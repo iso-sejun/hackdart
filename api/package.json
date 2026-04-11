@@ -6,7 +6,8 @@
   "scripts": {
   "dev": "nodemon server.js",
   "start": "node server.js",
-  "lint": "eslint . --ext .js"
+  "lint": "eslint . --ext .js",
+  "seed:foodbanks": "node src/scripts/seedFoodBanks.js"
 },
   "keywords": [],
   "author": "",
