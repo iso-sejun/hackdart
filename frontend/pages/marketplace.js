@@ -133,6 +133,32 @@ function renderProduceGlyph(product) {
   );
 }
 
+function getCategoryIcon(category) {
+  const normalized = (category || '').toLowerCase();
+
+  if (normalized === 'all') {
+    return '✦';
+  }
+
+  if (normalized.includes('fruit') || normalized.includes('tomato')) {
+    return '🍅';
+  }
+
+  if (normalized.includes('leaf')) {
+    return '🥬';
+  }
+
+  if (normalized.includes('herb')) {
+    return '🌿';
+  }
+
+  if (normalized.includes('root')) {
+    return '🥕';
+  }
+
+  return '🧺';
+}
+
 export default function MarketplacePage() {
   const { isAuthenticated, token, user } = useAuth();
   const [search, setSearch] = useState('');
@@ -291,7 +317,7 @@ export default function MarketplacePage() {
           </form>
 
           <section className="market-chip-row" aria-label="Produce categories">
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <button
                 key={category}
                 type="button"
@@ -299,7 +325,7 @@ export default function MarketplacePage() {
                 className={`market-chip ${activeCategory === category ? 'is-active' : ''}`}
               >
                 <span className="market-chip__icon" aria-hidden="true">
-                  {['✦', '🍅', '🥬', '🌿', '🥕', '🧺', '☄︎'][index % 7]}
+                  {getCategoryIcon(category)}
                 </span>
                 <span>{category}</span>
               </button>
