@@ -22,8 +22,7 @@ export default function AppShell({
 
   const isGoldNav = ['marketplace', 'login', 'register', 'home', 'mission', 'why-us'].includes(variant);
   const isAuthVariant = ['login', 'register'].includes(variant);
-  const dashboardHref =
-    user?.role === 'seller' ? '/seller/dashboard' : user?.role === 'buyer' ? '/buyer/dashboard' : null;
+  const cartLabel = isAuthenticated ? 'Cargo Hold' : null;
 
   return (
     <main className={`min-h-screen text-white ${shellClass}`}>
@@ -62,6 +61,9 @@ export default function AppShell({
               <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/">
                 Home
               </Link>
+              <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/why-us">
+                Why Us
+              </Link>
               <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/marketplace">
                 Marketplace
               </Link>
@@ -73,20 +75,11 @@ export default function AppShell({
               </Link>
               {isAuthenticated ? (
                 <>
-                  {dashboardHref ? (
-                    <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href={dashboardHref}>
-                      Dashboard
+                  {cartLabel ? (
+                    <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/cart">
+                      {cartLabel}
                     </Link>
                   ) : null}
-                  <span
-                    className={`rounded-full border px-4 py-3 text-xs uppercase tracking-[0.2em] ${
-                      isGoldNav
-                        ? 'border-[#c9a84c]/25 bg-[#0f1b3d]/35 text-[#d7bc68]'
-                        : 'border-white/10 bg-white/5 text-white/70'
-                    }`}
-                  >
-                    {user?.role || 'signed in'}
-                  </span>
                   <button
                     type="button"
                     className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`}
