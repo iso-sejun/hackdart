@@ -131,15 +131,22 @@ async function sendFoodBankManifest({ sellerName, foodBank, batch, orders, ready
     html,
   });
 
+  const manualSendUrl = `mailto:${encodeURIComponent(HACKATHON_FOOD_BANK_EMAIL)}?subject=${encodeURIComponent(
+    `HackDart batch ready from ${sellerName}`
+  )}&body=${encodeURIComponent(text)}`;
+
   return {
     accepted: info.accepted || [],
     rejected: info.rejected || [],
     messageId: info.messageId || null,
     preview: typeof info.message === 'string' ? info.message : text,
     usedJsonTransport: !process.env.SMTP_HOST,
+    recipient: HACKATHON_FOOD_BANK_EMAIL,
+    manualSendUrl,
   };
 }
 
 module.exports = {
   sendFoodBankManifest,
+  HACKATHON_FOOD_BANK_EMAIL,
 };

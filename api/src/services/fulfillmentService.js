@@ -6,7 +6,7 @@ const FulfillmentBatch = require('../models/FulfillmentBatch');
 const Order = require('../models/Order');
 const OrderGroup = require('../models/OrderGroup');
 const SellerProfile = require('../models/SellerProfile');
-const { sendFoodBankManifest } = require('./emailService');
+const { HACKATHON_FOOD_BANK_EMAIL, sendFoodBankManifest } = require('./emailService');
 
 function createError(message, statusCode, code) {
   const error = new Error(message);
@@ -145,7 +145,7 @@ async function buildBatchPayload(batchDoc) {
       ? {
           id: foodBank._id,
           name: foodBank.name,
-          email: foodBank.email,
+          email: HACKATHON_FOOD_BANK_EMAIL,
           address: foodBank.address,
           contactName: foodBank.contactName,
         }

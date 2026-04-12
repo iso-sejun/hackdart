@@ -7,12 +7,15 @@ import DashboardShell from '../../../../src/components/DashboardShell';
 import { useAuth } from '../../../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../../../src/lib/api';
 
+const DEMO_FOOD_BANK_EMAIL = 'unboxingvidskim@gmail.com';
+
 export default function SellerBatchDetailPage() {
   const router = useRouter();
   const { batchId } = router.query;
   const { token } = useAuth();
   const [batch, setBatch] = useState(null);
   const [message, setMessage] = useState('');
+  const [emailMeta, setEmailMeta] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isShipping, setIsShipping] = useState(false);
 
@@ -26,6 +29,7 @@ export default function SellerBatchDetailPage() {
     try {
       const response = await apiRequest(`/sellers/me/batches/${batchId}`, withAuth(token));
       setBatch(response.data);
+      setEmailMeta(null);
     } catch (error) {
       setMessage(error.message);
     } finally {
@@ -50,10 +54,11 @@ export default function SellerBatchDetailPage() {
       );
 
       setBatch(response.data.batch);
+      setEmailMeta(response.data.email || null);
       setMessage(
         response.data.email?.usedJsonTransport
-          ? 'Batch marked shipped. SMTP is not configured, so the manifest preview was generated locally.'
-          : 'Batch marked shipped and manifest email sent to the food bank.'
+          ? `Batch marked shipped. SMTP is not configured on the backend, so use the prefilled email link below to send the manifest to ${response.data.email?.recipient || 'the demo inbox'}.`
+          : `Batch marked shipped and manifest email sent to ${response.data.email?.recipient || 'the food bank'}.`
       );
     } catch (error) {
       setMessage(error.message);
@@ -76,6 +81,16 @@ export default function SellerBatchDetailPage() {
         ]}
       >
         {message ? <p className="mb-6 text-sm text-[#d7bc68]">{message}</p> : null}
+        {emailMeta?.usedJsonTransport && emailMeta?.manualSendUrl ? (
+          <div className="mb-6 flex flex-wrap gap-3">
+            <a href={emailMeta.manualSendUrl} className="btn-gold">
+              Send manifest with email app
+            </a>
+            <span className="self-center text-sm text-[#f5e6c8]/72">
+              Recipient: {emailMeta.recipient}
+            </span>
+          </div>
+        ) : null}
 
         {isLoading ? (
           <section className="dashboard-panel">
@@ -94,7 +109,7 @@ export default function SellerBatchDetailPage() {
                   Shipment batch {String(batch.id).slice(-6).toUpperCase()}
                 </h2>
                 <p className="mt-4 max-w-2xl text-[#f5e6c8]/76">
-                  Contact {batch.foodBank?.contactName || 'food bank staff'} at {batch.foodBank?.email} once this produce leaves your dock.
+                  Contact {batch.foodBank?.contactName || 'food bank staff'} at {DEMO_FOOD_BANK_EMAIL} once this produce leaves your dock.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   {batch.status === 'ready_to_ship' ? (
@@ -142,7 +157,7 @@ export default function SellerBatchDetailPage() {
                 <p className="eyebrow-gold">Food Bank Contact</p>
                 <div className="mt-4 text-[#f5e6c8]/76">
                   <p className="text-lg font-semibold text-white">{batch.foodBank?.name}</p>
-                  <p className="mt-2">{batch.foodBank?.email}</p>
+                  <p className="mt-2">{DEMO_FOOD_BANK_EMAIL}</p>
                   <p className="mt-2">
                     {batch.foodBank?.address?.line1}, {batch.foodBank?.address?.city},{' '}
                     {batch.foodBank?.address?.state} {batch.foodBank?.address?.postalCode}
