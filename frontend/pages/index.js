@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 import AppShell from '../src/components/AppShell';
 
@@ -90,6 +91,30 @@ const faqs = [
 ];
 
 export default function Home() {
+  useEffect(() => {
+    const sections = Array.from(document.querySelectorAll('.home-section-shell--reveal'));
+
+    if (!sections.length) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        });
+      },
+      {
+        threshold: 0.18,
+        rootMargin: '-8% 0px -8% 0px',
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <AppShell variant="home">
       <section className="hero-ship-stage">
@@ -136,10 +161,13 @@ export default function Home() {
               Come aboard
             </Link>
           </div>
+          <a href="#landing-content" className="hero-scroll-cue">
+            Scroll to continue
+          </a>
         </div>
       </section>
 
-      <div className="home-fade-stack">
+      <div className="home-fade-stack" id="landing-content">
         <section className="home-section-shell home-section-shell--reveal">
           <div className="text-center">
             <p className="eyebrow-gold">How It Works</p>

@@ -938,6 +938,9 @@
     box-shadow:
       0 28px 70px rgba(0, 0, 0, 0.22),
       inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+    animation: heroShipFadeIn 1600ms cubic-bezier(0.22, 1, 0.36, 1) 180ms forwards;
   }
 
   .hero-ship-shell__trail {
@@ -1148,12 +1151,29 @@
     justify-items: center;
     text-align: center;
     padding: 0 1rem;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: heroCaptionFadeIn 1200ms cubic-bezier(0.22, 1, 0.36, 1) 680ms forwards;
   }
 
   .home-fade-stack {
     display: grid;
     gap: 1.4rem;
     scroll-snap-type: y proximity;
+  }
+
+  .hero-scroll-cue {
+    margin-top: 0.5rem;
+    color: rgba(201, 168, 76, 0.92);
+    font-size: 0.82rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 180ms ease, transform 180ms ease;
+  }
+
+  .hero-scroll-cue:hover {
+    color: var(--brand-cream);
+    transform: translateY(1px);
   }
 
   .home-section-shell {
@@ -1165,6 +1185,22 @@
       0 24px 65px rgba(0, 0, 0, 0.16),
       inset 0 1px 0 rgba(255, 255, 255, 0.03);
     scroll-snap-align: start;
+  }
+
+  .home-section-shell--reveal {
+    opacity: 0.16;
+    transform: translateY(34px);
+    transition:
+      opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 720ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 720ms cubic-bezier(0.22, 1, 0.36, 1);
+    filter: blur(6px);
+  }
+
+  .home-section-shell--reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 
   .home-info-card {
@@ -1507,6 +1543,28 @@
     pointer-events: none;
   }
 
+  @keyframes heroShipFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes heroCaptionFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   @media (min-width: 1024px) {
     .home-hero-grid {
       grid-template-columns: 0.82fr 1.18fr;
@@ -1553,6 +1611,18 @@
     .home-section-shell,
     .home-final-cta {
       padding: 1.4rem 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-ship-shell,
+    .hero-ship-caption,
+    .home-section-shell--reveal {
+      animation: none;
+      transition: none;
+      opacity: 1;
+      transform: none;
+      filter: none;
     }
   }
 }
