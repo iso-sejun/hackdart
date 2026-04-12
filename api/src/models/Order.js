@@ -67,6 +67,12 @@ const orderSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
+    batchId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'FulfillmentBatch',
+      default: null,
+      index: true,
+    },
     status: {
       type: String,
       enum: [

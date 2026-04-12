@@ -91,7 +91,10 @@ export default function SellerDashboardPage() {
         roleLabel="Seller Dashboard"
         title="Your farm command deck is online."
         description="Manage your catalog from the cargo hold, keep compliance details up to date, and prep the next harvest for the marketplace."
-        navItems={[{ href: '/seller/products', label: 'Products' }]}
+        navItems={[
+          { href: '/seller/products', label: 'Products' },
+          { href: '/seller/orders', label: 'Orders' },
+        ]}
       >
         <section className="dashboard-hero-card dashboard-hero-card--seller">
           <div className="dashboard-hero-card__copy">
@@ -105,6 +108,9 @@ export default function SellerDashboardPage() {
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/seller/products" className="btn-gold">
                 Open products
+              </Link>
+              <Link href="/seller/orders" className="btn-orbit">
+                View orders
               </Link>
               <Link href="/marketplace" className="btn-orbit">
                 Preview marketplace

@@ -135,10 +135,14 @@ export default function SellerProductsPage() {
   return (
     <ProtectedPage roles={['seller']}>
       <DashboardShell
+        variant="seller"
         roleLabel="Seller Products"
         title="Build your produce catalog."
         description="Create, update, and remove marketplace inventory from a single seller workspace."
-        navItems={[{ href: '/seller/dashboard', label: 'Dashboard' }]}
+        navItems={[
+          { href: '/seller/dashboard', label: 'Dashboard' },
+          { href: '/seller/orders', label: 'Orders' },
+        ]}
       >
         <div className="dashboard-grid">
           <section className="panel-glow">
