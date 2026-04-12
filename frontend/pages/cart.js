@@ -98,7 +98,7 @@ export default function CartPage() {
               ) : !cart?.items?.length ? (
                 <div className="space-y-4">
                   <p className="text-slate-300">Your cart is empty. Start in the marketplace.</p>
-                  <Link href="/marketplace" className="btn-primary">
+                  <Link href="/marketplace" className="btn-gold">
                     Browse produce
                   </Link>
                 </div>
@@ -172,7 +172,7 @@ export default function CartPage() {
                 <span className="text-white">${(cart?.subtotal || 0).toFixed(2)}</span>
               </div>
             </div>
-            <Link href="/checkout" className="btn-primary mt-6 w-full">
+            <Link href="/checkout" className="btn-gold mt-6 w-full">
               Select pickup
             </Link>
           </section>
