@@ -8,9 +8,11 @@ export default function AppShell({ children, compact = false, variant = 'default
         ? 'bg-space-login'
         : variant === 'home'
           ? 'bg-space-home'
+          : variant === 'mission' || variant === 'why-us'
+            ? 'bg-space-story'
           : 'bg-space';
 
-  const isGoldNav = ['marketplace', 'login', 'register', 'home'].includes(variant);
+  const isGoldNav = ['marketplace', 'login', 'register', 'home', 'mission', 'why-us'].includes(variant);
 
   return (
     <main className={`min-h-screen text-white ${shellClass}`}>
@@ -22,6 +24,9 @@ export default function AppShell({ children, compact = false, variant = 'default
         </>
       ) : null}
       {variant === 'home' ? <div className="home-stars" aria-hidden="true" /> : null}
+      {variant === 'mission' || variant === 'why-us' ? (
+        <div className={`story-backdrop story-backdrop--${variant}`} aria-hidden="true" />
+      ) : null}
 
       <div className={`mx-auto px-6 py-8 ${compact ? 'max-w-5xl' : 'max-w-7xl'}`}>
         <header

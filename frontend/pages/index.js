@@ -86,6 +86,21 @@ export default function Home() {
             </Link>
           </div>
 
+          <div className="home-impact-strip">
+            <div className="home-impact-chip">
+              <span className="home-impact-chip__value">50%</span>
+              <span className="home-impact-chip__label">profit recovered from would-be waste</span>
+            </div>
+            <div className="home-impact-chip">
+              <span className="home-impact-chip__value">1 hub</span>
+              <span className="home-impact-chip__label">combines many household orders into one dropoff</span>
+            </div>
+            <div className="home-impact-chip">
+              <span className="home-impact-chip__value">2-sided</span>
+              <span className="home-impact-chip__label">support for both growers and families</span>
+            </div>
+          </div>
+
           <div className="grid gap-3 sm:grid-cols-2">
             {destinations.map((item) => (
               <Link key={item.href} href={item.href} className="home-sidecard">
@@ -122,6 +137,15 @@ export default function Home() {
                 aria-label={hotspot.title}
                 title={hotspot.title}
               >
+                <span>{hotspot.title}</span>
+              </Link>
+            ))}
+          </div>
+
+          <div className="home-ship-legend">
+            {shipHotspots.map((hotspot) => (
+              <Link key={hotspot.title} href={hotspot.href} className="home-ship-legend__item">
+                <span className="home-ship-legend__dot" aria-hidden="true" />
                 <span>{hotspot.title}</span>
               </Link>
             ))}
