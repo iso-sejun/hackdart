@@ -1492,6 +1492,13 @@
       border-color 180ms ease,
       box-shadow 180ms ease,
       background 180ms ease;
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+    animation: registerRoleCardIn 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .register-role-card:nth-child(2) {
+    animation-delay: 120ms;
   }
 
   .register-role-card:hover,
@@ -1619,6 +1626,17 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes registerRoleCardIn {
+    from {
+      opacity: 0;
+      transform: translateY(26px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   }
 
@@ -1759,7 +1777,8 @@
     .hero-reference-layout,
     .hero-ship-caption,
     .hero-ship-actions,
-    .home-section-shell--reveal {
+    .home-section-shell--reveal,
+    .register-role-card {
       animation: none;
       transition: none;
       opacity: 1;

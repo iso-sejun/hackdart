@@ -343,22 +343,29 @@ export default function RegisterPage() {
                   <span className={`register-role-card__icon register-role-card__icon--${item.icon}`} aria-hidden="true">
                     {item.icon === 'farmer' ? (
                       <svg viewBox="0 0 120 120" role="presentation">
-                        <circle cx="52" cy="28" r="13" />
-                        <path d="M34 28c5-14 30-19 43-5M28 33c10-8 37-9 47 0" />
-                        <path d="M44 43h16v22H44z" />
-                        <path d="M34 92V60c0-10 8-18 18-18s18 8 18 18v32" />
-                        <path d="M18 86h19v18H18zM82 86h19v18H82z" />
-                        <path d="M27 86c2-11 8-18 18-22M92 86c-2-11-8-18-18-22" />
-                        <path d="M28 84c0-10-5-17-13-19M92 84c0-10 5-17 13-19" />
+                        <ellipse cx="60" cy="24" rx="23" ry="8" />
+                        <path d="M40 24c4-10 15-16 20-16s16 6 20 16" />
+                        <circle cx="60" cy="40" r="11" />
+                        <path d="M49 58h22v22H49z" />
+                        <path d="M38 98V72c0-12 10-22 22-22s22 10 22 22v26" />
+                        <path d="M49 80v18M71 80v18" />
+                        <path d="M18 82c10 0 18 8 18 18v4H18z" />
+                        <path d="M102 82c-10 0-18 8-18 18v4h18z" />
+                        <path d="M27 82v-8c0-9-6-16-15-18" />
+                        <path d="M93 82v-8c0-9 6-16 15-18" />
                       </svg>
                     ) : (
                       <svg viewBox="0 0 120 120" role="presentation">
-                        <circle cx="38" cy="28" r="13" />
-                        <path d="M27 43l-7 17 10 6 8-15 12 8 8 23 12-4-7-24 18 1 18 14 7-8-19-18-27-4-12-9c-9-7-21-6-30 3z" />
-                        <path d="M69 48h28v20H69z" />
-                        <path d="M65 68h36M74 48V40M88 48V40" />
-                        <circle cx="77" cy="73" r="8" />
-                        <circle cx="100" cy="73" r="8" />
+                        <circle cx="34" cy="28" r="11" />
+                        <path d="M26 40l-10 18 10 6 10-14 12 9" />
+                        <path d="M48 60l9 19" />
+                        <path d="M42 46l12 9 16-4" />
+                        <path d="M68 44h26l8 10v16H64V54z" />
+                        <path d="M72 44v-8M84 44v-8M96 44v-8" />
+                        <path d="M64 56h38" />
+                        <circle cx="75" cy="76" r="8" />
+                        <circle cx="98" cy="76" r="8" />
+                        <path d="M52 79l10-15" />
                       </svg>
                     )}
                   </span>
