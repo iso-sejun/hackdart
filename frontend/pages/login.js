@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import AppShell from '../src/components/AppShell';
 import AuthCard from '../src/components/AuthCard';
@@ -51,7 +52,26 @@ export default function LoginPage() {
   };
 
   return (
-    <AppShell compact variant="login">
+    <AppShell compact variant="login" showHeader={false}>
+      <header className="market-nav-shell auth-page-header mb-10 flex flex-wrap items-center justify-between gap-4">
+        <Link href="/" className="font-display text-2xl tracking-[0.08em] text-brand-gold">
+          HACKDART
+        </Link>
+        <nav className="flex flex-wrap items-center gap-3 text-sm text-[#f5e6c8]/80">
+          <Link className="nav-link nav-link-gold" href="/">
+            Home
+          </Link>
+          <Link className="nav-link nav-link-gold" href="/marketplace">
+            Marketplace
+          </Link>
+          <Link className="nav-link nav-link-gold" href="/login">
+            Login
+          </Link>
+          <Link className="nav-link nav-link-gold" href="/register">
+            Register
+          </Link>
+        </nav>
+      </header>
       <AuthCard
         eyebrow="Launch Login"
         title="Reconnect to the shared greenhouse ship."

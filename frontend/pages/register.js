@@ -128,7 +128,26 @@ export default function RegisterPage() {
   };
 
   return (
-    <AppShell compact variant="register">
+    <AppShell compact variant="register" showHeader={false}>
+      <header className="market-nav-shell auth-page-header mb-10 flex flex-wrap items-center justify-between gap-4">
+        <Link href="/" className="font-display text-2xl tracking-[0.08em] text-brand-gold">
+          HACKDART
+        </Link>
+        <nav className="flex flex-wrap items-center gap-3 text-sm text-[#f5e6c8]/80">
+          <Link className="nav-link nav-link-gold" href="/">
+            Home
+          </Link>
+          <Link className="nav-link nav-link-gold" href="/marketplace">
+            Marketplace
+          </Link>
+          <Link className="nav-link nav-link-gold" href="/login">
+            Login
+          </Link>
+          <Link className="nav-link nav-link-gold" href="/register">
+            Register
+          </Link>
+        </nav>
+      </header>
       <AuthCard
         eyebrow="Board The Ship"
         title="Create the first account layers for buyers and growers."
