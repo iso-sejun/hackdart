@@ -147,6 +147,7 @@ export default function CheckoutPage() {
   return (
     <ProtectedPage roles={['buyer']}>
       <DashboardShell
+        variant="checkout"
         roleLabel="Checkout Setup"
         title="Choose a pickup hub."
         description="Review your address, select a nearby food bank, and lock pricing before launching into Stripe checkout."
@@ -156,11 +157,37 @@ export default function CheckoutPage() {
           { href: '/buyer/orders', label: 'Orders' },
         ]}
       >
-        <div className="dashboard-grid">
-          <section className="panel-glow">
-            <p className="eyebrow">Select Pickup</p>
-            <h2 className="mt-2 font-display text-3xl text-white">Search nearby food banks</h2>
-            <p className="mt-3 text-slate-300">
+        <section className="dashboard-hero-card dashboard-hero-card--checkout">
+          <div className="dashboard-hero-card__copy">
+            <p className="eyebrow-gold">Docking Sequence</p>
+            <h2 className="mt-3 font-display text-4xl text-brand-cream sm:text-5xl">
+              Route every order to the right pickup bay.
+            </h2>
+            <p className="mt-4 max-w-2xl text-[#f5e6c8]/76">
+              First select a nearby food bank, then review live inventory totals before opening Stripe Checkout.
+            </p>
+          </div>
+          <div className="dashboard-hero-card__stats">
+            <div className="dashboard-stat-card">
+              <span className="dashboard-stat-card__label">Radius</span>
+              <strong>{Number(radiusMiles) || 5} mi</strong>
+            </div>
+            <div className="dashboard-stat-card">
+              <span className="dashboard-stat-card__label">Pickup hubs</span>
+              <strong>{pickupOptions.length}</strong>
+            </div>
+            <div className="dashboard-stat-card">
+              <span className="dashboard-stat-card__label">Order total</span>
+              <strong>${summary?.total?.toFixed(2) || '0.00'}</strong>
+            </div>
+          </div>
+        </section>
+
+        <div className="dashboard-grid mt-6">
+          <section className="dashboard-panel">
+            <p className="eyebrow-gold">Select Pickup</p>
+            <h2 className="mt-3 font-display text-3xl text-brand-cream">Search nearby food banks</h2>
+            <p className="mt-3 text-[#f5e6c8]/72">
               Demo addresses supported right now: Hanover NH 03755, Lebanon NH 03766, White River
               Junction VT 05001, and Woodstock VT 05091.
             </p>
@@ -198,38 +225,38 @@ export default function CheckoutPage() {
                 />
               </label>
               <div className="sm:col-span-2">
-                <button type="submit" className="btn-primary" disabled={isLookingUp}>
+                <button type="submit" className="btn-gold" disabled={isLookingUp}>
                   {isLookingUp ? 'Looking up...' : 'Find pickup hubs'}
                 </button>
               </div>
             </form>
           </section>
 
-          <section className="panel-glow">
-            <p className="eyebrow">Nearby Options</p>
-            <h2 className="mt-2 font-display text-3xl text-white">Pickup selector</h2>
-            {message ? <p className="mt-4 text-sm text-emerald-200">{message}</p> : null}
+          <section className="dashboard-panel">
+            <p className="eyebrow-gold">Nearby Options</p>
+            <h2 className="mt-3 font-display text-3xl text-brand-cream">Pickup selector</h2>
+            {message ? <p className="mt-4 text-sm text-[#d7bc68]">{message}</p> : null}
 
             <div className="mt-6 space-y-4">
               {pickupOptions.length === 0 ? (
-                <p className="text-slate-300">
+                <p className="text-[#f5e6c8]/72">
                   Lookup nearby food banks to choose a pickup destination for the order.
                 </p>
               ) : (
                 pickupOptions.map((option) => (
                   <label
                     key={option.id}
-                    className={`block rounded-3xl border p-4 transition ${
+                    className={`dashboard-option-card ${
                       selectedFoodBankId === option.id
-                        ? 'border-emerald-300/45 bg-emerald-300/10'
-                        : 'border-white/10 bg-white/5'
+                        ? 'dashboard-option-card--active'
+                        : ''
                     }`}
                   >
                     <div className="flex items-start gap-3">
                       <input
                         type="radio"
                         name="foodBank"
-                        className="mt-1 h-4 w-4 accent-emerald-300"
+                        className="mt-1 h-4 w-4 accent-[#c9a84c]"
                         checked={selectedFoodBankId === option.id}
                         onChange={() => {
                           setSelectedFoodBankId(option.id);
@@ -238,12 +265,12 @@ export default function CheckoutPage() {
                       />
                       <div>
                         <p className="text-lg font-semibold text-white">{option.name}</p>
-                        <p className="mt-1 text-sm text-slate-300">
+                        <p className="mt-1 text-sm text-[#f5e6c8]/72">
                           {option.address.line1}, {option.address.city}, {option.address.state}{' '}
                           {option.address.postalCode}
                         </p>
-                        <p className="mt-2 text-sm text-slate-300">Hours: {option.hours}</p>
-                        <p className="mt-1 text-sm text-slate-300">Contact: {option.contactName}</p>
+                        <p className="mt-2 text-sm text-[#f5e6c8]/72">Hours: {option.hours}</p>
+                        <p className="mt-1 text-sm text-[#f5e6c8]/72">Contact: {option.contactName}</p>
                       </div>
                     </div>
                   </label>
@@ -252,23 +279,23 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          <section className="panel-glow">
-            <p className="eyebrow">Review Order</p>
-            <h2 className="mt-2 font-display text-3xl text-white">Live checkout summary</h2>
-            <p className="mt-3 text-slate-300">
+          <section className="dashboard-panel">
+            <p className="eyebrow-gold">Review Order</p>
+            <h2 className="mt-3 font-display text-3xl text-brand-cream">Live checkout summary</h2>
+            <p className="mt-3 text-[#f5e6c8]/72">
               Recalculate with current inventory before starting Stripe Checkout.
             </p>
 
             {summary ? (
               <div className="mt-6 space-y-4">
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm uppercase tracking-[0.28em] text-emerald-200">
+                <div className="dashboard-summary-card">
+                  <p className="text-sm uppercase tracking-[0.28em] text-[#d7bc68]">
                     Pickup hub
                   </p>
                   <p className="mt-3 text-lg font-semibold text-white">
                     {selectedPickupOption?.name || summary.foodBank?.name}
                   </p>
-                  <p className="mt-1 text-sm text-slate-300">
+                  <p className="mt-1 text-sm text-[#f5e6c8]/72">
                     {selectedPickupOption
                       ? `${selectedPickupOption.address.line1}, ${selectedPickupOption.address.city}, ${selectedPickupOption.address.state} ${selectedPickupOption.address.postalCode}`
                       : ''}
@@ -279,11 +306,11 @@ export default function CheckoutPage() {
                   {summary.items.map((item) => (
                     <div
                       key={item.productId}
-                      className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
+                      className="dashboard-summary-line"
                     >
                       <div>
                         <p className="font-semibold text-white">{item.name}</p>
-                        <p className="text-sm text-slate-300">
+                        <p className="text-sm text-[#f5e6c8]/72">
                           {item.quantity} x ${item.unitPrice.toFixed(2)} per {item.unit}
                         </p>
                       </div>
@@ -292,12 +319,12 @@ export default function CheckoutPage() {
                   ))}
                 </div>
 
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <div className="flex items-center justify-between text-slate-300">
+                <div className="dashboard-summary-card">
+                  <div className="flex items-center justify-between text-[#f5e6c8]/72">
                     <span>Subtotal</span>
                     <span className="text-white">${summary.subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="mt-3 flex items-center justify-between text-slate-300">
+                  <div className="mt-3 flex items-center justify-between text-[#f5e6c8]/72">
                     <span>Fees</span>
                     <span className="text-white">${summary.fees.toFixed(2)}</span>
                   </div>
@@ -308,16 +335,16 @@ export default function CheckoutPage() {
                 </div>
               </div>
             ) : (
-              <p className="mt-6 text-slate-300">
+              <p className="mt-6 text-[#f5e6c8]/72">
                 Select a food bank, then review the order to confirm inventory and current pricing.
               </p>
             )}
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <button type="button" className="btn-secondary" onClick={validateOrder} disabled={isValidating}>
+              <button type="button" className="btn-orbit" onClick={validateOrder} disabled={isValidating}>
                 {isValidating ? 'Reviewing...' : 'Review totals'}
               </button>
-              <button type="button" className="btn-primary" onClick={startPayment} disabled={isRedirecting}>
+              <button type="button" className="btn-gold" onClick={startPayment} disabled={isRedirecting}>
                 {isRedirecting ? 'Redirecting...' : 'Continue to payment'}
               </button>
             </div>

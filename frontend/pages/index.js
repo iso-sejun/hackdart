@@ -1,9 +1,6 @@
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 import AppShell from '../src/components/AppShell';
-import { useAuth } from '../src/context/AuthContext';
 
 const destinations = [
   {
@@ -67,17 +64,6 @@ const shipHotspots = [
 ];
 
 export default function Home() {
-  const { isAuthenticated, user } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isAuthenticated || !user) {
-      return;
-    }
-
-    router.replace(user.role === 'seller' ? '/seller/dashboard' : '/buyer/dashboard');
-  }, [isAuthenticated, router, user]);
-
   return (
     <AppShell variant="home">
       <section className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">

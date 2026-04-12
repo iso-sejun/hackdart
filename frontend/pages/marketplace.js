@@ -5,6 +5,79 @@ import AppShell from '../src/components/AppShell';
 import { useAuth } from '../src/context/AuthContext';
 import { apiRequest, withAuth } from '../src/lib/api';
 
+const DEMO_PRODUCTS = [
+  {
+    id: 'demo-cosmic-cherry-tomatoes',
+    name: 'Cosmic Cherry Tomatoes',
+    category: 'Organic Fruit',
+    description: 'Sweet, juicy tomatoes grown under warm orbital rails and packed for food bank pickup.',
+    images: ['https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=900&q=80'],
+    unit: 'basket',
+    quantityAvailable: 28,
+    minimumOrderQty: 1,
+    price: 4.99,
+    status: 'demo',
+    farmName: 'Astro-Grown Farms',
+    isDemo: true,
+  },
+  {
+    id: 'demo-leafy-greens',
+    name: 'Leafy Greens',
+    category: 'Leafy Greens',
+    description: 'Tender lettuce bundles and salad-ready greens from a low-waste hydroponic bay.',
+    images: ['https://images.unsplash.com/photo-1515356956468-8733193425c6?auto=format&fit=crop&w=900&q=80'],
+    unit: 'basket',
+    quantityAvailable: 19,
+    minimumOrderQty: 1,
+    price: 4.99,
+    status: 'demo',
+    farmName: 'Orbit Leaf Collective',
+    isDemo: true,
+  },
+  {
+    id: 'demo-herb-mix',
+    name: 'Herbs & Microgreens',
+    category: 'Herbs',
+    description: 'Bright basil, parsley, and microgreens for quick meals and pantry refreshes.',
+    images: ['https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?auto=format&fit=crop&w=900&q=80'],
+    unit: 'basket',
+    quantityAvailable: 14,
+    minimumOrderQty: 1,
+    price: 4.99,
+    status: 'demo',
+    farmName: 'Comet Patch Farm',
+    isDemo: true,
+  },
+  {
+    id: 'demo-root-mix',
+    name: 'Root Vegetable Mix',
+    category: 'Root Vegetables',
+    description: 'Carrots, radishes, and roots packed together for affordable family pickups.',
+    images: ['https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=900&q=80'],
+    unit: 'basket',
+    quantityAvailable: 16,
+    minimumOrderQty: 1,
+    price: 5.49,
+    status: 'demo',
+    farmName: 'Harvest Dock Produce',
+    isDemo: true,
+  },
+];
+
+function filterDemoProducts(nextQuery = '') {
+  const normalizedQuery = nextQuery.trim().toLowerCase();
+
+  if (!normalizedQuery) {
+    return DEMO_PRODUCTS;
+  }
+
+  return DEMO_PRODUCTS.filter((product) =>
+    [product.name, product.category, product.description, product.farmName]
+      .filter(Boolean)
+      .some((value) => value.toLowerCase().includes(normalizedQuery))
+  );
+}
+
 export default function MarketplacePage() {
   const { isAuthenticated, token, user } = useAuth();
   const [search, setSearch] = useState('');
@@ -32,11 +105,21 @@ export default function MarketplacePage() {
     try {
       const suffix = nextQuery ? `?search=${encodeURIComponent(nextQuery)}` : '';
       const response = await apiRequest(`/products${suffix}`);
-      setProducts(response.data.products);
+      const liveProducts = response.data.products || [];
+
+      if (liveProducts.length === 0) {
+        setProducts(filterDemoProducts(nextQuery));
+        setMessage('Showing demo harvests while live seller inventory syncs.');
+      } else {
+        setProducts(liveProducts);
+        setMessage('');
+      }
+
       setHasLoadError(false);
     } catch (error) {
-      setMessage(error.message);
-      setHasLoadError(true);
+      setProducts(filterDemoProducts(nextQuery));
+      setMessage(`${error.message} Showing demo harvests instead.`);
+      setHasLoadError(false);
     } finally {
       setIsLoading(false);
     }
@@ -52,6 +135,11 @@ export default function MarketplacePage() {
   };
 
   const addToCart = async (productId) => {
+    if (`${productId}`.startsWith('demo-')) {
+      setMessage('These are demo harvests for the deployed preview. Add live products after a seller publishes inventory.');
+      return;
+    }
+
     if (!isAuthenticated || user?.role !== 'buyer') {
       setMessage('Login as a buyer to add items to your cart.');
       return;
@@ -145,11 +233,7 @@ export default function MarketplacePage() {
         <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {isLoading ? (
             <div className="market-empty sm:col-span-2 xl:col-span-4">Loading marketplace...</div>
-          ) : hasLoadError ? (
-            <div className="market-empty sm:col-span-2 xl:col-span-4">
-              The marketplace could not load because the API is unavailable.
-            </div>
-          ) : products.length === 0 ? (
+          ) : hasLoadError ? null : products.length === 0 ? (
             <div className="market-empty sm:col-span-2 xl:col-span-4">
               No products matched this search yet.
             </div>
@@ -178,7 +262,9 @@ export default function MarketplacePage() {
                     </span>
                   </div>
 
-                  <p className="mt-2 text-[0.75rem] text-[#f5e6c8]/60">Astro-grown farms</p>
+                  <p className="mt-2 text-[0.75rem] text-[#f5e6c8]/60">
+                    {product.farmName || 'Astro-grown farms'}
+                  </p>
                   <p className="mt-2 flex-1 text-sm leading-6 text-[#f5e6c8]/76">
                     {product.description}
                   </p>

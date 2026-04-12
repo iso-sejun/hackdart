@@ -87,41 +87,84 @@ export default function SellerDashboardPage() {
   return (
     <ProtectedPage roles={['seller']}>
       <DashboardShell
+        variant="seller"
         roleLabel="Seller Dashboard"
         title="Your farm command deck is online."
-        description="Complete your seller profile here, then move into products to publish marketplace-ready produce."
+        description="Manage your catalog from the cargo hold, keep compliance details up to date, and prep the next harvest for the marketplace."
         navItems={[{ href: '/seller/products', label: 'Products' }]}
       >
-        <div className="dashboard-grid">
-          <section className="panel-glow">
-            <p className="eyebrow">Farm</p>
-            <h3 className="mt-2 text-2xl font-semibold text-white">{profile?.farmName || 'Seller'}</h3>
-            <p className="mt-3 text-slate-300">
-              Stripe onboarding status:{' '}
-              <span className="text-emerald-200">{profile?.stripeOnboardingStatus || 'not_started'}</span>
+        <section className="dashboard-hero-card dashboard-hero-card--seller">
+          <div className="dashboard-hero-card__copy">
+            <p className="eyebrow-gold">Cargo Overview</p>
+            <h2 className="mt-3 font-display text-4xl text-brand-cream sm:text-5xl">
+              Turn surplus harvest into live marketplace inventory.
+            </h2>
+            <p className="mt-4 max-w-2xl text-[#f5e6c8]/76">
+              Your cargo hold keeps listings, food-safety attestation, and outbound order prep in one place.
             </p>
-            <p className="mt-3 text-slate-300">
-              Food safety attested:{' '}
-              <span className="text-emerald-200">
-                {profile?.foodSafetyAttested ? 'Yes' : 'No'}
-              </span>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/seller/products" className="btn-gold">
+                Open products
+              </Link>
+              <Link href="/marketplace" className="btn-orbit">
+                Preview marketplace
+              </Link>
+            </div>
+          </div>
+
+          <div className="dashboard-hero-card__stats">
+            <div className="dashboard-stat-card">
+              <span className="dashboard-stat-card__label">Stripe status</span>
+              <strong>{profile?.stripeOnboardingStatus || 'not_started'}</strong>
+            </div>
+            <div className="dashboard-stat-card">
+              <span className="dashboard-stat-card__label">Food safety</span>
+              <strong>{profile?.foodSafetyAttested ? 'Attested' : 'Missing'}</strong>
+            </div>
+            <div className="dashboard-stat-card">
+              <span className="dashboard-stat-card__label">Farm base</span>
+              <strong>{profile?.farmAddress?.city || 'Set city'}</strong>
+            </div>
+          </div>
+        </section>
+
+        <div className="dashboard-grid mt-6">
+          <section className="dashboard-panel">
+            <p className="eyebrow-gold">Farm</p>
+            <h3 className="mt-3 text-2xl font-semibold text-white">{profile?.farmName || 'Seller'}</h3>
+            <p className="mt-3 text-[#f5e6c8]/72">
+              Contact: <span className="text-[#d7bc68]">{profile?.contactName || 'Set contact'}</span>
+            </p>
+            <p className="mt-2 text-[#f5e6c8]/72">
+              Base: <span className="text-[#d7bc68]">{profile?.farmAddress?.city || 'Set city'}, {profile?.farmAddress?.state || 'State'}</span>
             </p>
           </section>
 
-          <section className="panel-glow">
-            <p className="eyebrow">Inventory</p>
-            <p className="mt-3 text-slate-300">
-              Start your marketplace catalog and keep produce current from one dedicated workspace.
-            </p>
-            <Link href="/seller/products" className="btn-primary mt-6">
-              Open products
-            </Link>
+          <section className="dashboard-panel">
+            <p className="eyebrow-gold">Quick Actions</p>
+            <div className="mt-4 grid gap-3">
+              <Link href="/seller/products" className="dashboard-action-card">
+                <span className="dashboard-action-card__title">Publish inventory</span>
+                <span className="dashboard-action-card__body">Add or edit listings with live price, quantity, and unit data.</span>
+              </Link>
+              <Link href="/marketplace" className="dashboard-action-card">
+                <span className="dashboard-action-card__title">See storefront</span>
+                <span className="dashboard-action-card__body">Preview how buyers experience your current produce layout.</span>
+              </Link>
+            </div>
           </section>
         </div>
 
-        <section className="panel-glow mt-6">
-          <p className="eyebrow">Profile Completion</p>
-          <h2 className="mt-2 font-display text-3xl text-white">Keep your farm details marketplace-ready.</h2>
+        <section className="dashboard-panel mt-6">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="eyebrow-gold">Profile Completion</p>
+              <h2 className="mt-3 font-display text-3xl text-brand-cream">
+                Keep your farm details marketplace-ready.
+              </h2>
+            </div>
+          </div>
+
           <form className="mt-6 grid gap-4 sm:grid-cols-2" onSubmit={handleSubmit}>
             <label className="field sm:col-span-2">
               <span>Farm name</span>
@@ -166,12 +209,12 @@ export default function SellerDashboardPage() {
                 value={form.description}
                 onChange={handleChange}
                 rows="4"
-                className="min-h-[120px] w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-white outline-none transition focus:border-emerald-300/70 focus:ring-4 focus:ring-emerald-300/10"
+                className="themed-textarea"
               />
             </label>
-            {message ? <p className="sm:col-span-2 text-sm text-emerald-200">{message}</p> : null}
+            {message ? <p className="sm:col-span-2 text-sm text-[#d7bc68]">{message}</p> : null}
             <div className="sm:col-span-2">
-              <button type="submit" className="btn-primary" disabled={isSaving}>
+              <button type="submit" className="btn-gold" disabled={isSaving}>
                 {isSaving ? 'Saving profile...' : 'Save seller profile'}
               </button>
             </div>

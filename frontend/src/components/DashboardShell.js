@@ -2,41 +2,84 @@ import Link from 'next/link';
 
 import { useAuth } from '../context/AuthContext';
 
-export default function DashboardShell({ roleLabel, title, description, children, navItems = [] }) {
+function getRoomMeta(variant) {
+  if (variant === 'seller') {
+    return {
+      label: 'Cargo Hold',
+      description: 'Inventory shelves, shipment crates, and fulfillment controls.',
+    };
+  }
+
+  if (variant === 'checkout') {
+    return {
+      label: 'Docking Bay',
+      description: 'Pickup routing, order review, and payment launch sequence.',
+    };
+  }
+
+  return {
+    label: 'Cockpit',
+    description: 'Buyer controls, route summaries, and pickup telemetry.',
+  };
+}
+
+export default function DashboardShell({
+  roleLabel,
+  title,
+  description,
+  children,
+  navItems = [],
+  variant = 'buyer',
+}) {
   const { logout, user } = useAuth();
+  const roomMeta = getRoomMeta(variant);
 
   return (
-    <main className="min-h-screen bg-space text-white">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.16),transparent_30%),linear-gradient(180deg,#07121d_0%,#050910_100%)]" />
+    <main className={`dashboard-room dashboard-room--${variant}`}>
+      <div className={`dashboard-room-art dashboard-room-art--${variant}`} aria-hidden="true" />
+      <div className="dashboard-room-overlay" aria-hidden="true" />
 
-      <div className="mx-auto max-w-7xl px-6 py-8">
-        <header className="mb-10 flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p className="eyebrow">{roleLabel}</p>
-            <h1 className="mt-2 font-display text-4xl text-white">{title}</h1>
-            <p className="mt-3 max-w-2xl text-slate-300">{description}</p>
+      <div className="relative z-[1] mx-auto max-w-7xl px-6 py-8">
+        <header className="market-nav-shell dashboard-shell-header">
+          <div className="min-w-0">
+            <p className="eyebrow-gold">{roleLabel}</p>
+            <h1 className="mt-3 font-display text-4xl text-brand-cream sm:text-5xl">{title}</h1>
+            <p className="mt-3 max-w-3xl text-[#f5e6c8]/78">{description}</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <Link href="/" className="nav-link">
+          <div className="flex flex-wrap items-center gap-3 text-sm text-[#f5e6c8]/80">
+            <Link href="/" className="nav-link nav-link-gold">
               Home
             </Link>
             {navItems.map((item) => (
-              <Link key={item.href} href={item.href} className="nav-link">
+              <Link key={item.href} href={item.href} className="nav-link nav-link-gold">
                 {item.label}
               </Link>
             ))}
-            <button type="button" className="btn-secondary" onClick={logout}>
+            <button type="button" className="btn-orbit" onClick={logout}>
               Logout
             </button>
           </div>
         </header>
 
-        <div className="mb-8 flex items-center justify-between rounded-3xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-slate-300">
-          <span>Signed in as {user?.email}</span>
-          <span className="rounded-full border border-emerald-300/30 px-3 py-1 uppercase tracking-[0.2em] text-emerald-200">
-            {user?.role}
-          </span>
+        <div className="dashboard-room-strip">
+          <div className="dashboard-room-strip__lights" aria-hidden="true">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <span key={index} />
+            ))}
+          </div>
+
+          <div className="dashboard-room-strip__content">
+            <div>
+              <p className="eyebrow-gold">{roomMeta.label}</p>
+              <p className="mt-2 text-sm leading-6 text-[#f5e6c8]/74">{roomMeta.description}</p>
+            </div>
+
+            <div className="dashboard-user-badge">
+              <span>Signed in as {user?.email}</span>
+              <span className="dashboard-user-badge__role">{user?.role}</span>
+            </div>
+          </div>
         </div>
 
         {children}
