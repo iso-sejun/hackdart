@@ -12,6 +12,47 @@ const DEMO_FOOD_BANK_NAME_MAP = {
   'demo-food-bank-y': 'Food Bank Y',
 };
 
+const DEMO_FOOD_BANK_FIXTURES = {
+  'demo-food-bank-x': {
+    name: 'Food Bank X',
+    email: 'hello@foodbankx.org',
+    phone: '603-555-0101',
+    hours: 'Mon-Fri 9am-5pm',
+    contactName: 'Riley Hart',
+    address: {
+      line1: '101 Elm St',
+      line2: '',
+      city: 'Hanover',
+      state: 'NH',
+      postalCode: '03755',
+      country: 'US',
+    },
+    geo: {
+      type: 'Point',
+      coordinates: [-72.2875, 43.7011],
+    },
+  },
+  'demo-food-bank-y': {
+    name: 'Food Bank Y',
+    email: 'pickup@foodbanky.org',
+    phone: '603-555-0142',
+    hours: 'Tue-Sat 10am-4pm',
+    contactName: 'Morgan Lee',
+    address: {
+      line1: '44 School St',
+      line2: '',
+      city: 'Lebanon',
+      state: 'NH',
+      postalCode: '03766',
+      country: 'US',
+    },
+    geo: {
+      type: 'Point',
+      coordinates: [-72.2522, 43.6434],
+    },
+  },
+};
+
 function createError(message, statusCode, code, details = null) {
   const error = new Error(message);
   error.statusCode = statusCode;
@@ -75,6 +116,24 @@ async function resolveFoodBank(foodBankId, pickupAddress = {}) {
       name: mappedName,
       acceptingOrders: true,
     });
+  }
+
+  if (!foodBank && DEMO_FOOD_BANK_FIXTURES[foodBankId]) {
+    const fixture = DEMO_FOOD_BANK_FIXTURES[foodBankId];
+
+    foodBank = await FoodBank.findOneAndUpdate(
+      { name: fixture.name },
+      {
+        $setOnInsert: {
+          ...fixture,
+          acceptingOrders: true,
+        },
+      },
+      {
+        upsert: true,
+        new: true,
+      }
+    );
   }
 
   if (!foodBank && pickupAddress.postalCode) {
