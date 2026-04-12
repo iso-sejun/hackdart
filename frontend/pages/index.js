@@ -130,7 +130,7 @@ export default function Home() {
         <div className="hero-ship-caption">
           <p className="eyebrow-gold">Spaceship</p>
           <h1 className="font-display text-4xl text-brand-cream sm:text-6xl">
-            A simpler way to shop affordable produce.
+            Affordable produce for low-income households and less waste for farms
           </h1>
           <p className="max-w-3xl text-lg leading-8 text-[#f5e6c8]/74">
             Explore the ship to enter the marketplace, manage your cart, sign in, and understand the mission.
