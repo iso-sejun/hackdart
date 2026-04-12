@@ -190,7 +190,7 @@ export default function MarketplacePage() {
     const grouped = new Map();
 
     products.forEach((product) => {
-      const farmName = product.farmName || 'HackDart Growers';
+      const farmName = product.farmName || 'HackDart Grower';
       const current = grouped.get(farmName) || {
         name: farmName,
         items: 0,
@@ -378,7 +378,7 @@ export default function MarketplacePage() {
                         <div className="market-product-card__head">
                           <div>
                             <h2>{product.name}</h2>
-                            <p>{product.farmName || 'HackDart Growers'}</p>
+                            <p>{product.farmName || 'HackDart Grower'}</p>
                           </div>
                           <span className="market-status-pill">{product.status}</span>
                         </div>

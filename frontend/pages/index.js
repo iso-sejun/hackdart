@@ -224,7 +224,7 @@ export default function Home() {
         <section className="home-section-shell">
           <div className="home-section-reveal">
             <div className="text-center">
-              <p className="eyebrow-gold">Why HackDart?</p>
+              <p className="eyebrow-gold">Why Hyperion?</p>
               <h2 className="mt-3 font-display text-4xl text-brand-cream">Better for families and better for farms.</h2>
             </div>
             <div className="mt-8 grid gap-4 md:grid-cols-2">

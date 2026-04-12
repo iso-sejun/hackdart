@@ -222,7 +222,7 @@ export default function RegisterPage() {
         description={
           hasChosenRole
             ? helperText
-            : 'Choose whether you are joining HackDart as a seller moving harvests through the route or a buyer picking up produce nearby.'
+            : 'Choose whether you are joining Hyperion as a seller moving harvests through the route or a buyer picking up produce nearby.'
         }
         footerText="Already have access?"
         footerHref="/login"

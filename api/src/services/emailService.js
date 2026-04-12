@@ -126,13 +126,13 @@ async function sendFoodBankManifest({ sellerName, foodBank, batch, orders, ready
   const info = await transport.sendMail({
     from: fromAddress,
     to: HACKATHON_FOOD_BANK_EMAIL,
-    subject: `HackDart batch ready from ${sellerName}`,
+    subject: `Hyperion batch ready from ${sellerName}`,
     text,
     html,
   });
 
   const manualSendUrl = `mailto:${encodeURIComponent(HACKATHON_FOOD_BANK_EMAIL)}?subject=${encodeURIComponent(
-    `HackDart batch ready from ${sellerName}`
+    `Hyperion batch ready from ${sellerName}`
   )}&body=${encodeURIComponent(text)}`;
 
   return {

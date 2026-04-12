@@ -1,13 +1,13 @@
-# HackDart
+# Hyperion
 
-HackDart is a celestial theme produce marketplace built for a hackathon. The platform is designed to solve three problems at once:
+Hyperion is a celestial theme produce marketplace built for a hackathon. The platform is designed to solve three problems at once:
 
 - food waste for farms
 - lost profit for farmers
 - lack of access to fresh produce to low-income households.
 
 
-HackDart connects those two sides through a shared pickup model:
+Hyperion connects those two sides through a shared pickup model:
 
 1. buyers order discounted farm produce
 2. orders are grouped by food bank hub
@@ -81,4 +81,3 @@ Typical judge/demo path:
 8. mark a batch as shipped
 9. use the emailed ready-for-pickup link
 10. verify the buyer sees `ready for pickup`
-

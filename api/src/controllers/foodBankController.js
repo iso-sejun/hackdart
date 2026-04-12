@@ -13,7 +13,7 @@ async function markReadyForPickup(req, res, next) {
           <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <title>HackDart Pickup Ready</title>
+            <title>Hyperion Pickup Ready</title>
             <style>
               body {
                 margin: 0;
@@ -67,7 +67,7 @@ async function markReadyForPickup(req, res, next) {
           <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <title>HackDart Pickup Link</title>
+            <title>Hyperion Pickup Link</title>
             <style>
               body {
                 margin: 0;
