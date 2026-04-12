@@ -6,6 +6,10 @@ import ProtectedPage from '../../../../src/components/ProtectedPage';
 import DashboardShell from '../../../../src/components/DashboardShell';
 import { useAuth } from '../../../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../../../src/lib/api';
+import {
+  getMockSellerBatch,
+  markMockSellerBatchShipped,
+} from '../../../../src/lib/mockCheckout';
 
 export default function SellerBatchDetailPage() {
   const router = useRouter();
@@ -27,7 +31,14 @@ export default function SellerBatchDetailPage() {
       const response = await apiRequest(`/sellers/me/batches/${batchId}`, withAuth(token));
       setBatch(response.data);
     } catch (error) {
-      setMessage(error.message);
+      const mockBatch = getMockSellerBatch(batchId);
+
+      if (mockBatch) {
+        setBatch(mockBatch);
+        setMessage(`${error.message} Showing locally simulated batch data instead.`);
+      } else {
+        setMessage(error.message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -56,7 +67,14 @@ export default function SellerBatchDetailPage() {
           : 'Batch marked shipped and manifest email sent to the food bank.'
       );
     } catch (error) {
-      setMessage(error.message);
+      const mockBatch = markMockSellerBatchShipped(batchId);
+
+      if (mockBatch) {
+        setBatch(mockBatch);
+        setMessage(`${error.message} Demo batch marked shipped locally for hackathon testing.`);
+      } else {
+        setMessage(error.message);
+      }
     } finally {
       setIsShipping(false);
     }

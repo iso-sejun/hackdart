@@ -5,6 +5,7 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
+import { readMockSellerBatches } from '../../src/lib/mockCheckout';
 
 export default function SellerOrdersPage() {
   const { token } = useAuth();
@@ -22,9 +23,15 @@ export default function SellerOrdersPage() {
 
       try {
         const response = await apiRequest('/sellers/me/batches', withAuth(token));
-        setBatches(response.data.batches);
+        setBatches([...readMockSellerBatches(), ...response.data.batches]);
       } catch (error) {
-        setMessage(error.message);
+        const mockBatches = readMockSellerBatches();
+        setBatches(mockBatches);
+        setMessage(
+          mockBatches.length
+            ? `${error.message} Showing locally simulated buyer batches instead.`
+            : error.message
+        );
       } finally {
         setIsLoading(false);
       }

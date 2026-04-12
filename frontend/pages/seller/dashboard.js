@@ -5,6 +5,7 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
+import { readMockSellerBatches } from '../../src/lib/mockCheckout';
 
 export default function SellerDashboardPage() {
   const { profile, token, refreshSession } = useAuth();
@@ -22,6 +23,7 @@ export default function SellerDashboardPage() {
   });
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [batchCount, setBatchCount] = useState(0);
 
   useEffect(() => {
     if (!profile) {
@@ -41,6 +43,23 @@ export default function SellerDashboardPage() {
       country: profile.farmAddress?.country || 'US',
     });
   }, [profile]);
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+
+    const loadBatchCount = async () => {
+      try {
+        const response = await apiRequest('/sellers/me/batches', withAuth(token));
+        setBatchCount((response.data.batches || []).length + readMockSellerBatches().length);
+      } catch (_error) {
+        setBatchCount(readMockSellerBatches().length);
+      }
+    };
+
+    loadBatchCount();
+  }, [token]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -130,6 +149,10 @@ export default function SellerDashboardPage() {
             <div className="dashboard-stat-card">
               <span className="dashboard-stat-card__label">Farm base</span>
               <strong>{profile?.farmAddress?.city || 'Set city'}</strong>
+            </div>
+            <div className="dashboard-stat-card">
+              <span className="dashboard-stat-card__label">Batches queued</span>
+              <strong>{batchCount}</strong>
             </div>
           </div>
         </section>
