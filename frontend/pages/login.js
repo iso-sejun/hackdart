@@ -63,8 +63,8 @@ export default function LoginPage() {
           <Link className="nav-link nav-link-gold" href="/">
             Home
           </Link>
-          <Link className="nav-link nav-link-gold" href="/why-us">
-            Why Us
+          <Link className="nav-link nav-link-gold" href="/mission">
+            Mission
           </Link>
           <Link className="nav-link nav-link-gold" href="/marketplace">
             Marketplace
