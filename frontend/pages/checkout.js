@@ -7,6 +7,12 @@ import { useAuth } from '../src/context/AuthContext';
 import { apiRequest, withAuth } from '../src/lib/api';
 import { createMockOrder, getDemoPickupOptions } from '../src/lib/mockCheckout';
 
+const INITIAL_DEMO_PICKUP_OPTIONS = getDemoPickupOptions({
+  city: 'Hanover',
+  state: 'NH',
+  country: 'US',
+});
+
 export default function CheckoutPage() {
   const router = useRouter();
   const { profile, token } = useAuth();
@@ -18,8 +24,8 @@ export default function CheckoutPage() {
     country: 'US',
   });
   const [radiusMiles, setRadiusMiles] = useState(5);
-  const [pickupOptions, setPickupOptions] = useState([]);
-  const [selectedFoodBankId, setSelectedFoodBankId] = useState('');
+  const [pickupOptions, setPickupOptions] = useState(INITIAL_DEMO_PICKUP_OPTIONS);
+  const [selectedFoodBankId, setSelectedFoodBankId] = useState(INITIAL_DEMO_PICKUP_OPTIONS[0]?.id || '');
   const [summary, setSummary] = useState(null);
   const [message, setMessage] = useState('');
   const [isLookingUp, setIsLookingUp] = useState(false);
@@ -42,7 +48,7 @@ export default function CheckoutPage() {
 
     const demoOptions = getDemoPickupOptions(profile.defaultAddress || {});
     setPickupOptions(demoOptions);
-    setSelectedFoodBankId(demoOptions[0]?.id || '');
+    setSelectedFoodBankId((current) => current || demoOptions[0]?.id || '');
   }, [profile]);
 
   const selectedPickupOption = useMemo(
@@ -93,6 +99,13 @@ export default function CheckoutPage() {
         email: 'pickup@hackdart.demo',
       },
     };
+  };
+
+  const activateDemoPickup = () => {
+    const demoOptions = getDemoPickupOptions(address);
+    setPickupOptions(demoOptions);
+    setSelectedFoodBankId(demoOptions[0]?.id || '');
+    setMessage('Demo pickup hubs are active below. You can continue testing checkout now.');
   };
 
   const lookupPickupOptions = async (event) => {
@@ -257,6 +270,11 @@ export default function CheckoutPage() {
               Demo addresses supported right now: Hanover NH 03755, Lebanon NH 03766, White River
               Junction VT 05001, and Woodstock VT 05091.
             </p>
+            <div className="mt-4">
+              <button type="button" className="btn-orbit" onClick={activateDemoPickup}>
+                Use demo pickup hubs
+              </button>
+            </div>
 
             <form className="mt-6 grid gap-4 sm:grid-cols-2" onSubmit={lookupPickupOptions}>
               <label className="field sm:col-span-2">
