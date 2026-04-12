@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 import { useAuth } from '../context/AuthContext';
-import BrandLockup from './BrandLockup';
 
 export default function AppShell({
   children,
@@ -48,9 +47,14 @@ export default function AppShell({
               isGoldNav ? 'market-nav-shell' : ''
             } ${isAuthVariant ? 'auth-shell-header' : ''}`}
           >
-            <BrandLockup
-              textClassName={isGoldNav ? 'text-brand-gold' : 'text-emerald-200'}
-            />
+            <Link
+              href="/"
+              className={`font-display text-2xl tracking-[0.08em] ${
+                isGoldNav ? 'text-brand-gold' : 'text-emerald-200'
+              }`}
+            >
+              Hyperion
+            </Link>
             <nav
               className={`flex flex-wrap items-center gap-3 text-sm ${
                 isGoldNav ? 'text-[#f5e6c8]/80' : 'text-slate-300'

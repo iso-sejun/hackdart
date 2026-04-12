@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 import AppShell from '../src/components/AppShell';
 import AuthCard from '../src/components/AuthCard';
-import BrandLockup from '../src/components/BrandLockup';
 import { useAuth } from '../src/context/AuthContext';
 
 const roles = [
@@ -181,7 +180,9 @@ export default function RegisterPage() {
   return (
     <AppShell compact variant="register" showHeader={false}>
       <header className="market-nav-shell auth-page-header mb-10 flex flex-wrap items-center justify-between gap-4">
-        <BrandLockup textClassName="text-brand-gold" />
+        <Link href="/" className="font-display text-2xl tracking-[0.08em] text-brand-gold">
+          Hyperion
+        </Link>
         <nav className="flex flex-wrap items-center gap-3 text-sm text-[#f5e6c8]/80">
           <Link className="nav-link nav-link-gold" href="/">
             Home
