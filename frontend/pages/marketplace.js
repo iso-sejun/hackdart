@@ -290,8 +290,7 @@ export default function MarketplacePage() {
             <p className="eyebrow-gold">Rocket &gt; Greenhouse</p>
             <h1 className="market-title mt-2 font-display">Marketplace</h1>
             <p className="mt-3 max-w-2xl text-[#f5e6c8]/72">
-              Browse hydroponic produce from orbit, compare inventory, and send affordable harvests
-              into your pickup route.
+              Browse fresh produce, filter and search for specifics, and access the cart.
             </p>
           </div>
           <Link href={cartHref} className="btn-orbit">

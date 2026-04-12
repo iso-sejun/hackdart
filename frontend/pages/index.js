@@ -10,7 +10,7 @@ const shipPods = [
     className: 'hero-callout hero-callout--left-top',
     detail: 'Login & accounts',
     cta: 'Open cockpit',
-    body: 'Sign in, create an account, and access your buyer or seller route.',
+    body: 'Sign in, create an account, and access buyer or seller dashboard.',
   },
   {
     title: 'Cargo',
@@ -18,7 +18,7 @@ const shipPods = [
     className: 'hero-callout hero-callout--left-bottom',
     detail: 'Cart & pickup',
     cta: 'Open cargo',
-    body: 'Review items, track order state, and move toward local pickup.',
+    body: 'Review cart items, track orders.',
   },
   {
     title: 'Greenhouse',
