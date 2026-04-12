@@ -76,24 +76,20 @@ export default function RegisterPage() {
     () =>
       role === 'seller'
         ? {
-            badge: 'Seller Manifest',
+            badge: 'Seller Pass',
             passTitle: 'Grower boarding pass',
-            lineOneLabel: 'Route',
-            lineOneValue: 'Farm to hub',
-            lineTwoLabel: 'Bay',
-            lineTwoValue: 'Cargo A1',
-            lineThreeLabel: 'Mode',
-            lineThreeValue: 'Pilot / Seller',
+            lineOneLabel: 'Bay',
+            lineOneValue: 'Cargo A1',
+            lineTwoLabel: 'Mode',
+            lineTwoValue: 'Pilot / Seller',
           }
         : {
             badge: 'Customer Pass',
             passTitle: 'Pickup boarding pass',
-            lineOneLabel: 'Flight no',
-            lineOneValue: 'Polar route',
-            lineTwoLabel: 'Seat',
-            lineTwoValue: 'Pickup',
-            lineThreeLabel: 'Mode',
-            lineThreeValue: 'Passenger / Buyer',
+            lineOneLabel: 'Seat',
+            lineOneValue: 'Pickup',
+            lineTwoLabel: 'Mode',
+            lineTwoValue: 'Passenger / Buyer',
           },
     [role]
   );
@@ -403,9 +399,6 @@ export default function RegisterPage() {
                 <div className="register-pass-panel">
                   <div className="register-pass-panel__avatar" aria-hidden="true" />
                   <p className="register-pass-panel__badge">{passMeta.badge}</p>
-                  <div className="register-pass-panel__qr" aria-hidden="true">
-                    <span />
-                  </div>
                   <div className="register-pass-panel__meta">
                     <div>
                       <p>{passMeta.lineOneLabel}</p>
@@ -414,10 +407,6 @@ export default function RegisterPage() {
                     <div>
                       <p>{passMeta.lineTwoLabel}</p>
                       <strong>{passMeta.lineTwoValue}</strong>
-                    </div>
-                    <div className="sm:col-span-2">
-                      <p>{passMeta.lineThreeLabel}</p>
-                      <strong>{passMeta.lineThreeValue}</strong>
                     </div>
                   </div>
                   <p className="register-pass-panel__title">{passMeta.passTitle}</p>
