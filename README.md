@@ -75,8 +75,6 @@ cp .env.example .env.local
 
 #### Required backend env vars
 
-From `/Users/jacesung/Desktop/HackDartmouth/hackdart/api/.env.example`:
-
 - `PORT`
 - `MONGODB_URI`
 - `JWT_SECRET`
