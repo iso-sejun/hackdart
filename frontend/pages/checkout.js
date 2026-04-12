@@ -7,11 +7,7 @@ import { useAuth } from '../src/context/AuthContext';
 import { apiRequest, withAuth } from '../src/lib/api';
 import { getDemoPickupOptions } from '../src/lib/mockCheckout';
 
-const INITIAL_DEMO_PICKUP_OPTIONS = getDemoPickupOptions({
-  city: 'Hanover',
-  state: 'NH',
-  country: 'US',
-});
+const INITIAL_DEMO_PICKUP_OPTIONS = [];
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -25,7 +21,7 @@ export default function CheckoutPage() {
   });
   const [radiusMiles, setRadiusMiles] = useState(5);
   const [pickupOptions, setPickupOptions] = useState(INITIAL_DEMO_PICKUP_OPTIONS);
-  const [selectedFoodBankId, setSelectedFoodBankId] = useState(INITIAL_DEMO_PICKUP_OPTIONS[0]?.id || '');
+  const [selectedFoodBankId, setSelectedFoodBankId] = useState('');
   const [summary, setSummary] = useState(null);
   const [message, setMessage] = useState('');
   const [isLookingUp, setIsLookingUp] = useState(false);
@@ -45,11 +41,28 @@ export default function CheckoutPage() {
       country: profile.defaultAddress?.country || 'US',
     });
     setRadiusMiles(profile.pickupRadiusMiles || 5);
-
-    const demoOptions = getDemoPickupOptions(profile.defaultAddress || {});
-    setPickupOptions(demoOptions);
-    setSelectedFoodBankId((current) => current || demoOptions[0]?.id || '');
   }, [profile]);
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+
+    const loadDemoPickupOptions = async () => {
+      try {
+        const response = await apiRequest('/pickup/demo-options', withAuth(token));
+        const options = response.data.pickupOptions || [];
+        setPickupOptions(options);
+        setSelectedFoodBankId((current) => current || options[0]?.id || '');
+      } catch (_error) {
+        const localOptions = getDemoPickupOptions(profile?.defaultAddress || {});
+        setPickupOptions(localOptions);
+        setSelectedFoodBankId((current) => current || localOptions[0]?.id || '');
+      }
+    };
+
+    loadDemoPickupOptions();
+  }, [token, profile]);
 
   const selectedPickupOption = useMemo(
     () => pickupOptions.find((option) => option.id === selectedFoodBankId) || null,
@@ -62,11 +75,18 @@ export default function CheckoutPage() {
   };
 
   const applyFallbackPickupOptions = (note) => {
-    const demoOptions = getDemoPickupOptions(address);
-    setPickupOptions(demoOptions);
-    setSelectedFoodBankId((current) => current || demoOptions[0]?.id || '');
     setMessage(note);
-    return demoOptions;
+  };
+
+  const loadDemoPickupOptionsFromApi = async (note) => {
+    const response = await apiRequest('/pickup/demo-options', withAuth(token));
+    const options = response.data.pickupOptions || [];
+    setPickupOptions(options);
+    setSelectedFoodBankId((current) => current || options[0]?.id || '');
+    if (note) {
+      setMessage(note);
+    }
+    return options;
   };
 
   const buildFallbackSummary = async () => {
@@ -102,10 +122,11 @@ export default function CheckoutPage() {
   };
 
   const activateDemoPickup = () => {
-    const demoOptions = getDemoPickupOptions(address);
-    setPickupOptions(demoOptions);
-    setSelectedFoodBankId(demoOptions[0]?.id || '');
-    setMessage('Demo pickup hubs are active below. You can continue testing checkout now.');
+    loadDemoPickupOptionsFromApi('Demo pickup hubs are active below. You can continue testing checkout now.').catch(
+      (error) => {
+        setMessage(error.message);
+      }
+    );
   };
 
   const lookupPickupOptions = async (event) => {
@@ -131,10 +152,16 @@ export default function CheckoutPage() {
         setSelectedFoodBankId(response.data.pickupOptions[0]?.id || '');
         setMessage('Nearby pickup hubs loaded.');
       } else {
-        applyFallbackPickupOptions('No live food banks were found, so demo pickup hubs are shown instead.');
+        await loadDemoPickupOptionsFromApi(
+          'No live food banks were found, so demo pickup hubs are shown instead.'
+        );
       }
     } catch (error) {
-      applyFallbackPickupOptions(`${error.message} Demo pickup hubs are available below.`);
+      try {
+        await loadDemoPickupOptionsFromApi(`${error.message} Demo pickup hubs are available below.`);
+      } catch (demoError) {
+        applyFallbackPickupOptions(demoError.message);
+      }
     } finally {
       setIsLookingUp(false);
     }

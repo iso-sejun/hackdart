@@ -6,6 +6,13 @@ const { validatePickupLookup } = require('../validators/pickupValidators');
 
 const router = express.Router();
 
+router.get(
+  '/demo-options',
+  requireAuth,
+  requireRole('buyer'),
+  pickupController.getDemoPickupOptions
+);
+
 router.post(
   '/lookup',
   requireAuth,

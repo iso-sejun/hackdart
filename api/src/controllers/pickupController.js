@@ -12,6 +12,21 @@ async function lookupPickupOptions(req, res, next) {
   }
 }
 
+async function getDemoPickupOptions(_req, res, next) {
+  try {
+    const foodBanks = await pickupService.ensureDemoFoodBanks();
+
+    res.json({
+      data: {
+        pickupOptions: foodBanks.map(pickupService.serializeFoodBank),
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   lookupPickupOptions,
+  getDemoPickupOptions,
 };

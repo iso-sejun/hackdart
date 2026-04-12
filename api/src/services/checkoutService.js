@@ -5,6 +5,7 @@ const Order = require('../models/Order');
 const OrderGroup = require('../models/OrderGroup');
 const Payment = require('../models/Payment');
 const Product = require('../models/Product');
+const mongoose = require('mongoose');
 const { getStripeClient } = require('../config/stripe');
 
 const DEMO_FOOD_BANK_NAME_MAP = {
@@ -100,10 +101,14 @@ async function resolveFoodBank(foodBankId, pickupAddress = {}) {
     throw createError('Pickup food bank not found', 404, 'FOOD_BANK_NOT_FOUND');
   }
 
-  let foodBank = await FoodBank.findOne({
-    _id: foodBankId,
-    acceptingOrders: true,
-  });
+  let foodBank = null;
+
+  if (mongoose.Types.ObjectId.isValid(foodBankId)) {
+    foodBank = await FoodBank.findOne({
+      _id: foodBankId,
+      acceptingOrders: true,
+    });
+  }
 
   if (foodBank) {
     return foodBank;

@@ -1,7 +1,7 @@
 export function getDemoPickupOptions(address = {}) {
   return [
     {
-      id: 'demo-food-bank-x',
+      id: null,
       name: 'Food Bank X',
       hours: 'Mon-Fri 9am-5pm',
       contactName: 'Riley Hart',
@@ -14,7 +14,7 @@ export function getDemoPickupOptions(address = {}) {
       },
     },
     {
-      id: 'demo-food-bank-y',
+      id: null,
       name: 'Food Bank Y',
       hours: 'Tue-Sat 10am-4pm',
       contactName: 'Morgan Lee',
