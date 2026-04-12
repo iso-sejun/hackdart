@@ -1,11 +1,14 @@
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 
 import ProtectedPage from '../src/components/ProtectedPage';
 import DashboardShell from '../src/components/DashboardShell';
 import { useAuth } from '../src/context/AuthContext';
 import { apiRequest, withAuth } from '../src/lib/api';
+import { createMockOrder, getDemoPickupOptions } from '../src/lib/mockCheckout';
 
 export default function CheckoutPage() {
+  const router = useRouter();
   const { profile, token } = useAuth();
   const [address, setAddress] = useState({
     line1: '',
@@ -36,6 +39,10 @@ export default function CheckoutPage() {
       country: profile.defaultAddress?.country || 'US',
     });
     setRadiusMiles(profile.pickupRadiusMiles || 5);
+
+    const demoOptions = getDemoPickupOptions(profile.defaultAddress || {});
+    setPickupOptions(demoOptions);
+    setSelectedFoodBankId(demoOptions[0]?.id || '');
   }, [profile]);
 
   const selectedPickupOption = useMemo(
@@ -46,6 +53,46 @@ export default function CheckoutPage() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setAddress((current) => ({ ...current, [name]: value }));
+  };
+
+  const applyFallbackPickupOptions = (note) => {
+    const demoOptions = getDemoPickupOptions(address);
+    setPickupOptions(demoOptions);
+    setSelectedFoodBankId((current) => current || demoOptions[0]?.id || '');
+    setMessage(note);
+    return demoOptions;
+  };
+
+  const buildMockSummary = async () => {
+    const cartResponse = await apiRequest('/cart', withAuth(token));
+    const cart = cartResponse.data;
+
+    if (!cart.items?.length) {
+      throw new Error('Your cart is empty.');
+    }
+
+    return {
+      valid: true,
+      subtotal: cart.subtotal,
+      fees: 0,
+      total: cart.subtotal,
+      items: cart.items.map((item) => ({
+        productId: item.productId,
+        sellerId: item.sellerId,
+        name: item.name,
+        imageUrl: item.imageUrl,
+        quantity: item.quantity,
+        unit: item.unit,
+        unitPrice: item.unitPrice,
+        lineTotal: item.lineTotal,
+      })),
+      foodBank: {
+        id: selectedPickupOption?.id || selectedFoodBankId,
+        name: selectedPickupOption?.name || 'Demo pickup hub',
+        address: selectedPickupOption?.address || address,
+        email: 'pickup@hackdart.demo',
+      },
+    };
   };
 
   const lookupPickupOptions = async (event) => {
@@ -66,17 +113,15 @@ export default function CheckoutPage() {
         })
       );
 
-      setPickupOptions(response.data.pickupOptions);
-      setSelectedFoodBankId(response.data.pickupOptions[0]?.id || '');
-      setMessage(
-        response.data.pickupOptions.length
-          ? 'Nearby pickup hubs loaded.'
-          : 'No food banks were found in that radius.'
-      );
+      if (response.data.pickupOptions.length) {
+        setPickupOptions(response.data.pickupOptions);
+        setSelectedFoodBankId(response.data.pickupOptions[0]?.id || '');
+        setMessage('Nearby pickup hubs loaded.');
+      } else {
+        applyFallbackPickupOptions('No live food banks were found, so demo pickup hubs are shown instead.');
+      }
     } catch (error) {
-      setPickupOptions([]);
-      setSelectedFoodBankId('');
-      setMessage(error.message);
+      applyFallbackPickupOptions(`${error.message} Demo pickup hubs are available below.`);
     } finally {
       setIsLookingUp(false);
     }
@@ -85,7 +130,7 @@ export default function CheckoutPage() {
   const validateOrder = async () => {
     if (!selectedFoodBankId) {
       setMessage('Choose a pickup hub before reviewing totals.');
-      return;
+      return null;
     }
 
     setIsValidating(true);
@@ -105,9 +150,12 @@ export default function CheckoutPage() {
 
       setSummary(response.data);
       setMessage('Checkout totals are live and ready for payment.');
+      return response.data;
     } catch (error) {
-      setSummary(null);
-      setMessage(error.message);
+      const mockSummary = await buildMockSummary();
+      setSummary(mockSummary);
+      setMessage(`${error.message} Using a demo checkout summary so you can keep testing.`);
+      return mockSummary;
     } finally {
       setIsValidating(false);
     }
@@ -123,6 +171,13 @@ export default function CheckoutPage() {
     setMessage('');
 
     try {
+      const activeSummary = summary || (await validateOrder());
+
+      if (!activeSummary) {
+        setIsRedirecting(false);
+        return;
+      }
+
       const origin = window.location.origin;
       const response = await apiRequest(
         '/checkout/session',
@@ -139,7 +194,18 @@ export default function CheckoutPage() {
 
       window.location.assign(response.data.checkoutUrl);
     } catch (error) {
-      setMessage(error.message);
+      const activeSummary = summary || (await buildMockSummary());
+      const mockOrder = createMockOrder({
+        summary: activeSummary,
+        foodBank: {
+          id: selectedPickupOption?.id || selectedFoodBankId,
+          name: selectedPickupOption?.name || activeSummary.foodBank?.name || 'Demo pickup hub',
+          address: selectedPickupOption?.address || activeSummary.foodBank?.address || address,
+        },
+      });
+
+      setMessage(`${error.message} Launching demo checkout success instead.`);
+      router.push(`/checkout/success?mock=1&order=${mockOrder.orderGroupId}`);
       setIsRedirecting(false);
     }
   };

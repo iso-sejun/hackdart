@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -5,13 +6,25 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
+import { readMockOrders } from '../../src/lib/mockCheckout';
 
 export default function CheckoutSuccessPage() {
+  const router = useRouter();
   const { token } = useAuth();
   const [orders, setOrders] = useState([]);
   const [message, setMessage] = useState('Waiting for payment confirmation...');
 
   useEffect(() => {
+    if (router.query.mock === '1') {
+      const mockOrders = readMockOrders();
+      const matched =
+        mockOrders.find((order) => order.orderGroupId === router.query.order) || mockOrders[0];
+
+      setOrders(matched ? [matched] : []);
+      setMessage('Demo payment complete. Your mock order is now in the pickup queue.');
+      return;
+    }
+
     if (!token) {
       return;
     }
@@ -42,43 +55,44 @@ export default function CheckoutSuccessPage() {
     };
 
     pollOrders();
-  }, [token]);
+  }, [token, router.query.mock, router.query.order]);
 
   const latestOrder = orders[0];
 
   return (
     <ProtectedPage roles={['buyer']}>
       <DashboardShell
+        variant="checkout"
         roleLabel="Checkout Success"
         title="Your pickup request is in orbit."
-        description="Stripe returned successfully. We are waiting for the webhook to stamp the order into your dashboard."
+        description="Your checkout completed. In demo mode, the order is stored locally so you can keep testing the buyer flow."
         navItems={[
           { href: '/buyer/orders', label: 'Orders' },
           { href: '/marketplace', label: 'Marketplace' },
         ]}
       >
-        <section className="panel-glow">
-          <p className="eyebrow">Payment Status</p>
-          <h2 className="mt-2 font-display text-3xl text-white">{message}</h2>
+        <section className="dashboard-panel">
+          <p className="eyebrow-gold">Payment Status</p>
+          <h2 className="mt-3 font-display text-3xl text-brand-cream">{message}</h2>
 
           {latestOrder ? (
-            <div className="mt-6 rounded-3xl border border-white/10 bg-white/5 p-5">
-              <p className="text-sm uppercase tracking-[0.24em] text-emerald-200">
+            <div className="dashboard-summary-card mt-6">
+              <p className="text-sm uppercase tracking-[0.24em] text-[#d7bc68]">
                 {latestOrder.orderNumber}
               </p>
               <p className="mt-3 text-lg font-semibold text-white">{latestOrder.foodBank?.name}</p>
-              <p className="mt-2 text-slate-300">
+              <p className="mt-2 text-[#f5e6c8]/72">
                 Total charged: ${latestOrder.total.toFixed(2)}
               </p>
-              <p className="mt-1 text-slate-300">Status: {latestOrder.status}</p>
+              <p className="mt-1 text-[#f5e6c8]/72">Status: {latestOrder.status}</p>
             </div>
           ) : null}
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/buyer/orders" className="btn-primary">
+            <Link href="/buyer/orders" className="btn-gold">
               View orders
             </Link>
-            <Link href="/marketplace" className="btn-secondary">
+            <Link href="/marketplace" className="btn-orbit">
               Return to marketplace
             </Link>
           </div>
