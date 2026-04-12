@@ -2228,21 +2228,21 @@
       radial-gradient(circle, rgba(245, 230, 200, 0.74) 0 1px, transparent 1.7px),
       radial-gradient(circle, rgba(201, 168, 76, 0.56) 0 1px, transparent 2px),
       linear-gradient(180deg, rgba(22, 39, 87, 0.22), rgba(9, 16, 36, 0.04)),
-      url('/design/login-backdrop.png') center bottom / contain no-repeat;
+      url('/design/login-backdrop.png') center center / cover no-repeat;
     background-size:
       auto,
       auto,
       145px 145px,
       210px 210px,
       auto,
-      contain;
+      cover;
     background-position:
       center,
       center,
       0 0,
       58px 76px,
       center,
-      center bottom;
+      center center;
     opacity: 0.92;
     filter: saturate(0.88);
     pointer-events: none;
