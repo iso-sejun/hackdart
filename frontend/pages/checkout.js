@@ -5,7 +5,7 @@ import ProtectedPage from '../src/components/ProtectedPage';
 import DashboardShell from '../src/components/DashboardShell';
 import { useAuth } from '../src/context/AuthContext';
 import { apiRequest, withAuth } from '../src/lib/api';
-import { createMockOrder, getDemoPickupOptions } from '../src/lib/mockCheckout';
+import { getDemoPickupOptions } from '../src/lib/mockCheckout';
 
 const INITIAL_DEMO_PICKUP_OPTIONS = getDemoPickupOptions({
   city: 'Hanover',
@@ -69,7 +69,7 @@ export default function CheckoutPage() {
     return demoOptions;
   };
 
-  const buildMockSummary = async () => {
+  const buildFallbackSummary = async () => {
     const cartResponse = await apiRequest('/cart', withAuth(token));
     const cart = cartResponse.data;
 
@@ -165,10 +165,10 @@ export default function CheckoutPage() {
       setMessage('Checkout totals are live and ready for payment.');
       return response.data;
     } catch (error) {
-      const mockSummary = await buildMockSummary();
-      setSummary(mockSummary);
-      setMessage(`${error.message} Using a demo checkout summary so you can keep testing.`);
-      return mockSummary;
+      const fallbackSummary = await buildFallbackSummary();
+      setSummary(fallbackSummary);
+      setMessage(`${error.message} Showing a local summary preview, but placing the order still requires the shared backend route to succeed.`);
+      return fallbackSummary;
     } finally {
       setIsValidating(false);
     }
@@ -204,18 +204,7 @@ export default function CheckoutPage() {
 
       router.push(`/checkout/success?demo=backend&order=${response.data.orderGroupId}`);
     } catch (error) {
-      const activeSummary = summary || (await buildMockSummary());
-      const mockOrder = createMockOrder({
-        summary: activeSummary,
-        foodBank: {
-          id: selectedPickupOption?.id || selectedFoodBankId,
-          name: selectedPickupOption?.name || activeSummary.foodBank?.name || 'Demo pickup hub',
-          address: selectedPickupOption?.address || activeSummary.foodBank?.address || address,
-        },
-      });
-
-      setMessage(`${error.message} Falling back to local demo checkout on this device only.`);
-      router.push(`/checkout/success?mock=1&order=${mockOrder.orderGroupId}`);
+      setMessage(`${error.message} The shared demo order was not created, so the cart and seller dashboard were not updated.`);
       setIsRedirecting(false);
     }
   };

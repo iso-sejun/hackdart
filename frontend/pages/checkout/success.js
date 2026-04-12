@@ -6,7 +6,6 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
-import { readMockOrders } from '../../src/lib/mockCheckout';
 
 export default function CheckoutSuccessPage() {
   const router = useRouter();
@@ -15,16 +14,6 @@ export default function CheckoutSuccessPage() {
   const [message, setMessage] = useState('Waiting for payment confirmation...');
 
   useEffect(() => {
-    if (router.query.mock === '1') {
-      const mockOrders = readMockOrders();
-      const matched =
-        mockOrders.find((order) => order.orderGroupId === router.query.order) || mockOrders[0];
-
-      setOrders(matched ? [matched] : []);
-      setMessage('Demo payment complete. Your mock order is now in the pickup queue.');
-      return;
-    }
-
     if (!token) {
       return;
     }
@@ -55,7 +44,7 @@ export default function CheckoutSuccessPage() {
     };
 
     pollOrders();
-  }, [token, router.query.mock, router.query.order]);
+  }, [token, router.query.order]);
 
   const latestOrder = orders[0];
 
@@ -65,7 +54,7 @@ export default function CheckoutSuccessPage() {
         variant="checkout"
         roleLabel="Checkout Success"
         title="Your pickup request is in orbit."
-        description="Your checkout completed. In demo mode, the order is stored locally so you can keep testing the buyer flow."
+        description="Your checkout completed through the shared demo backend. If no order appears here, the backend placement step did not succeed."
         navItems={[
           { href: '/buyer/orders', label: 'Orders' },
           { href: '/marketplace', label: 'Marketplace' },

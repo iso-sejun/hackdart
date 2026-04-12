@@ -5,7 +5,6 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
-import { readMockSellerBatches } from '../../src/lib/mockCheckout';
 
 export default function SellerDashboardPage() {
   const { profile, token, refreshSession } = useAuth();
@@ -52,9 +51,9 @@ export default function SellerDashboardPage() {
     const loadBatchCount = async () => {
       try {
         const response = await apiRequest('/sellers/me/batches', withAuth(token));
-        setBatchCount((response.data.batches || []).length + readMockSellerBatches().length);
+        setBatchCount((response.data.batches || []).length);
       } catch (_error) {
-        setBatchCount(readMockSellerBatches().length);
+        setBatchCount(0);
       }
     };
 

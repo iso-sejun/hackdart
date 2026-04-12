@@ -4,7 +4,6 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
-import { readMockOrders } from '../../src/lib/mockCheckout';
 
 export default function BuyerOrdersPage() {
   const { token } = useAuth();
@@ -22,15 +21,10 @@ export default function BuyerOrdersPage() {
 
       try {
         const response = await apiRequest('/buyers/me/orders', withAuth(token));
-        setOrders([...readMockOrders(), ...response.data.orders]);
+        setOrders(response.data.orders);
       } catch (error) {
-        const mockOrders = readMockOrders();
-        setOrders(mockOrders);
-        setMessage(
-          mockOrders.length
-            ? `${error.message} Showing locally simulated checkout orders instead.`
-            : error.message
-        );
+        setOrders([]);
+        setMessage(error.message);
       } finally {
         setIsLoading(false);
       }
@@ -45,7 +39,7 @@ export default function BuyerOrdersPage() {
         variant="buyer"
         roleLabel="Buyer Orders"
         title="Track every pickup orbit."
-        description="Live orders appear here from the backend, and demo checkouts are stored locally so the buyer journey stays testable during the hackathon."
+        description="Orders shown here come directly from the shared backend so buyer and seller views stay in sync."
         navItems={[
           { href: '/marketplace', label: 'Marketplace' },
           { href: '/cart', label: 'Cart' },
