@@ -119,9 +119,6 @@ export default function MissionPage() {
             <Link href="/marketplace" className="btn-gold">
               Shop the greenhouse
             </Link>
-            <Link href="/mission" className="btn-orbit">
-              Read the mission again
-            </Link>
           </div>
         </section>
       </section>
