@@ -2,98 +2,128 @@ import Link from 'next/link';
 
 import AppShell from '../src/components/AppShell';
 
-const pillars = [
+const buyerBenefits = [
   {
-    title: 'Rescue farm surplus',
-    body: 'Produce that would have stayed at the farm gets a second market and a real path to households.',
+    title: 'Affordable produce',
+    body: 'Farm surplus enters the marketplace at a lower price point so healthy food stays within reach.',
   },
   {
-    title: 'Lower healthy-food costs',
-    body: 'Families get fresh food at a steep discount without needing a full retail grocery markup.',
+    title: 'Real local inventory',
+    body: 'Buyers access produce from nearby farms instead of relying on shelf-stable leftovers alone.',
   },
   {
-    title: 'Use food banks as hubs',
-    body: 'One combined shipment reaches the food bank, which then splits household orders for pickup.',
+    title: 'Simple pickup',
+    body: 'Orders move through a neighborhood food bank hub, keeping the final handoff practical and clear.',
   },
+];
+
+const sellerBenefits = [
+  {
+    title: 'Recover value from surplus',
+    body: 'Farms earn revenue from produce that might otherwise never leave the field.',
+  },
+  {
+    title: 'One route, fewer dropoffs',
+    body: 'Grouped food bank shipments reduce fulfillment complexity compared with many individual deliveries.',
+  },
+];
+
+const routeSteps = [
+  'Farms list fresh surplus produce.',
+  'Households browse, add to cart, and select pickup.',
+  'Orders are grouped by food bank hub.',
+  'Sellers ship one combined batch.',
+  'Food banks prepare orders for local pickup.',
+];
+
+const ecosystemNotes = [
+  'Surplus produce becomes household access instead of farm waste.',
+  'Food banks support pickup logistics without carrying the full burden of sourcing.',
+  'Buyers get fresher ingredients close to home, and farmers keep more value in circulation.',
 ];
 
 export default function MissionPage() {
   return (
     <AppShell variant="mission">
-      <section className="story-hero">
-        <div className="story-hero__copy">
-          <p className="eyebrow-gold">Observatory</p>
-          <h1 className="font-display text-5xl leading-[0.95] text-brand-cream sm:text-7xl">
-            Our mission is to turn waste into access.
-          </h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-[#f5e6c8]/78">
-            HackDart re-routes excess produce from farms to food bank pickup hubs, letting growers
-            recover revenue and helping low-income households reach healthier food without the full
-            retail price barrier.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
+      <section className="mission-page">
+        <section className="mission-stats-band">
+          <div className="mission-stat">
+            <p className="mission-stat__value">1 in 7</p>
+            <p className="mission-stat__caption">households face pressure when trying to afford healthy groceries.</p>
+          </div>
+
+          <div className="mission-connector">
+            <span className="mission-connector__dot" aria-hidden="true" />
+            <p>We connect farmers, food banks, and families through one shared route.</p>
+            <span className="mission-connector__dot" aria-hidden="true" />
+          </div>
+
+          <div className="mission-stat">
+            <p className="mission-stat__value">16.9M tons</p>
+            <p className="mission-stat__caption">of food waste represents lost nutrition, lost income, and missed access.</p>
+          </div>
+        </section>
+
+        <section className="mission-band mission-band--buyers">
+          <p className="eyebrow-gold text-center">Transmission</p>
+          <h2 className="mission-band__title">For Buyers</h2>
+          <div className="mission-pill-grid mission-pill-grid--buyers">
+            {buyerBenefits.map((item) => (
+              <article key={item.title} className="mission-pill-card">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mission-band mission-band--sellers">
+          <p className="eyebrow-gold text-center">Cargo Route</p>
+          <h2 className="mission-band__title">For Sellers</h2>
+          <div className="mission-pill-grid mission-pill-grid--sellers">
+            {sellerBenefits.map((item) => (
+              <article key={item.title} className="mission-pill-card">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mission-process">
+          <p className="eyebrow-gold text-center">Route Overview</p>
+          <h2 className="mission-band__title">How It Works</h2>
+          <div className="mission-process__row">
+            {routeSteps.map((step, index) => (
+              <div key={step} className="mission-process__step">
+                <div className="mission-process__icon">{index + 1}</div>
+                <p>{step}</p>
+                {index < routeSteps.length - 1 ? <span className="mission-process__arrow" aria-hidden="true">→</span> : null}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mission-ecosystem">
+          <p className="eyebrow-gold text-center">Observatory</p>
+          <h2 className="mission-band__title">A Self-Sustaining Ecosystem</h2>
+          <div className="mission-ecosystem__orbit">
+            <div className="mission-ecosystem__ring" aria-hidden="true" />
+            {ecosystemNotes.map((note, index) => (
+              <article key={note} className={`mission-ecosystem__node mission-ecosystem__node--${index + 1}`}>
+                <p>{note}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mission-cta">
             <Link href="/marketplace" className="btn-gold">
-              Enter the greenhouse
+              Shop the greenhouse
             </Link>
             <Link href="/why-us" className="btn-orbit">
-              Why this model works
+              Read why this model works
             </Link>
           </div>
-        </div>
-
-        <div className="story-window-card">
-          <p className="eyebrow-gold">Orbital Brief</p>
-          <div className="mt-4 space-y-4">
-            <div className="story-window-card__metric">
-              <span className="story-window-card__value">Farmers</span>
-              <span className="story-window-card__label">recover value from produce that might have earned nothing</span>
-            </div>
-            <div className="story-window-card__metric">
-              <span className="story-window-card__value">Food banks</span>
-              <span className="story-window-card__label">act as neighborhood pickup hubs instead of last-resort warehouses</span>
-            </div>
-            <div className="story-window-card__metric">
-              <span className="story-window-card__value">Families</span>
-              <span className="story-window-card__label">gain discounted access to fresh, healthier ingredients</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="story-section-grid">
-        {pillars.map((pillar) => (
-          <article key={pillar.title} className="story-panel">
-            <p className="eyebrow-gold">Mission Pillar</p>
-            <h2 className="mt-3 font-display text-3xl text-brand-cream">{pillar.title}</h2>
-            <p className="mt-4 text-[#f5e6c8]/76 leading-8">{pillar.body}</p>
-          </article>
-        ))}
-      </section>
-
-      <section className="story-lab-section">
-        <div className="story-panel story-panel--wide">
-          <p className="eyebrow-gold">How the route works</p>
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <div className="story-route-card">
-              <h3 className="font-display text-2xl text-brand-cream">1. Buyers place orders</h3>
-              <p className="mt-3 text-[#f5e6c8]/74">
-                Households shop the greenhouse marketplace and choose a nearby food bank pickup point.
-              </p>
-            </div>
-            <div className="story-route-card">
-              <h3 className="font-display text-2xl text-brand-cream">2. Sellers ship in one batch</h3>
-              <p className="mt-3 text-[#f5e6c8]/74">
-                Orders are grouped by food bank so each farm ships one combined manifest instead of many small dropoffs.
-              </p>
-            </div>
-            <div className="story-route-card">
-              <h3 className="font-display text-2xl text-brand-cream">3. Food banks complete the handoff</h3>
-              <p className="mt-3 text-[#f5e6c8]/74">
-                Staff split each buyer order for pickup, keeping the final step local, practical, and low-cost.
-              </p>
-            </div>
-          </div>
-        </div>
+        </section>
       </section>
     </AppShell>
   );
