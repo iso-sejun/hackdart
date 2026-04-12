@@ -10,10 +10,14 @@ const sellerRouter = require('./routes/sellers');
 const productRouter = require('./routes/products');
 const cartRouter = require('./routes/cart');
 const pickupRouter = require('./routes/pickup');
+const buyerRouter = require('./routes/buyers');
+const checkoutRouter = require('./routes/checkout');
+const stripeWebhookRouter = require('./routes/stripeWebhook');
 
 const app = express();
 
 app.use(corsMiddleware);
+app.use('/api/v1/webhooks/stripe', express.raw({ type: 'application/json' }), stripeWebhookRouter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestContext);
@@ -24,6 +28,8 @@ app.use('/api/v1/sellers', sellerRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/cart', cartRouter);
 app.use('/api/v1/pickup', pickupRouter);
+app.use('/api/v1/buyers', buyerRouter);
+app.use('/api/v1/checkout', checkoutRouter);
 
 app.use(notFound);
 app.use(errorHandler);

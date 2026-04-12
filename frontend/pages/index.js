@@ -33,6 +33,39 @@ const destinations = [
   },
 ];
 
+const shipHotspots = [
+  {
+    title: 'Cockpit',
+    href: '/login',
+    className: 'home-ship-hotspot home-ship-hotspot--cockpit',
+  },
+  {
+    title: 'Observatory',
+    href: '/mission',
+    className: 'home-ship-hotspot home-ship-hotspot--observatory',
+  },
+  {
+    title: 'Greenhouse',
+    href: '/marketplace',
+    className: 'home-ship-hotspot home-ship-hotspot--greenhouse',
+  },
+  {
+    title: 'Pantry',
+    href: '/why-us',
+    className: 'home-ship-hotspot home-ship-hotspot--pantry',
+  },
+  {
+    title: 'Cargo Hold',
+    href: '/cart',
+    className: 'home-ship-hotspot home-ship-hotspot--cargo',
+  },
+  {
+    title: 'Docking Bay',
+    href: '/checkout',
+    className: 'home-ship-hotspot home-ship-hotspot--docking',
+  },
+];
+
 export default function Home() {
   const { isAuthenticated, user } = useAuth();
   const router = useRouter();
@@ -46,56 +79,66 @@ export default function Home() {
   }, [isAuthenticated, router, user]);
 
   return (
-    <AppShell>
-      <section className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-        <div className="space-y-6">
-          <p className="text-sm uppercase tracking-[0.35em] text-emerald-200/80">
-            Greenhouse In Space
-          </p>
-          <h1 className="max-w-3xl font-display text-5xl leading-tight text-white sm:text-6xl">
+    <AppShell variant="home">
+      <section className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+        <div className="space-y-6 pt-6">
+          <p className="eyebrow-gold">Fresh From Space To Your Door</p>
+          <h1 className="max-w-3xl font-display text-5xl leading-[0.96] text-brand-cream sm:text-7xl">
             Build a brighter food system with one shared ship for farmers and families.
           </h1>
-          <p className="max-w-2xl text-lg text-slate-200/85">
-            HackDartmouth&apos;s platform turns surplus produce into affordable pickups through food
-            bank hubs, with a celestial marketplace that keeps buyers and sellers on the same
-            route.
+          <p className="max-w-2xl text-lg leading-8 text-[#f5e6c8]/76">
+            HackDartmouth&apos;s platform turns surplus produce into affordable pickups through
+            food bank hubs, wrapped in a retro-futurist marketplace that feels like exploring a
+            living ship.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link className="btn-primary" href="/register">
+            <Link className="btn-gold" href="/register">
               Create account
             </Link>
-            <Link className="btn-secondary" href="/login">
+            <Link className="btn-orbit" href="/login">
               Login
             </Link>
           </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {destinations.map((item) => (
+              <Link key={item.href} href={item.href} className="home-sidecard">
+                <span className="eyebrow-gold">{item.title}</span>
+                <span className="mt-2 block text-base leading-7 text-[#f5e6c8]/82">
+                  {item.description}
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
 
-        <div className="panel-glow relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(52,211,153,0.28),transparent_58%)]" />
-          <div className="relative space-y-6">
-            <div className="rounded-[2rem] border border-white/10 bg-slate-950/70 p-5">
-              <p className="text-xs uppercase tracking-[0.3em] text-emerald-200/70">Ship Map</p>
-              <div className="mt-4 flex min-h-[260px] items-center justify-center rounded-[1.5rem] border border-dashed border-emerald-300/25 bg-slate-900/70 p-6 text-center">
-                <div className="space-y-3">
-                  <div className="mx-auto h-24 w-24 rounded-full border border-emerald-300/40 bg-emerald-300/10 shadow-[0_0_50px_rgba(74,222,128,0.2)]" />
-                  <p className="text-lg font-semibold text-white">Spaceship navigation hub</p>
-                  <p className="text-sm text-slate-300">
-                    Phase 1 foundation is live. The illustrated hotspot map can plug into this
-                    shell next.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {destinations.map((item) => (
-                <Link key={item.href} href={item.href} className="card-link">
-                  <span className="text-sm uppercase tracking-[0.25em] text-emerald-200/80">
-                    {item.title}
-                  </span>
-                  <span className="mt-2 block text-base text-slate-100">{item.description}</span>
-                </Link>
-              ))}
-            </div>
+        <div className="home-ship-panel relative overflow-hidden">
+          <div className="home-ship-panel__copy">
+            <p className="eyebrow-gold">Ship Map</p>
+            <h2 className="mt-2 font-display text-4xl text-brand-cream">Explore the ship.</h2>
+            <p className="mt-3 max-w-xl text-[#f5e6c8]/72">
+              Each room is a destination. Tap into the ship map to head straight to login,
+              checkout, mission, and the greenhouse marketplace.
+            </p>
+          </div>
+
+          <div className="home-ship-map">
+            <img
+              src="/design/home-ship-map.png"
+              alt="Rocket ship map showing sections like cockpit, greenhouse, pantry, cargo hold, and docking bay."
+              className="home-ship-map__image"
+            />
+            {shipHotspots.map((hotspot) => (
+              <Link
+                key={hotspot.title}
+                href={hotspot.href}
+                className={hotspot.className}
+                aria-label={hotspot.title}
+                title={hotspot.title}
+              >
+                <span>{hotspot.title}</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

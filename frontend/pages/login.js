@@ -51,7 +51,7 @@ export default function LoginPage() {
   };
 
   return (
-    <AppShell compact>
+    <AppShell compact variant="login">
       <AuthCard
         eyebrow="Launch Login"
         title="Reconnect to the shared greenhouse ship."
@@ -59,8 +59,9 @@ export default function LoginPage() {
         footerText="Need a new account?"
         footerHref="/register"
         footerLabel="Create one"
+        variant="login"
       >
-        <div className="mb-6 flex gap-3 rounded-full border border-white/10 bg-slate-900/70 p-1">
+        <div className="login-role-switch mb-6 flex gap-3 rounded-full p-1">
           {roles.map((item) => (
             <button
               key={item.id}
@@ -68,8 +69,8 @@ export default function LoginPage() {
               onClick={() => setRole(item.id)}
               className={`flex-1 rounded-full px-4 py-2 text-sm font-medium transition ${
                 role === item.id
-                  ? 'bg-emerald-300 text-slate-950'
-                  : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                  ? 'bg-[#c9a84c] text-space-navy shadow-[0_10px_30px_rgba(201,168,76,0.22)]'
+                  : 'text-[#f5e6c8]/72 hover:bg-white/5 hover:text-[#f5e6c8]'
               }`}
             >
               {item.label}
@@ -94,9 +95,9 @@ export default function LoginPage() {
             />
           </label>
 
-          {error ? <p className="text-sm text-rose-300">{error}</p> : null}
+          {error ? <p className="text-sm text-[#f7c8c8]">{error}</p> : null}
 
-          <button type="submit" className="btn-primary w-full" disabled={isLoading}>
+          <button type="submit" className="btn-gold w-full" disabled={isLoading}>
             {isLoading ? 'Signing in...' : `Login as ${role}`}
           </button>
         </form>

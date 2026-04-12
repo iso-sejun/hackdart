@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "dev": "nodemon server.js",
-  "start": "node server.js",
-  "lint": "eslint . --ext .js",
-  "seed:foodbanks": "node src/scripts/seedFoodBanks.js"
-},
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "lint": "eslint . --ext .js",
+    "seed:foodbanks": "node src/scripts/seedFoodBanks.js",
+    "seed:marketplace": "node src/scripts/seedMarketplace.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -19,7 +20,8 @@
     "express": "^5.2.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.4.1"
+    "mongoose": "^9.4.1",
+    "stripe": "^22.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

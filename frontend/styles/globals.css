@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,6 +7,13 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --space-navy: #0f1b3d;
+    --space-panel: #1a2550;
+    --space-panel-soft: #233163;
+    --brand-gold: #c9a84c;
+    --brand-gold-soft: #d7bc68;
+    --brand-cream: #f5e6c8;
+    --ship-blue: #435d95;
   }
 
   * {
@@ -20,8 +27,8 @@
   body {
     margin: 0;
     min-height: 100vh;
-    font-family: 'Space Grotesk', sans-serif;
-    background: #030712;
+    font-family: 'Manrope', sans-serif;
+    background: var(--space-navy);
     color: #fff;
   }
 
@@ -62,7 +69,19 @@
 
 @layer components {
   .font-display {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .text-brand-gold {
+    color: var(--brand-gold);
+  }
+
+  .text-brand-cream {
+    color: var(--brand-cream);
+  }
+
+  .text-space-navy {
+    color: var(--space-navy);
   }
 
   .bg-space {
@@ -71,6 +90,71 @@
     background:
       radial-gradient(circle at top, rgba(16, 185, 129, 0.14), transparent 25%),
       linear-gradient(180deg, #06101a 0%, #030712 50%, #02040a 100%);
+  }
+
+  .bg-space-market {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 10% 12%, rgba(201, 168, 76, 0.12), transparent 18%),
+      radial-gradient(circle at 82% 18%, rgba(108, 131, 199, 0.18), transparent 24%),
+      linear-gradient(180deg, #15255a 0%, #101d47 26%, #0f1b3d 58%, #0c1530 100%);
+  }
+
+  .bg-space-market::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(245, 230, 200, 0.88) 0 1px, transparent 1.5px),
+      radial-gradient(circle, rgba(201, 168, 76, 0.85) 0 1.2px, transparent 1.8px);
+    background-size: 120px 120px, 170px 170px;
+    background-position: 0 0, 45px 70px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .bg-space-login {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top, rgba(52, 78, 145, 0.16), transparent 28%),
+      linear-gradient(180deg, #10245a 0%, #0f1b3d 48%, #0a1431 100%);
+  }
+
+  .bg-space-home {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 12% 12%, rgba(201, 168, 76, 0.12), transparent 18%),
+      radial-gradient(circle at 78% 16%, rgba(84, 104, 164, 0.18), transparent 24%),
+      linear-gradient(180deg, #10245a 0%, #0f1b3d 52%, #0a1431 100%);
+  }
+
+  .bg-space-login::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 16%, rgba(212, 184, 90, 0.65) 0 2px, transparent 3px),
+      radial-gradient(circle at 24% 28%, rgba(245, 230, 200, 0.9) 0 1.5px, transparent 2.6px),
+      radial-gradient(circle at 78% 18%, rgba(212, 184, 90, 0.7) 0 2px, transparent 3.5px),
+      radial-gradient(circle at 84% 30%, rgba(245, 230, 200, 0.85) 0 1.3px, transparent 2.4px),
+      radial-gradient(circle at 60% 56%, rgba(245, 230, 200, 0.6) 0 1.2px, transparent 2px);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .home-stars {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(245, 230, 200, 0.88) 0 1px, transparent 1.8px),
+      radial-gradient(circle, rgba(201, 168, 76, 0.84) 0 1.3px, transparent 2px);
+    background-size: 135px 135px, 190px 190px;
+    background-position: 0 0, 65px 45px;
+    opacity: 0.26;
+    pointer-events: none;
   }
 
   .panel-glow {
@@ -91,6 +175,13 @@
     color: rgba(167, 243, 208, 0.8);
   }
 
+  .eyebrow-gold {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: rgba(201, 168, 76, 0.95);
+  }
+
   .nav-link {
     border-radius: 9999px;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -104,6 +195,17 @@
     color: white;
   }
 
+  .nav-link-gold {
+    border-color: rgba(201, 168, 76, 0.28);
+    background: rgba(15, 27, 61, 0.28);
+  }
+
+  .nav-link-gold:hover {
+    border-color: rgba(201, 168, 76, 0.7);
+    background: rgba(201, 168, 76, 0.08);
+    color: var(--brand-cream);
+  }
+
   .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -115,6 +217,60 @@
     font-weight: 700;
     transition: transform 180ms ease, box-shadow 180ms ease;
     box-shadow: 0 15px 35px rgba(16, 185, 129, 0.25);
+  }
+
+  .btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    padding: 0.95rem 1.5rem;
+    background: linear-gradient(180deg, #d8bb63 0%, #c9a84c 100%);
+    color: var(--space-navy);
+    font-weight: 700;
+    box-shadow: 0 16px 40px rgba(201, 168, 76, 0.22);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 44px rgba(201, 168, 76, 0.28);
+  }
+
+  .btn-orbit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    background: rgba(13, 23, 48, 0.42);
+    padding: 0.9rem 1.35rem;
+    color: var(--brand-cream);
+    transition: all 180ms ease;
+  }
+
+  .btn-orbit:hover {
+    border-color: rgba(201, 168, 76, 0.72);
+    background: rgba(201, 168, 76, 0.08);
+  }
+
+  .btn-market-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid rgba(201, 168, 76, 0.72);
+    background: transparent;
+    padding: 0.52rem 0.9rem;
+    color: var(--brand-gold-soft);
+    font-size: 0.76rem;
+    font-weight: 600;
+    transition: all 180ms ease;
+  }
+
+  .btn-market-ghost:hover {
+    background: rgba(201, 168, 76, 0.12);
+    color: var(--brand-cream);
   }
 
   .btn-primary:hover {
@@ -167,5 +323,401 @@
     display: grid;
     gap: 1.25rem;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .market-nav-shell {
+    border: 1px solid rgba(201, 168, 76, 0.36);
+    border-radius: 1.7rem;
+    padding: 1rem 1.3rem;
+    background: rgba(16, 27, 61, 0.42);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .home-sidecard {
+    border: 1px solid rgba(201, 168, 76, 0.22);
+    border-radius: 1.2rem;
+    background: rgba(15, 27, 61, 0.4);
+    padding: 1rem 1.1rem;
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  }
+
+  .home-sidecard:hover {
+    transform: translateY(-1px);
+    border-color: rgba(201, 168, 76, 0.52);
+    background: rgba(201, 168, 76, 0.07);
+  }
+
+  .home-ship-panel {
+    border: 1.5px solid rgba(201, 168, 76, 0.38);
+    border-radius: 2rem;
+    padding: 1.5rem;
+    background: rgba(15, 27, 61, 0.46);
+    box-shadow:
+      0 28px 70px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .home-ship-panel__copy {
+    margin-bottom: 1rem;
+  }
+
+  .home-ship-map {
+    position: relative;
+    max-width: 38rem;
+    margin: 0 auto;
+  }
+
+  .home-ship-map__image {
+    width: 100%;
+    height: auto;
+    border-radius: 1.6rem;
+  }
+
+  .home-ship-hotspot {
+    position: absolute;
+    display: block;
+    border-radius: 0.9rem;
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid transparent;
+    transition: all 180ms ease;
+  }
+
+  .home-ship-hotspot span {
+    position: absolute;
+    left: calc(100% + 0.7rem);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    border-radius: 9999px;
+    border: 1px solid rgba(201, 168, 76, 0.42);
+    background: rgba(15, 27, 61, 0.85);
+    padding: 0.32rem 0.65rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-cream);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .home-ship-hotspot:hover,
+  .home-ship-hotspot:focus-visible {
+    border-color: rgba(201, 168, 76, 0.82);
+    background: rgba(123, 198, 126, 0.16);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.16);
+  }
+
+  .home-ship-hotspot:hover span,
+  .home-ship-hotspot:focus-visible span {
+    opacity: 1;
+  }
+
+  .home-ship-hotspot--cockpit {
+    left: 26%;
+    top: 15%;
+    width: 17%;
+    height: 9%;
+  }
+
+  .home-ship-hotspot--observatory {
+    left: 21.5%;
+    top: 25.6%;
+    width: 25%;
+    height: 10.2%;
+  }
+
+  .home-ship-hotspot--greenhouse {
+    left: 18%;
+    top: 38%;
+    width: 31%;
+    height: 12%;
+  }
+
+  .home-ship-hotspot--pantry {
+    left: 19.5%;
+    top: 51.7%;
+    width: 28%;
+    height: 10.2%;
+  }
+
+  .home-ship-hotspot--cargo {
+    left: 20%;
+    top: 63.5%;
+    width: 27.4%;
+    height: 10.2%;
+  }
+
+  .home-ship-hotspot--docking {
+    left: 20%;
+    top: 75.2%;
+    width: 27.4%;
+    height: 10.2%;
+  }
+
+  .market-title {
+    color: var(--brand-cream);
+    font-size: clamp(2.7rem, 5vw, 4rem);
+  }
+
+  .greenhouse-hero {
+    position: relative;
+    overflow: hidden;
+    border: 1.5px solid rgba(201, 168, 76, 0.5);
+    border-radius: 1.8rem;
+    min-height: 25rem;
+    padding: 2rem;
+    background:
+      linear-gradient(180deg, rgba(72, 94, 153, 0.96) 0%, rgba(35, 52, 104, 0.98) 100%);
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.28),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  .greenhouse-hero__copy {
+    position: relative;
+    z-index: 3;
+    max-width: 34rem;
+    padding-top: 4rem;
+  }
+
+  .greenhouse-hero__window {
+    position: absolute;
+    inset: 4.5rem 15% 4.4rem;
+    border: 2px solid rgba(13, 23, 48, 0.7);
+    border-radius: 2rem;
+    background:
+      radial-gradient(circle at 50% 48%, rgba(27, 43, 91, 0.25), transparent 24%),
+      linear-gradient(180deg, #15275c 0%, #101a41 100%);
+    box-shadow:
+      inset 0 0 0 8px rgba(13, 23, 48, 0.45),
+      inset 0 0 40px rgba(0, 0, 0, 0.22);
+  }
+
+  .greenhouse-hero__window::before {
+    content: '';
+    position: absolute;
+    inset: 1rem;
+    background-image:
+      linear-gradient(90deg, rgba(245, 230, 200, 0.1) 0, rgba(245, 230, 200, 0.1) 1px, transparent 1px),
+      radial-gradient(circle, rgba(245, 230, 200, 0.8) 0 1px, transparent 1.7px),
+      radial-gradient(circle, rgba(201, 168, 76, 0.8) 0 1.1px, transparent 2px);
+    background-size: calc(100% / 4) 100%, 110px 110px, 150px 150px;
+    background-position: 0 0, 0 0, 40px 70px;
+    border-radius: 1.2rem;
+    opacity: 0.8;
+  }
+
+  .greenhouse-hero__lights {
+    position: absolute;
+    inset: 1.4rem 1.4rem auto;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 0.8rem;
+    z-index: 2;
+  }
+
+  .greenhouse-hero__lights span {
+    height: 0.8rem;
+    border-radius: 9999px;
+    background: linear-gradient(180deg, #f5dfa2 0%, #d7b962 100%);
+    box-shadow: 0 0 24px rgba(245, 223, 162, 0.45);
+  }
+
+  .greenhouse-hero__plants {
+    position: absolute;
+    bottom: 1.2rem;
+    width: 12rem;
+    height: 8rem;
+    z-index: 2;
+    opacity: 0.95;
+  }
+
+  .greenhouse-hero__plants::before,
+  .greenhouse-hero__plants::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    border-radius: 9999px 9999px 0 0;
+    background: linear-gradient(180deg, #73c66b 0%, #3f9144 100%);
+  }
+
+  .greenhouse-hero__plants::before {
+    left: 0.8rem;
+    width: 6rem;
+    height: 5rem;
+    box-shadow:
+      2rem -0.8rem 0 -0.2rem rgba(93, 184, 98, 0.95),
+      4.3rem 0.1rem 0 -0.6rem rgba(82, 163, 88, 0.95);
+  }
+
+  .greenhouse-hero__plants::after {
+    left: 4.5rem;
+    width: 5rem;
+    height: 4.2rem;
+    background: linear-gradient(180deg, #8bd891 0%, #4f9d51 100%);
+  }
+
+  .greenhouse-hero__plants--left {
+    left: 1.2rem;
+  }
+
+  .greenhouse-hero__plants--right {
+    right: 1.2rem;
+    transform: scaleX(-1);
+  }
+
+  .market-search-shell {
+    border: 1.5px solid rgba(201, 168, 76, 0.32);
+    border-radius: 1.7rem;
+    padding: 1.25rem;
+    background: rgba(18, 29, 69, 0.68);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  }
+
+  .market-search-input {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1;
+    border-radius: 1.2rem;
+    border: 1px solid rgba(201, 168, 76, 0.28);
+    background: rgba(14, 23, 51, 0.8);
+    padding: 0.2rem 1rem;
+  }
+
+  .market-search-input input {
+    border: 0;
+    background: transparent;
+    padding-left: 0;
+    color: var(--brand-cream);
+    box-shadow: none;
+  }
+
+  .market-search-input input:focus {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .market-search-icon {
+    color: var(--brand-gold-soft);
+    font-size: 1.15rem;
+  }
+
+  .market-category-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .market-category-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    border-radius: 9999px;
+    border: 1.3px solid rgba(201, 168, 76, 0.34);
+    background: rgba(19, 30, 67, 0.7);
+    padding: 0.9rem 1rem;
+    color: var(--brand-cream);
+    min-height: 5rem;
+  }
+
+  .market-category-pill__icon {
+    display: grid;
+    place-items: center;
+    width: 3.1rem;
+    height: 3.1rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(201, 168, 76, 0.34);
+    background: linear-gradient(180deg, rgba(68, 91, 152, 0.9), rgba(31, 46, 93, 0.95));
+    font-size: 1.4rem;
+  }
+
+  .market-product-card {
+    border: 1.4px solid rgba(201, 168, 76, 0.5);
+    border-radius: 1rem;
+    padding: 0.8rem;
+    background: linear-gradient(180deg, rgba(27, 39, 86, 0.96), rgba(16, 25, 58, 0.98));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+  }
+
+  .market-status-pill {
+    border-radius: 9999px;
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    padding: 0.3rem 0.65rem;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--brand-gold-soft);
+  }
+
+  .market-empty {
+    border: 1.4px solid rgba(201, 168, 76, 0.28);
+    border-radius: 1.2rem;
+    background: rgba(15, 27, 61, 0.45);
+    padding: 1.3rem;
+    color: var(--brand-cream);
+  }
+
+  .auth-orbit-card {
+    position: relative;
+    overflow: hidden;
+    border: 1.5px solid rgba(201, 168, 76, 0.4);
+    border-radius: 2rem;
+    padding: 2rem;
+    background: linear-gradient(180deg, rgba(13, 23, 48, 0.82), rgba(12, 21, 46, 0.94));
+    box-shadow:
+      0 28px 70px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+  }
+
+  .auth-orbit-card::before {
+    content: '';
+    position: absolute;
+    inset: auto auto -2rem -2rem;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(201, 168, 76, 0.18), transparent 68%);
+    pointer-events: none;
+  }
+
+  .login-role-switch {
+    border: 1px solid rgba(201, 168, 76, 0.22);
+    background: rgba(15, 27, 61, 0.55);
+  }
+
+  .marketplace-backdrop-art {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(15, 27, 61, 0.66), rgba(15, 27, 61, 0.9)),
+      url('/design/marketplace-reference.png') center top / cover no-repeat;
+    opacity: 0.22;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  .login-backdrop-art {
+    position: absolute;
+    inset: 0;
+    background: url('/design/login-backdrop.png') center center / cover no-repeat;
+    pointer-events: none;
+  }
+
+  .login-backdrop-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(11, 19, 45, 0.48), rgba(10, 20, 49, 0.88)),
+      radial-gradient(circle at center, rgba(255, 255, 255, 0.02), transparent 42%);
+    pointer-events: none;
+  }
+
+  @media (max-width: 900px) {
+    .home-ship-hotspot span {
+      display: none;
+    }
   }
 }

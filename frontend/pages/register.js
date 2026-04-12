@@ -82,7 +82,7 @@ export default function RegisterPage() {
 
     try {
       if (role === 'seller') {
-        const user = await registerSeller({
+        const nextUser = await registerSeller({
           email: sellerForm.email,
           password: sellerForm.password,
           farmName: sellerForm.farmName,
@@ -100,11 +100,11 @@ export default function RegisterPage() {
           foodSafetyTermsVersion: 'v1',
         });
 
-        router.replace(user.role === 'seller' ? '/seller/dashboard' : '/buyer/dashboard');
+        router.replace(nextUser.role === 'seller' ? '/seller/dashboard' : '/buyer/dashboard');
         return;
       }
 
-      const user = await registerBuyer({
+      const nextUser = await registerBuyer({
         email: buyerForm.email,
         password: buyerForm.password,
         fullName: buyerForm.fullName,
@@ -121,14 +121,14 @@ export default function RegisterPage() {
         eligibilityMode: 'self_attested',
       });
 
-      router.replace(user.role === 'seller' ? '/seller/dashboard' : '/buyer/dashboard');
+      router.replace(nextUser.role === 'seller' ? '/seller/dashboard' : '/buyer/dashboard');
     } catch (submissionError) {
       setError(submissionError.message);
     }
   };
 
   return (
-    <AppShell compact>
+    <AppShell compact variant="register">
       <AuthCard
         eyebrow="Board The Ship"
         title="Create the first account layers for buyers and growers."
@@ -136,8 +136,9 @@ export default function RegisterPage() {
         footerText="Already have access?"
         footerHref="/login"
         footerLabel="Login"
+        variant="login"
       >
-        <div className="mb-6 flex gap-3 rounded-full border border-white/10 bg-slate-900/70 p-1">
+        <div className="login-role-switch mb-6 flex gap-3 rounded-full p-1">
           {roles.map((item) => (
             <button
               key={item.id}
@@ -145,8 +146,8 @@ export default function RegisterPage() {
               onClick={() => setRole(item.id)}
               className={`flex-1 rounded-full px-4 py-2 text-sm font-medium transition ${
                 role === item.id
-                  ? 'bg-emerald-300 text-slate-950'
-                  : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                  ? 'bg-[#c9a84c] text-space-navy shadow-[0_10px_30px_rgba(201,168,76,0.22)]'
+                  : 'text-[#f5e6c8]/72 hover:bg-white/5 hover:text-[#f5e6c8]'
               }`}
             >
               {item.label}
@@ -245,9 +246,9 @@ export default function RegisterPage() {
                 />
               </label>
             ) : (
-              <label className="flex items-start gap-3 rounded-3xl border border-emerald-300/20 bg-emerald-300/10 p-4 text-sm text-slate-200 sm:col-span-2">
+              <label className="flex items-start gap-3 rounded-3xl border border-[#c9a84c]/20 bg-[#c9a84c]/10 p-4 text-sm text-[#f5e6c8] sm:col-span-2">
                 <input
-                  className="mt-1 h-4 w-4 accent-emerald-300"
+                  className="mt-1 h-4 w-4 accent-[#c9a84c]"
                   name="foodSafetyAttested"
                   type="checkbox"
                   checked={activeForm.foodSafetyAttested}
@@ -262,19 +263,19 @@ export default function RegisterPage() {
             )}
           </div>
 
-          {error ? <p className="text-sm text-rose-300">{error}</p> : null}
+          {error ? <p className="text-sm text-[#f7c8c8]">{error}</p> : null}
 
-          <button type="submit" className="btn-primary w-full" disabled={isLoading}>
+          <button type="submit" className="btn-gold w-full" disabled={isLoading}>
             {isLoading ? 'Creating account...' : `Create ${role} account`}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-slate-400">
+        <p className="mt-4 text-center text-sm text-[#f5e6c8]/60">
           Public mission pages will plug in next. For now, this foundation focuses on the app
           shell, auth flow, and role-safe routing.
         </p>
-        <p className="mt-2 text-center text-sm text-slate-400">
-          <Link href="/" className="text-emerald-200 transition hover:text-white">
+        <p className="mt-2 text-center text-sm text-[#f5e6c8]/60">
+          <Link href="/" className="text-brand-gold transition hover:text-brand-cream">
             Back to home
           </Link>
         </p>
