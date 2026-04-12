@@ -16,6 +16,7 @@ export default function AppShell({ children, compact = false, variant = 'default
           : 'bg-space';
 
   const isGoldNav = ['marketplace', 'login', 'register', 'home', 'mission', 'why-us'].includes(variant);
+  const isAuthVariant = ['login', 'register'].includes(variant);
 
   return (
     <main className={`min-h-screen text-white ${shellClass}`}>
@@ -31,11 +32,11 @@ export default function AppShell({ children, compact = false, variant = 'default
         <div className={`story-backdrop story-backdrop--${variant}`} aria-hidden="true" />
       ) : null}
 
-      <div className={`mx-auto px-6 py-8 ${compact ? 'max-w-5xl' : 'max-w-7xl'}`}>
+      <div className={`relative z-[1] mx-auto px-6 py-8 ${compact ? 'max-w-5xl' : 'max-w-7xl'}`}>
         <header
           className={`mb-10 flex flex-wrap items-center justify-between gap-4 ${
             isGoldNav ? 'market-nav-shell' : ''
-          }`}
+          } ${isAuthVariant ? 'auth-shell-header' : ''}`}
         >
           <Link
             href="/"

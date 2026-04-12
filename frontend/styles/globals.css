@@ -847,6 +847,15 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
+  .auth-shell-header {
+    position: relative;
+    background: rgba(12, 20, 46, 0.68);
+    backdrop-filter: blur(12px);
+    box-shadow:
+      0 14px 40px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
   .home-sidecard {
     border: 1px solid rgba(201, 168, 76, 0.22);
     border-radius: 1.2rem;
