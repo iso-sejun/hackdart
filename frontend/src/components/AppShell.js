@@ -22,6 +22,8 @@ export default function AppShell({
 
   const isGoldNav = ['marketplace', 'login', 'register', 'home', 'mission', 'why-us'].includes(variant);
   const isAuthVariant = ['login', 'register'].includes(variant);
+  const accountHref =
+    user?.role === 'seller' ? '/seller/dashboard' : user?.role === 'buyer' ? '/buyer/dashboard' : '/login';
   const cartLabel = isAuthenticated ? 'Cargo Hold' : null;
 
   return (
@@ -67,14 +69,11 @@ export default function AppShell({
               <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/marketplace">
                 Marketplace
               </Link>
-              <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/login">
-                Login
-              </Link>
-              <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/register">
-                Register
-              </Link>
               {isAuthenticated ? (
                 <>
+                  <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href={accountHref}>
+                    Account
+                  </Link>
                   {cartLabel ? (
                     <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/cart">
                       {cartLabel}
@@ -88,7 +87,16 @@ export default function AppShell({
                     Logout
                   </button>
                 </>
-              ) : null}
+              ) : (
+                <>
+                  <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/login">
+                    Login
+                  </Link>
+                  <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/register">
+                    Register
+                  </Link>
+                </>
+              )}
             </nav>
           </header>
         ) : null}

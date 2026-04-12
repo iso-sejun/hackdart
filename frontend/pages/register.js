@@ -63,6 +63,8 @@ export default function RegisterPage() {
   const [buyerForm, setBuyerForm] = useState(buyerInitialState);
   const [sellerForm, setSellerForm] = useState(sellerInitialState);
   const [error, setError] = useState('');
+  const accountHref =
+    user?.role === 'seller' ? '/seller/dashboard' : user?.role === 'buyer' ? '/buyer/dashboard' : '/login';
   const helperText = useMemo(
     () =>
       role === 'seller'
@@ -195,12 +197,20 @@ export default function RegisterPage() {
           <Link className="nav-link nav-link-gold" href="/marketplace">
             Marketplace
           </Link>
-          <Link className="nav-link nav-link-gold" href="/login">
-            Login
-          </Link>
-          <Link className="nav-link nav-link-gold" href="/register">
-            Register
-          </Link>
+          {isAuthenticated ? (
+            <Link className="nav-link nav-link-gold" href={accountHref}>
+              Account
+            </Link>
+          ) : (
+            <>
+              <Link className="nav-link nav-link-gold" href="/login">
+                Login
+              </Link>
+              <Link className="nav-link nav-link-gold" href="/register">
+                Register
+              </Link>
+            </>
+          )}
           {isAuthenticated ? (
             <Link className="nav-link nav-link-gold" href="/cart">
               Cargo Hold
