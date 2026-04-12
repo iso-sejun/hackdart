@@ -62,26 +62,6 @@ export default function DashboardShell({
           </div>
         </header>
 
-        <div className="dashboard-room-strip">
-          <div className="dashboard-room-strip__lights" aria-hidden="true">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <span key={index} />
-            ))}
-          </div>
-
-          <div className="dashboard-room-strip__content">
-            <div>
-              <p className="eyebrow-gold">{roomMeta.label}</p>
-              <p className="mt-2 text-sm leading-6 text-[#f5e6c8]/74">{roomMeta.description}</p>
-            </div>
-
-            <div className="dashboard-user-badge">
-              <span>Signed in as {user?.email}</span>
-              <span className="dashboard-user-badge__role">{user?.role}</span>
-            </div>
-          </div>
-        </div>
-
         {children}
       </div>
     </main>
