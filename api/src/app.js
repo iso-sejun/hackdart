@@ -13,6 +13,7 @@ const pickupRouter = require('./routes/pickup');
 const buyerRouter = require('./routes/buyers');
 const checkoutRouter = require('./routes/checkout');
 const stripeWebhookRouter = require('./routes/stripeWebhook');
+const foodBankRouter = require('./routes/foodBank');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/v1/cart', cartRouter);
 app.use('/api/v1/pickup', pickupRouter);
 app.use('/api/v1/buyers', buyerRouter);
 app.use('/api/v1/checkout', checkoutRouter);
+app.use('/api/v1/food-bank', foodBankRouter);
 
 app.use(notFound);
 app.use(errorHandler);

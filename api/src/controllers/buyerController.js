@@ -18,6 +18,8 @@ function serializeOrder(order) {
     })),
     buyerTotal: order.buyerTotal,
     createdAt: order.createdAt,
+    shippedAt: order.shippedAt,
+    readyForPickupAt: order.readyForPickupAt,
   };
 }
 
@@ -36,6 +38,7 @@ async function listOrders(req, res, next) {
           fulfillmentStatus: group.fulfillmentStatus,
           total: group.total,
           createdAt: group.createdAt,
+          paidAt: group.paidAt,
           foodBank: {
             id: group.selectedFoodBankId,
             name: group.selectedFoodBankSnapshot.name,

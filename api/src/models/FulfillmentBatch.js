@@ -77,6 +77,16 @@ const fulfillmentBatchSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    readyForPickupToken: {
+      type: String,
+      trim: true,
+      default: null,
+      index: true,
+    },
+    readyForPickupTokenIssuedAt: {
+      type: Date,
+      default: null,
+    },
     readyForPickupAt: {
       type: Date,
       default: null,

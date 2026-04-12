@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 const BuyerProfile = require('../models/BuyerProfile');
 const FoodBank = require('../models/FoodBank');
 const FulfillmentBatch = require('../models/FulfillmentBatch');
@@ -15,6 +17,10 @@ function createError(message, statusCode, code) {
 
 function roundQuantity(value) {
   return Number(value.toFixed(2));
+}
+
+function createReadyToken() {
+  return crypto.randomBytes(24).toString('hex');
 }
 
 async function ensureSellerProfile(userId) {
@@ -128,6 +134,7 @@ async function buildBatchPayload(batchDoc) {
     status: batch.status,
     shippedAt: batch.shippedAt,
     manifestSentAt: batch.manifestSentAt,
+    readyForPickupAt: batch.readyForPickupAt,
     aggregatedItems: batch.aggregatedItems,
     seller: {
       id: batch.sellerId,
@@ -156,6 +163,46 @@ async function buildBatchPayload(batchDoc) {
       createdAt: order.createdAt,
     })),
   };
+}
+
+async function refreshOrderGroupStatuses(orderIds) {
+  const orders = await Order.find({ _id: { $in: orderIds } }).lean();
+  const grouped = orders.reduce((accumulator, order) => {
+    const key = order.orderGroupId.toString();
+
+    if (!accumulator[key]) {
+      accumulator[key] = [];
+    }
+
+    accumulator[key].push(order);
+    return accumulator;
+  }, {});
+
+  for (const [orderGroupId, groupOrders] of Object.entries(grouped)) {
+    const allReady = groupOrders.every((order) => order.status === 'ready_for_pickup');
+    const allShippedOrReady = groupOrders.every((order) =>
+      ['shipped', 'ready_for_pickup', 'picked_up'].includes(order.status)
+    );
+
+    const nextStatus = allReady
+      ? 'ready_for_pickup'
+      : allShippedOrReady
+        ? 'shipped'
+        : 'confirmed';
+
+    const nextFulfillmentStatus = allReady
+      ? 'ready_for_pickup'
+      : allShippedOrReady
+        ? 'shipped'
+        : 'pending';
+
+    await OrderGroup.findByIdAndUpdate(orderGroupId, {
+      $set: {
+        status: nextStatus,
+        fulfillmentStatus: nextFulfillmentStatus,
+      },
+    });
+  }
 }
 
 async function listSellerBatches(sellerId) {
@@ -190,10 +237,13 @@ async function markBatchShipped(sellerId, batchId) {
   }
 
   const now = new Date();
+  const readyToken = createReadyToken();
 
   batch.status = 'shipped';
   batch.shippedAt = now;
   batch.manifestSentAt = now;
+  batch.readyForPickupToken = readyToken;
+  batch.readyForPickupTokenIssuedAt = now;
   batch.manifestVersion += 1;
   await batch.save();
 
@@ -208,7 +258,14 @@ async function markBatchShipped(sellerId, batchId) {
     }
   );
 
+  await refreshOrderGroupStatuses(batch.orderIds);
+
   const payload = await buildBatchPayload(batch);
+  const baseUrl =
+    process.env.API_BASE_URL ||
+    process.env.PUBLIC_API_BASE_URL ||
+    'http://localhost:4000';
+  const readyLink = `${baseUrl.replace(/\/$/, '')}/api/v1/food-bank/ready/${readyToken}`;
   const emailResult = await sendFoodBankManifest({
     sellerName: payload.seller.farmName,
     foodBank: payload.foodBank,
@@ -220,6 +277,7 @@ async function markBatchShipped(sellerId, batchId) {
       ...order,
       orderGroup: { orderNumber: order.orderNumber },
     })),
+    readyLink,
   });
 
   return {
@@ -228,8 +286,43 @@ async function markBatchShipped(sellerId, batchId) {
   };
 }
 
+async function markBatchReadyForPickupByToken(token) {
+  const batch = await FulfillmentBatch.findOne({ readyForPickupToken: token });
+
+  if (!batch) {
+    throw createError('Ready-for-pickup link is invalid or expired', 404, 'READY_LINK_INVALID');
+  }
+
+  if (batch.status !== 'shipped') {
+    throw createError('Only shipped batches can be marked ready for pickup', 400, 'BATCH_NOT_READYABLE');
+  }
+
+  const now = new Date();
+
+  batch.status = 'ready_for_pickup';
+  batch.readyForPickupAt = now;
+  batch.readyForPickupToken = null;
+  await batch.save();
+
+  await Order.updateMany(
+    { _id: { $in: batch.orderIds } },
+    {
+      $set: {
+        status: 'ready_for_pickup',
+        fulfillmentStatus: 'ready_for_pickup',
+        readyForPickupAt: now,
+      },
+    }
+  );
+
+  await refreshOrderGroupStatuses(batch.orderIds);
+
+  return buildBatchPayload(batch);
+}
+
 module.exports = {
   listSellerBatches,
   getSellerBatch,
   markBatchShipped,
+  markBatchReadyForPickupByToken,
 };

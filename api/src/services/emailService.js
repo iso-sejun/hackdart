@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 
 let transporter = null;
+const HACKATHON_FOOD_BANK_EMAIL = 'unboxingvidskim@gmail.com';
 
 function getTransporter() {
   if (transporter) {
@@ -37,7 +38,7 @@ function formatAddress(address) {
   return `${address.line1}, ${address.city}, ${address.state} ${address.postalCode}`;
 }
 
-function buildManifestText({ sellerName, foodBank, batch, orders }) {
+function buildManifestText({ sellerName, foodBank, batch, orders, readyLink }) {
   const aggregatedLines = batch.aggregatedItems
     .map((item) => `- ${item.productNameSnapshot}: ${item.totalQuantity} ${item.unit}`)
     .join('\n');
@@ -66,16 +67,19 @@ function buildManifestText({ sellerName, foodBank, batch, orders }) {
     '',
     'Pack by buyer:',
     orderLines,
+    '',
+    'Mark ready for pickup:',
+    readyLink,
   ].join('\n');
 }
 
-async function sendFoodBankManifest({ sellerName, foodBank, batch, orders }) {
+async function sendFoodBankManifest({ sellerName, foodBank, batch, orders, readyLink }) {
   const transport = getTransporter();
   const fromAddress =
     process.env.EMAIL_FROM ||
     (process.env.SMTP_USER ? process.env.SMTP_USER : 'no-reply@hackdart.local');
 
-  const text = buildManifestText({ sellerName, foodBank, batch, orders });
+  const text = buildManifestText({ sellerName, foodBank, batch, orders, readyLink });
   const html = `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
       <h2>Food bank manifest for ${foodBank.name}</h2>
@@ -110,12 +114,18 @@ async function sendFoodBankManifest({ sellerName, foodBank, batch, orders }) {
           `
         )
         .join('')}
+      <h3>Ready for pickup</h3>
+      <p>
+        <a href="${readyLink}" style="display:inline-block;padding:12px 18px;background:#c9a84c;color:#0f1b3d;text-decoration:none;border-radius:999px;font-weight:700;">
+          Mark batch ready for pickup
+        </a>
+      </p>
     </div>
   `;
 
   const info = await transport.sendMail({
     from: fromAddress,
-    to: foodBank.email,
+    to: HACKATHON_FOOD_BANK_EMAIL,
     subject: `HackDart batch ready from ${sellerName}`,
     text,
     html,
