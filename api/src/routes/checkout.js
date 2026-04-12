@@ -12,6 +12,7 @@ const router = express.Router();
 router.use(requireAuth, requireRole('buyer'));
 
 router.post('/validate', validateCheckoutPayload, checkoutController.validateCheckout);
+router.post('/demo-place-order', validateCheckoutPayload, checkoutController.placeDemoOrder);
 router.post('/session', validateCheckoutSessionPayload, checkoutController.createCheckoutSession);
 
 module.exports = router;

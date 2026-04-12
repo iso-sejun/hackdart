@@ -241,6 +241,105 @@ async function createCheckoutSession(buyerId, payload) {
   };
 }
 
+async function finalizePaidOrderGroup(orderGroup, payment, paymentIntentId = null) {
+  for (const item of orderGroup.itemsSnapshot) {
+    const product = await Product.findById(item.productId);
+
+    if (!product || product.status !== 'active') {
+      throw createError(
+        `${item.productNameSnapshot} is no longer available to fulfill`,
+        400,
+        'PRODUCT_UNAVAILABLE'
+      );
+    }
+
+    if (product.quantityAvailable < item.quantity) {
+      throw createError(
+        `${item.productNameSnapshot} does not have enough inventory to fulfill`,
+        400,
+        'INSUFFICIENT_INVENTORY'
+      );
+    }
+  }
+
+  for (const item of orderGroup.itemsSnapshot) {
+    const product = await Product.findById(item.productId);
+    product.quantityAvailable -= item.quantity;
+    product.status = product.quantityAvailable === 0 ? 'sold_out' : 'active';
+    await product.save();
+  }
+
+  const existingOrders = await Order.countDocuments({ orderGroupId: orderGroup._id });
+
+  if (existingOrders === 0) {
+    await buildOrdersFromGroup(orderGroup);
+  }
+
+  payment.status = 'paid';
+  payment.stripePaymentIntentId = paymentIntentId || payment.stripePaymentIntentId;
+
+  orderGroup.status = 'confirmed';
+  orderGroup.paymentStatus = 'paid';
+  orderGroup.stripePaymentIntentId = paymentIntentId || orderGroup.stripePaymentIntentId;
+  orderGroup.paidAt = new Date();
+
+  await payment.save();
+  await orderGroup.save();
+  await Cart.findOneAndUpdate(
+    { buyerId: orderGroup.buyerId },
+    {
+      $set: {
+        items: [],
+        subtotal: 0,
+        selectedFoodBankId: null,
+        pickupAddressSnapshot: null,
+      },
+    }
+  );
+
+  return { orderGroup, payment };
+}
+
+async function placeDemoOrder(buyerId, payload) {
+  const result = await validateCheckout(buyerId, payload);
+
+  const orderGroup = await OrderGroup.create({
+    buyerId,
+    orderNumber: buildOrderNumber(),
+    status: 'confirmed',
+    paymentStatus: 'paid',
+    fulfillmentStatus: 'pending',
+    pickupAddressSnapshot: payload.pickupAddress,
+    selectedFoodBankId: result.foodBank._id,
+    selectedFoodBankSnapshot: {
+      name: result.foodBank.name,
+      email: result.foodBank.email,
+      address: result.foodBank.address,
+    },
+    itemsSnapshot: result.items,
+    subtotal: result.subtotal,
+    paymentProcessingFee: result.paymentProcessingFee,
+    platformFee: result.platformFee,
+    total: result.total,
+    paidAt: new Date(),
+  });
+
+  const payment = await Payment.create({
+    orderGroupId: orderGroup._id,
+    buyerId,
+    amount: result.total,
+    currency: 'usd',
+    status: 'paid',
+  });
+
+  await finalizePaidOrderGroup(orderGroup, payment, 'demo-payment-intent');
+
+  return {
+    orderGroup,
+    payment,
+  };
+}
+
 async function buildOrdersFromGroup(orderGroup) {
   const ordersBySeller = new Map();
 
@@ -312,40 +411,6 @@ async function applySuccessfulCheckoutSession(session, eventId = null, eventType
     return { orderGroup, payment, alreadyProcessed: true };
   }
 
-  for (const item of orderGroup.itemsSnapshot) {
-    const product = await Product.findById(item.productId);
-
-    if (!product || product.status !== 'active') {
-      throw createError(
-        `${item.productNameSnapshot} is no longer available to fulfill`,
-        400,
-        'PRODUCT_UNAVAILABLE'
-      );
-    }
-
-    if (product.quantityAvailable < item.quantity) {
-      throw createError(
-        `${item.productNameSnapshot} does not have enough inventory to fulfill`,
-        400,
-        'INSUFFICIENT_INVENTORY'
-      );
-    }
-  }
-
-  for (const item of orderGroup.itemsSnapshot) {
-    const product = await Product.findById(item.productId);
-    product.quantityAvailable -= item.quantity;
-    product.status = product.quantityAvailable === 0 ? 'sold_out' : 'active';
-    await product.save();
-  }
-
-  const existingOrders = await Order.countDocuments({ orderGroupId: orderGroup._id });
-
-  if (existingOrders === 0) {
-    await buildOrdersFromGroup(orderGroup);
-  }
-
-  payment.status = 'paid';
   payment.stripePaymentIntentId =
     typeof session.payment_intent === 'string'
       ? session.payment_intent
@@ -358,24 +423,7 @@ async function applySuccessfulCheckoutSession(session, eventId = null, eventType
     });
   }
 
-  orderGroup.status = 'confirmed';
-  orderGroup.paymentStatus = 'paid';
-  orderGroup.stripePaymentIntentId = payment.stripePaymentIntentId;
-  orderGroup.paidAt = new Date();
-
-  await payment.save();
-  await orderGroup.save();
-  await Cart.findOneAndUpdate(
-    { buyerId: orderGroup.buyerId },
-    {
-      $set: {
-        items: [],
-        subtotal: 0,
-        selectedFoodBankId: null,
-        pickupAddressSnapshot: null,
-      },
-    }
-  );
+  await finalizePaidOrderGroup(orderGroup, payment, payment.stripePaymentIntentId);
 
   return { orderGroup, payment, alreadyProcessed: false };
 }
@@ -384,5 +432,6 @@ module.exports = {
   validateCheckout,
   serializeValidationResult,
   createCheckoutSession,
+  placeDemoOrder,
   applySuccessfulCheckoutSession,
 };

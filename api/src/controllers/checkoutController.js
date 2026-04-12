@@ -28,7 +28,24 @@ async function createCheckoutSession(req, res, next) {
   }
 }
 
+async function placeDemoOrder(req, res, next) {
+  try {
+    const result = await checkoutService.placeDemoOrder(req.auth.sub, req.body);
+
+    res.status(201).json({
+      data: {
+        orderGroupId: result.orderGroup._id,
+        orderNumber: result.orderGroup.orderNumber,
+        status: result.orderGroup.status,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   validateCheckout,
   createCheckoutSession,
+  placeDemoOrder,
 };

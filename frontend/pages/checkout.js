@@ -191,21 +191,18 @@ export default function CheckoutPage() {
         return;
       }
 
-      const origin = window.location.origin;
       const response = await apiRequest(
-        '/checkout/session',
+        '/checkout/demo-place-order',
         withAuth(token, {
           method: 'POST',
           body: {
             foodBankId: selectedFoodBankId,
             pickupAddress: address,
-            successUrl: `${origin}/checkout/success?session=success`,
-            cancelUrl: `${origin}/checkout`,
           },
         })
       );
 
-      window.location.assign(response.data.checkoutUrl);
+      router.push(`/checkout/success?demo=backend&order=${response.data.orderGroupId}`);
     } catch (error) {
       const activeSummary = summary || (await buildMockSummary());
       const mockOrder = createMockOrder({
@@ -217,7 +214,7 @@ export default function CheckoutPage() {
         },
       });
 
-      setMessage(`${error.message} Launching demo checkout success instead.`);
+      setMessage(`${error.message} Falling back to local demo checkout on this device only.`);
       router.push(`/checkout/success?mock=1&order=${mockOrder.orderGroupId}`);
       setIsRedirecting(false);
     }
@@ -243,7 +240,7 @@ export default function CheckoutPage() {
               Route every order to the right pickup bay.
             </h2>
             <p className="mt-4 max-w-2xl text-[#f5e6c8]/76">
-              First select a nearby food bank, then review live inventory totals before opening Stripe Checkout.
+              First select a nearby food bank, then review live inventory totals before placing the shared demo order.
             </p>
           </div>
           <div className="dashboard-hero-card__stats">
@@ -367,7 +364,7 @@ export default function CheckoutPage() {
             <p className="eyebrow-gold">Review Order</p>
             <h2 className="mt-3 font-display text-3xl text-brand-cream">Live checkout summary</h2>
             <p className="mt-3 text-[#f5e6c8]/72">
-              Recalculate with current inventory before starting Stripe Checkout.
+              Recalculate with current inventory before placing the hackathon demo order.
             </p>
 
             {summary ? (
@@ -429,7 +426,7 @@ export default function CheckoutPage() {
                 {isValidating ? 'Reviewing...' : 'Review totals'}
               </button>
               <button type="button" className="btn-gold" onClick={startPayment} disabled={isRedirecting}>
-                {isRedirecting ? 'Redirecting...' : 'Continue to payment'}
+                {isRedirecting ? 'Placing order...' : 'Place demo order'}
               </button>
             </div>
           </section>
