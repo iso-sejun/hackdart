@@ -2,42 +2,30 @@ import Link from 'next/link';
 
 import AppShell from '../src/components/AppShell';
 
-const shipHotspots = [
+const shipPods = [
   {
-    title: 'Opinion Hold',
+    title: 'Transmission',
     href: '/mission',
-    className: 'harvest-ship-hotspot harvest-ship-hotspot--mission',
+    className: 'hero-ship-pod hero-ship-pod--transmission',
     detail: 'Mission & impact',
   },
   {
-    title: 'Writing Pod',
-    href: '/register',
-    className: 'harvest-ship-hotspot harvest-ship-hotspot--register',
-    detail: 'Create account',
-  },
-  {
-    title: 'Bioscanner',
+    title: 'Cockpit',
     href: '/login',
-    className: 'harvest-ship-hotspot harvest-ship-hotspot--login',
-    detail: 'Buyer / seller login',
+    className: 'hero-ship-pod hero-ship-pod--cockpit',
+    detail: 'Login & accounts',
   },
   {
-    title: 'Greenhouse Bay',
+    title: 'Greenhouse',
     href: '/marketplace',
-    className: 'harvest-ship-hotspot harvest-ship-hotspot--marketplace',
+    className: 'hero-ship-pod hero-ship-pod--greenhouse',
     detail: 'Browse produce',
   },
   {
-    title: 'Cargo Route',
+    title: 'Cargo',
     href: '/cart',
-    className: 'harvest-ship-hotspot harvest-ship-hotspot--cart',
-    detail: 'Review cart',
-  },
-  {
-    title: 'Docking Path',
-    href: '/checkout',
-    className: 'harvest-ship-hotspot harvest-ship-hotspot--checkout',
-    detail: 'Pickup & checkout',
+    className: 'hero-ship-pod hero-ship-pod--cargo',
+    detail: 'Cart & pickup',
   },
 ];
 
@@ -45,36 +33,36 @@ const howItWorks = [
   {
     step: '01',
     title: 'Shop produce',
-    body: 'Buyers browse farm surplus in the greenhouse marketplace and add affordable produce to the cart.',
+    body: 'Buyers browse affordable surplus produce inside the greenhouse marketplace.',
   },
   {
     step: '02',
-    title: 'Orders group locally',
-    body: 'Orders are bundled by food bank so one farm shipment can serve many nearby households at once.',
+    title: 'Orders batch by hub',
+    body: 'Farmer orders group by food bank so one shipment can serve many nearby households.',
   },
   {
     step: '03',
-    title: 'Pick up nearby',
-    body: 'Food banks split the shipment by household, then buyers collect orders from a familiar local hub.',
+    title: 'Pick up locally',
+    body: 'Food banks split household orders and buyers collect them from a trusted local pickup point.',
   },
 ];
 
 const benefits = [
   {
     title: 'Lower prices',
-    body: 'Discounted produce becomes easier to reach for families without losing all value for farmers.',
+    body: 'Produce that might have earned nothing becomes discounted food access for families.',
   },
   {
     title: 'Fresh produce',
-    body: 'The system is designed around real farm inventory, not shelf-stable leftovers or vague substitutions.',
+    body: 'The model focuses on real farm inventory, not vague substitutions or shelf-stable fallback.',
   },
   {
     title: 'Simple pickup',
-    body: 'Food bank hubs keep fulfillment practical and understandable, especially for households without delivery access.',
+    body: 'Food bank hubs reduce the complexity of individual delivery while staying neighborhood-friendly.',
   },
   {
-    title: 'Better farm economics',
-    body: 'Growers recover partial profit from food that would otherwise never leave the farm.',
+    title: 'Better for farms',
+    body: 'Growers recover revenue from surplus harvest instead of absorbing a total loss.',
   },
 ];
 
@@ -82,174 +70,142 @@ const faqs = [
   {
     question: 'How does pickup work?',
     answer:
-      'At checkout, the buyer selects a nearby food bank. Farmers ship a combined batch there, and the food bank splits the order for pickup.',
+      'At checkout, the buyer selects a nearby food bank. Sellers ship one combined batch there, and the food bank splits each household order for pickup.',
   },
   {
     question: 'Why is the produce discounted?',
     answer:
-      'The platform is built for surplus farm produce that might otherwise go unsold, which lets families access healthy food at a lower price.',
+      'The platform is built around surplus farm produce that still has value but may otherwise go unsold.',
   },
   {
     question: 'Is the produce still fresh?',
     answer:
-      'Yes. The goal is to move good produce that still has value, not expired inventory. Sellers list active, harvest-ready items.',
+      'Yes. The goal is to move good produce before it becomes waste, not to resell expired inventory.',
   },
   {
     question: 'Do I need an account to browse?',
     answer:
-      'You can explore the experience first, but creating an account makes it easier to save your role and move through checkout or fulfillment.',
+      'You can explore first, but creating an account is the fastest way to move through shopping, order tracking, and fulfillment.',
   },
 ];
 
 export default function Home() {
   return (
     <AppShell variant="home">
-      <section className="home-hero-stack">
-        <div className="home-hero-copy">
-          <p className="eyebrow-gold">Spaceship</p>
-          <h1 className="font-display text-5xl leading-[0.94] text-brand-cream sm:text-7xl">
-            A shared ship for farmers, food banks, and families.
-          </h1>
-          <p className="mx-auto max-w-3xl text-lg leading-8 text-[#f5e6c8]/76">
-            HackDart reroutes farm surplus into affordable neighborhood pickups through one
-            coordinated route. The ship stays thematic, but the experience centers the actual
-            mission and flow.
-          </p>
+      <section className="hero-ship-stage">
+        <div className="hero-ship-stage__stars" aria-hidden="true" />
 
+        <div className="hero-ship-shell">
+          <div className="hero-ship-shell__trail hero-ship-shell__trail--top" aria-hidden="true" />
+          <div className="hero-ship-shell__trail hero-ship-shell__trail--bottom" aria-hidden="true" />
+
+          <div className="hero-ship" aria-hidden="true">
+            <div className="hero-ship__hull" />
+            <div className="hero-ship__nose" />
+            <div className="hero-ship__cockpit-glass" />
+            <div className="hero-ship__wing hero-ship__wing--left" />
+            <div className="hero-ship__wing hero-ship__wing--right" />
+            <div className="hero-ship__tail hero-ship__tail--left" />
+            <div className="hero-ship__tail hero-ship__tail--right" />
+            <div className="hero-ship__engine hero-ship__engine--top" />
+            <div className="hero-ship__engine hero-ship__engine--bottom" />
+            <div className="hero-ship__spine" />
+          </div>
+
+          {shipPods.map((pod) => (
+            <Link key={pod.title} href={pod.href} className={pod.className}>
+              <span className="hero-ship-pod__title">{pod.title}</span>
+              <span className="hero-ship-pod__detail">{pod.detail}</span>
+            </Link>
+          ))}
+        </div>
+
+        <div className="hero-ship-caption">
+          <p className="eyebrow-gold">Spaceship</p>
+          <h1 className="font-display text-4xl text-brand-cream sm:text-6xl">
+            A shared route for farmers, food banks, and families.
+          </h1>
+          <p className="max-w-3xl text-lg leading-8 text-[#f5e6c8]/74">
+            Explore the ship directly. Each transparent pod maps to one core action in the product.
+          </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link className="btn-gold" href="/marketplace">
-              Shop produce
+              Enter greenhouse
             </Link>
             <Link className="btn-orbit" href="/register">
-              Create account
+              Come aboard
             </Link>
           </div>
         </div>
+      </section>
 
-        <div className="home-ship-panel home-ship-panel--hero">
-          <div className="home-ship-panel__copy">
-            <p className="eyebrow-gold">Ship Map</p>
-            <h2 className="mt-2 font-display text-4xl text-brand-cream">Navigate the vessel.</h2>
-            <p className="mt-3 max-w-xl text-[#f5e6c8]/72">
-              Every room maps to a real product action: mission, login, account creation,
-              marketplace browsing, cart review, and pickup checkout.
-            </p>
+      <div className="home-fade-stack">
+        <section className="home-section-shell home-section-shell--reveal">
+          <div className="text-center">
+            <p className="eyebrow-gold">How It Works</p>
+            <h2 className="mt-3 font-display text-4xl text-brand-cream">Three steps from farm to pickup.</h2>
           </div>
-
-          <div className="harvest-ship-scene">
-            <div className="harvest-ship" aria-hidden="true">
-              <div className="harvest-ship__body" />
-              <div className="harvest-ship__nose" />
-              <div className="harvest-ship__cockpit" />
-              <div className="harvest-ship__wing harvest-ship__wing--left" />
-              <div className="harvest-ship__wing harvest-ship__wing--right" />
-              <div className="harvest-ship__tail harvest-ship__tail--left" />
-              <div className="harvest-ship__tail harvest-ship__tail--right" />
-              <div className="harvest-ship__thruster harvest-ship__thruster--top" />
-              <div className="harvest-ship__thruster harvest-ship__thruster--bottom" />
-              <div className="harvest-ship__room harvest-ship__room--mission" />
-              <div className="harvest-ship__room harvest-ship__room--register" />
-              <div className="harvest-ship__room harvest-ship__room--marketplace" />
-              <div className="harvest-ship__room harvest-ship__room--login" />
-              <div className="harvest-ship__room harvest-ship__room--cart" />
-              <div className="harvest-ship__engine" />
-            </div>
-
-            {shipHotspots.map((hotspot) => (
-              <Link
-                key={hotspot.title}
-                href={hotspot.href}
-                className={hotspot.className}
-                aria-label={`${hotspot.title}: ${hotspot.detail}`}
-              >
-                <span className="harvest-ship-hotspot__label">{hotspot.title}</span>
-                <span className="harvest-ship-hotspot__detail">{hotspot.detail}</span>
-              </Link>
+          <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            {howItWorks.map((item) => (
+              <article key={item.step} className="home-info-card">
+                <p className="home-info-card__step">{item.step}</p>
+                <h3 className="mt-3 text-xl font-semibold text-white">{item.title}</h3>
+                <p className="mt-3 text-[#f5e6c8]/72">{item.body}</p>
+              </article>
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="home-impact-strip">
-          <div className="home-impact-chip">
-            <span className="home-impact-chip__value">50%</span>
-            <span className="home-impact-chip__label">profit recovered on produce that may have earned zero</span>
+        <section className="home-section-shell home-section-shell--reveal">
+          <div className="text-center">
+            <p className="eyebrow-gold">Why HackDart?</p>
+            <h2 className="mt-3 font-display text-4xl text-brand-cream">Better for families and better for farms.</h2>
           </div>
-          <div className="home-impact-chip">
-            <span className="home-impact-chip__value">1 batch</span>
-            <span className="home-impact-chip__label">can satisfy many nearby household orders through one hub</span>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {benefits.map((item) => (
+              <article key={item.title} className="home-benefit-card">
+                <div className="home-benefit-card__icon" aria-hidden="true" />
+                <div>
+                  <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                  <p className="mt-2 text-[#f5e6c8]/72">{item.body}</p>
+                </div>
+              </article>
+            ))}
           </div>
-          <div className="home-impact-chip">
-            <span className="home-impact-chip__value">Fresh access</span>
-            <span className="home-impact-chip__label">without needing individual last-mile delivery for every order</span>
+        </section>
+
+        <section className="home-section-shell home-section-shell--reveal">
+          <div className="text-center">
+            <p className="eyebrow-gold">Frequently Asked Questions</p>
+            <h2 className="mt-3 font-display text-4xl text-brand-cream">Quick answers for first-time visitors.</h2>
           </div>
-        </div>
-      </section>
+          <div className="mt-8 space-y-3">
+            {faqs.map((item) => (
+              <details key={item.question} className="home-faq-item">
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
 
-      <section className="home-section-shell mt-14">
-        <div className="text-center">
-          <p className="eyebrow-gold">How It Works</p>
-          <h2 className="mt-3 font-display text-4xl text-brand-cream">Three steps from browsing to pickup.</h2>
-        </div>
-        <div className="mt-8 grid gap-4 lg:grid-cols-3">
-          {howItWorks.map((item) => (
-            <article key={item.step} className="home-info-card">
-              <p className="home-info-card__step">{item.step}</p>
-              <h3 className="mt-3 text-xl font-semibold text-white">{item.title}</h3>
-              <p className="mt-3 text-[#f5e6c8]/72">{item.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="home-section-shell mt-10">
-        <div className="text-center">
-          <p className="eyebrow-gold">Why HackDart?</p>
-          <h2 className="mt-3 font-display text-4xl text-brand-cream">Better for families and better for farms.</h2>
-        </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {benefits.map((item) => (
-            <article key={item.title} className="home-benefit-card">
-              <div className="home-benefit-card__icon" aria-hidden="true" />
-              <div>
-                <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                <p className="mt-2 text-[#f5e6c8]/72">{item.body}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="home-section-shell mt-10">
-        <div className="text-center">
-          <p className="eyebrow-gold">Frequently Asked Questions</p>
-          <h2 className="mt-3 font-display text-4xl text-brand-cream">Quick answers for first-time visitors.</h2>
-        </div>
-        <div className="mt-8 space-y-3">
-          {faqs.map((item) => (
-            <details key={item.question} className="home-faq-item">
-              <summary>{item.question}</summary>
-              <p>{item.answer}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      <section className="home-final-cta mt-10">
-        <p className="eyebrow-gold">Ready to come aboard?</p>
-        <h2 className="mt-3 font-display text-5xl text-brand-cream">Fresh, affordable produce is just a few clicks away.</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-[#f5e6c8]/74">
-          Start browsing as a buyer, or create a seller account and turn surplus harvest into a
-          real route for local pickup.
-        </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Link className="btn-gold" href="/marketplace">
-            Shop now
-          </Link>
-          <Link className="btn-orbit" href="/login">
-            Sign in
-          </Link>
-        </div>
-      </section>
+        <section className="home-final-cta home-section-shell--reveal">
+          <p className="eyebrow-gold">Ready to come aboard?</p>
+          <h2 className="mt-3 font-display text-5xl text-brand-cream">Fresh, affordable produce is a few clicks away.</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-[#f5e6c8]/74">
+            Start browsing as a buyer, or create a seller account and turn surplus harvest into a
+            real local pickup route.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link className="btn-gold" href="/marketplace">
+              Shop now
+            </Link>
+            <Link className="btn-orbit" href="/login">
+              Sign in
+            </Link>
+          </div>
+        </section>
+      </div>
     </AppShell>
   );
 }
