@@ -124,18 +124,83 @@ export default function Home() {
           <div className="hero-ship-shell__trail hero-ship-shell__trail--top" aria-hidden="true" />
           <div className="hero-ship-shell__trail hero-ship-shell__trail--bottom" aria-hidden="true" />
 
-          <div className="hero-ship" aria-hidden="true">
-            <div className="hero-ship__hull" />
-            <div className="hero-ship__nose" />
-            <div className="hero-ship__cockpit-glass" />
-            <div className="hero-ship__wing hero-ship__wing--left" />
-            <div className="hero-ship__wing hero-ship__wing--right" />
-            <div className="hero-ship__tail hero-ship__tail--left" />
-            <div className="hero-ship__tail hero-ship__tail--right" />
-            <div className="hero-ship__engine hero-ship__engine--top" />
-            <div className="hero-ship__engine hero-ship__engine--bottom" />
-            <div className="hero-ship__spine" />
-          </div>
+          <svg
+            className="hero-ship-svg"
+            viewBox="0 0 1200 760"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="shipGlass" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="rgba(201,168,76,0.32)" />
+                <stop offset="100%" stopColor="rgba(127,157,232,0.08)" />
+              </linearGradient>
+              <linearGradient id="shipGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(255,222,143,0.95)" />
+                <stop offset="55%" stopColor="rgba(255,140,88,0.85)" />
+                <stop offset="100%" stopColor="rgba(255,140,88,0)" />
+              </linearGradient>
+              <filter id="shipSoftGlow">
+                <feGaussianBlur stdDeviation="10" />
+              </filter>
+            </defs>
+
+            <g opacity="0.22">
+              <ellipse cx="185" cy="315" rx="78" ry="30" fill="url(#shipGlow)" filter="url(#shipSoftGlow)" />
+              <ellipse cx="185" cy="445" rx="78" ry="30" fill="url(#shipGlow)" filter="url(#shipSoftGlow)" />
+            </g>
+
+            <g className="hero-ship-svg__craft">
+              <path
+                d="M250 170
+                   C420 95, 680 95, 860 230
+                   L1000 315
+                   L860 400
+                   C690 525, 420 560, 250 590
+                   C210 520, 190 455, 190 380
+                   C190 305, 210 235, 250 170 Z"
+                className="hero-ship-svg__outline"
+              />
+
+              <path
+                d="M250 170
+                   C420 95, 680 95, 860 230
+                   L1000 315
+                   L860 400
+                   C690 525, 420 560, 250 590
+                   C210 520, 190 455, 190 380
+                   C190 305, 210 235, 250 170 Z"
+                className="hero-ship-svg__glass"
+              />
+
+              <path
+                d="M220 360 L70 470 L385 500 L360 380 Z"
+                className="hero-ship-svg__wing"
+              />
+              <path
+                d="M220 400 L70 290 L385 260 L360 380 Z"
+                className="hero-ship-svg__wing"
+              />
+              <path
+                d="M225 225 L140 160 L220 320 Z"
+                className="hero-ship-svg__tail"
+              />
+              <path
+                d="M225 535 L140 600 L220 440 Z"
+                className="hero-ship-svg__tail"
+              />
+
+              <rect x="360" y="165" rx="44" ry="44" width="180" height="140" className="hero-ship-svg__pod" />
+              <rect x="560" y="255" rx="42" ry="42" width="140" height="200" className="hero-ship-svg__pod" />
+              <rect x="420" y="360" rx="40" ry="40" width="240" height="165" className="hero-ship-svg__pod" />
+              <rect x="620" y="480" rx="38" ry="38" width="145" height="135" className="hero-ship-svg__pod" />
+
+              <rect x="720" y="300" rx="55" ry="55" width="120" height="120" className="hero-ship-svg__cockpit" />
+              <line x1="300" y1="380" x2="780" y2="380" className="hero-ship-svg__spine" />
+
+              <circle cx="165" cy="315" r="28" className="hero-ship-svg__engine" />
+              <circle cx="165" cy="445" r="28" className="hero-ship-svg__engine" />
+            </g>
+          </svg>
 
           {shipPods.map((pod) => (
             <Link key={pod.title} href={pod.href} className={pod.className}>

@@ -972,6 +972,58 @@
     transform: translate(-50%, -50%);
   }
 
+  .hero-ship-svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(82vw, 980px);
+    height: auto;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.34));
+  }
+
+  .hero-ship-svg__outline {
+    fill: rgba(112, 135, 205, 0.05);
+    stroke: rgba(223, 230, 255, 0.7);
+    stroke-width: 3;
+  }
+
+  .hero-ship-svg__glass {
+    fill: rgba(112, 135, 205, 0.04);
+    stroke: rgba(223, 230, 255, 0.14);
+    stroke-width: 1.2;
+  }
+
+  .hero-ship-svg__wing,
+  .hero-ship-svg__tail {
+    fill: rgba(112, 135, 205, 0.03);
+    stroke: rgba(223, 230, 255, 0.38);
+    stroke-width: 2;
+  }
+
+  .hero-ship-svg__pod {
+    fill: rgba(16, 27, 61, 0.18);
+    stroke: rgba(223, 230, 255, 0.72);
+    stroke-width: 2.4;
+  }
+
+  .hero-ship-svg__cockpit {
+    fill: url(#shipGlass);
+    stroke: rgba(223, 230, 255, 0.72);
+    stroke-width: 2.4;
+  }
+
+  .hero-ship-svg__spine {
+    stroke: rgba(223, 230, 255, 0.3);
+    stroke-width: 2;
+  }
+
+  .hero-ship-svg__engine {
+    fill: rgba(12, 18, 36, 0.75);
+    stroke: rgba(223, 230, 255, 0.36);
+    stroke-width: 1.4;
+  }
+
   .hero-ship__hull {
     position: absolute;
     inset: 19% 24% 19% 14%;
@@ -1592,7 +1644,8 @@
       min-height: 30rem;
     }
 
-    .hero-ship {
+    .hero-ship,
+    .hero-ship-svg {
       width: min(96vw, 620px);
     }
 
