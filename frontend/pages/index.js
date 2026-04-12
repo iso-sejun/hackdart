@@ -5,28 +5,36 @@ import AppShell from '../src/components/AppShell';
 
 const shipPods = [
   {
-    title: 'Transmission',
-    href: '/mission',
-    className: 'hero-ship-pod hero-ship-pod--transmission',
-    detail: 'Mission & impact',
-  },
-  {
     title: 'Cockpit',
     href: '/login',
-    className: 'hero-ship-pod hero-ship-pod--cockpit',
+    className: 'hero-callout hero-callout--left-top',
     detail: 'Login & accounts',
-  },
-  {
-    title: 'Greenhouse',
-    href: '/marketplace',
-    className: 'hero-ship-pod hero-ship-pod--greenhouse',
-    detail: 'Browse produce',
+    cta: 'Open cockpit',
+    body: 'Sign in, create an account, and access your buyer or seller route.',
   },
   {
     title: 'Cargo',
     href: '/cart',
-    className: 'hero-ship-pod hero-ship-pod--cargo',
+    className: 'hero-callout hero-callout--left-bottom',
     detail: 'Cart & pickup',
+    cta: 'Open cargo',
+    body: 'Review items, track order state, and move toward local pickup.',
+  },
+  {
+    title: 'Greenhouse',
+    href: '/marketplace',
+    className: 'hero-callout hero-callout--right-top',
+    detail: 'Storefront',
+    cta: 'Go to greenhouse',
+    body: 'Browse fresh, affordable produce from active farm inventory.',
+  },
+  {
+    title: 'Transmission',
+    href: '/mission',
+    className: 'hero-callout hero-callout--right-bottom',
+    detail: 'Mission & impact',
+    cta: 'Read the mission',
+    body: 'Understand how the platform reduces waste and improves affordability.',
   },
 ];
 
@@ -119,113 +127,74 @@ export default function Home() {
     <AppShell variant="home">
       <section className="hero-ship-stage">
         <div className="hero-ship-stage__stars" aria-hidden="true" />
-
-        <div className="hero-ship-shell">
-          <div className="hero-ship-shell__trail hero-ship-shell__trail--top" aria-hidden="true" />
-          <div className="hero-ship-shell__trail hero-ship-shell__trail--bottom" aria-hidden="true" />
-
-          <svg
-            className="hero-ship-svg"
-            viewBox="0 0 1200 760"
-            aria-hidden="true"
-          >
-            <defs>
-              <linearGradient id="shipGlass" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="rgba(201,168,76,0.32)" />
-                <stop offset="100%" stopColor="rgba(127,157,232,0.08)" />
-              </linearGradient>
-              <linearGradient id="shipGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(255,222,143,0.95)" />
-                <stop offset="55%" stopColor="rgba(255,140,88,0.85)" />
-                <stop offset="100%" stopColor="rgba(255,140,88,0)" />
-              </linearGradient>
-              <filter id="shipSoftGlow">
-                <feGaussianBlur stdDeviation="10" />
-              </filter>
-            </defs>
-
-            <g opacity="0.22">
-              <ellipse cx="185" cy="315" rx="78" ry="30" fill="url(#shipGlow)" filter="url(#shipSoftGlow)" />
-              <ellipse cx="185" cy="445" rx="78" ry="30" fill="url(#shipGlow)" filter="url(#shipSoftGlow)" />
-            </g>
-
-            <g className="hero-ship-svg__craft">
-              <path
-                d="M250 170
-                   C420 95, 680 95, 860 230
-                   L1000 315
-                   L860 400
-                   C690 525, 420 560, 250 590
-                   C210 520, 190 455, 190 380
-                   C190 305, 210 235, 250 170 Z"
-                className="hero-ship-svg__outline"
-              />
-
-              <path
-                d="M250 170
-                   C420 95, 680 95, 860 230
-                   L1000 315
-                   L860 400
-                   C690 525, 420 560, 250 590
-                   C210 520, 190 455, 190 380
-                   C190 305, 210 235, 250 170 Z"
-                className="hero-ship-svg__glass"
-              />
-
-              <path
-                d="M220 360 L70 470 L385 500 L360 380 Z"
-                className="hero-ship-svg__wing"
-              />
-              <path
-                d="M220 400 L70 290 L385 260 L360 380 Z"
-                className="hero-ship-svg__wing"
-              />
-              <path
-                d="M225 225 L140 160 L220 320 Z"
-                className="hero-ship-svg__tail"
-              />
-              <path
-                d="M225 535 L140 600 L220 440 Z"
-                className="hero-ship-svg__tail"
-              />
-
-              <rect x="360" y="165" rx="44" ry="44" width="180" height="140" className="hero-ship-svg__pod" />
-              <rect x="560" y="255" rx="42" ry="42" width="140" height="200" className="hero-ship-svg__pod" />
-              <rect x="420" y="360" rx="40" ry="40" width="240" height="165" className="hero-ship-svg__pod" />
-              <rect x="620" y="480" rx="38" ry="38" width="145" height="135" className="hero-ship-svg__pod" />
-
-              <rect x="720" y="300" rx="55" ry="55" width="120" height="120" className="hero-ship-svg__cockpit" />
-              <line x1="300" y1="380" x2="780" y2="380" className="hero-ship-svg__spine" />
-
-              <circle cx="165" cy="315" r="28" className="hero-ship-svg__engine" />
-              <circle cx="165" cy="445" r="28" className="hero-ship-svg__engine" />
-            </g>
-          </svg>
-
-          {shipPods.map((pod) => (
-            <Link key={pod.title} href={pod.href} className={pod.className}>
-              <span className="hero-ship-pod__title">{pod.title}</span>
-              <span className="hero-ship-pod__detail">{pod.detail}</span>
-            </Link>
-          ))}
-        </div>
-
         <div className="hero-ship-caption">
           <p className="eyebrow-gold">Spaceship</p>
           <h1 className="font-display text-4xl text-brand-cream sm:text-6xl">
-            A shared route for farmers, food banks, and families.
+            A simpler way to shop affordable produce.
           </h1>
           <p className="max-w-3xl text-lg leading-8 text-[#f5e6c8]/74">
-            Explore the ship directly. Each transparent pod maps to one core action in the product.
+            Explore the ship to enter the marketplace, manage your cart, sign in, and understand the mission.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link className="btn-gold" href="/marketplace">
-              Enter greenhouse
-            </Link>
-            <Link className="btn-orbit" href="/register">
-              Come aboard
-            </Link>
+        </div>
+
+        <div className="hero-reference-layout">
+          <div className="hero-callout-column hero-callout-column--left">
+            {shipPods.slice(0, 2).map((pod) => (
+              <Link key={pod.title} href={pod.href} className={pod.className}>
+                <h3>{pod.title} <span>&mdash; {pod.detail}</span></h3>
+                <p>{pod.body}</p>
+                <span className="hero-callout__cta">{pod.cta} -&gt;</span>
+              </Link>
+            ))}
           </div>
+
+          <div className="hero-reference-ship">
+            <svg className="hero-reference-ship__svg" viewBox="0 0 760 900" aria-hidden="true">
+              <g className="hero-reference-ship__craft">
+                <path d="M380 58 C420 78 443 110 455 166 L455 268 L540 358 L540 630 L498 694 L498 800 L430 854 L330 854 L262 800 L262 694 L220 630 L220 358 L305 268 L305 166 C317 110 340 78 380 58 Z" className="hero-reference-ship__outer" />
+                <path d="M380 92 C405 104 420 130 428 172 L428 274 L496 346 L496 610 L462 662 L462 784 L412 822 L348 822 L298 784 L298 662 L264 610 L264 346 L332 274 L332 172 C340 130 355 104 380 92 Z" className="hero-reference-ship__inner" />
+                <path d="M220 358 L146 410 L146 644 L204 678 L220 630 Z" className="hero-reference-ship__wing" />
+                <path d="M540 358 L614 410 L614 644 L556 678 L540 630 Z" className="hero-reference-ship__wing" />
+                <path d="M330 854 L352 892 L408 892 L430 854 Z" className="hero-reference-ship__ramp" />
+
+                <rect x="334" y="164" width="92" height="92" rx="16" className="hero-reference-ship__room" />
+                <rect x="316" y="286" width="128" height="150" rx="20" className="hero-reference-ship__room" />
+                <rect x="290" y="466" width="76" height="76" rx="14" className="hero-reference-ship__room" />
+                <rect x="394" y="466" width="76" height="76" rx="14" className="hero-reference-ship__room" />
+                <rect x="304" y="570" width="152" height="116" rx="20" className="hero-reference-ship__room" />
+
+                <text x="380" y="218" textAnchor="middle" className="hero-reference-ship__label">Cockpit</text>
+                <text x="380" y="366" textAnchor="middle" className="hero-reference-ship__label">Greenhouse</text>
+                <text x="330" y="512" textAnchor="middle" className="hero-reference-ship__label">Cart</text>
+                <text x="432" y="512" textAnchor="middle" className="hero-reference-ship__label">Mission</text>
+                <text x="380" y="638" textAnchor="middle" className="hero-reference-ship__label">Cargo</text>
+              </g>
+            </svg>
+
+            <Link href="/login" className="hero-reference-hotspot hero-reference-hotspot--cockpit" aria-label="Cockpit - login and accounts" />
+            <Link href="/marketplace" className="hero-reference-hotspot hero-reference-hotspot--greenhouse" aria-label="Greenhouse - browse produce" />
+            <Link href="/cart" className="hero-reference-hotspot hero-reference-hotspot--cart" aria-label="Cargo - cart and pickup" />
+            <Link href="/mission" className="hero-reference-hotspot hero-reference-hotspot--transmission" aria-label="Transmission - mission and impact" />
+          </div>
+
+          <div className="hero-callout-column hero-callout-column--right">
+            {shipPods.slice(2).map((pod) => (
+              <Link key={pod.title} href={pod.href} className={pod.className}>
+                <h3>{pod.title} <span>&mdash; {pod.detail}</span></h3>
+                <p>{pod.body}</p>
+                <span className="hero-callout__cta">{pod.cta} -&gt;</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="hero-ship-actions">
+          <Link className="btn-gold" href="/marketplace">
+            Enter greenhouse
+          </Link>
+          <Link className="btn-orbit" href="/register">
+            Come aboard
+          </Link>
           <a href="#landing-content" className="hero-scroll-cue">
             Scroll to continue
           </a>

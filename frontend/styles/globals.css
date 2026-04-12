@@ -906,293 +906,178 @@
     pointer-events: none;
   }
 
-  .home-ship-panel {
-    border: 1.5px solid rgba(201, 168, 76, 0.38);
-    border-radius: 2rem;
-    padding: 1.5rem;
-    background: rgba(15, 27, 61, 0.46);
-    box-shadow:
-      0 28px 70px rgba(0, 0, 0, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  }
-
-  .home-ship-panel--hero {
-    max-width: 90rem;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .home-ship-panel__copy {
-    margin-bottom: 1rem;
-  }
-
-  .hero-ship-shell {
+  .hero-reference-layout {
     position: relative;
-    min-height: 60vh;
-    overflow: hidden;
-    border-radius: 2.4rem;
-    border: 1px solid rgba(201, 168, 76, 0.16);
-    background:
-      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02), transparent 36%),
-      linear-gradient(180deg, rgba(7, 13, 32, 0.68), rgba(8, 14, 33, 0.9));
-    box-shadow:
-      0 28px 70px rgba(0, 0, 0, 0.22),
-      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(14rem, 1fr) minmax(24rem, 38rem) minmax(14rem, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+    width: 100%;
+    max-width: 92rem;
+    margin: 0 auto;
     opacity: 0;
     transform: translateY(18px) scale(0.985);
     animation: heroShipFadeIn 1600ms cubic-bezier(0.22, 1, 0.36, 1) 180ms forwards;
   }
 
-  .hero-ship-shell__trail {
-    position: absolute;
-    right: 8%;
-    width: 12rem;
-    height: 6rem;
-    border-radius: 9999px;
-    background: radial-gradient(circle at 20% 50%, rgba(255, 184, 95, 0.42), transparent 62%);
-    filter: blur(8px);
-    opacity: 0.65;
-    pointer-events: none;
-  }
-
-  .hero-ship-shell__trail--top {
-    top: 35%;
-  }
-
-  .hero-ship-shell__trail--bottom {
-    top: 50%;
-  }
-
-  .hero-ship {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: min(82vw, 980px);
-    aspect-ratio: 1.75 / 1;
-    transform: translate(-50%, -50%);
-  }
-
-  .hero-ship-svg {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: min(82vw, 980px);
-    height: auto;
-    transform: translate(-50%, -50%);
-    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.34));
-  }
-
-  .hero-ship-svg__outline {
-    fill: rgba(112, 135, 205, 0.05);
-    stroke: rgba(223, 230, 255, 0.7);
-    stroke-width: 3;
-  }
-
-  .hero-ship-svg__glass {
-    fill: rgba(112, 135, 205, 0.04);
-    stroke: rgba(223, 230, 255, 0.14);
-    stroke-width: 1.2;
-  }
-
-  .hero-ship-svg__wing,
-  .hero-ship-svg__tail {
-    fill: rgba(112, 135, 205, 0.03);
-    stroke: rgba(223, 230, 255, 0.38);
-    stroke-width: 2;
-  }
-
-  .hero-ship-svg__pod {
-    fill: rgba(16, 27, 61, 0.18);
-    stroke: rgba(223, 230, 255, 0.72);
-    stroke-width: 2.4;
-  }
-
-  .hero-ship-svg__cockpit {
-    fill: url(#shipGlass);
-    stroke: rgba(223, 230, 255, 0.72);
-    stroke-width: 2.4;
-  }
-
-  .hero-ship-svg__spine {
-    stroke: rgba(223, 230, 255, 0.3);
-    stroke-width: 2;
-  }
-
-  .hero-ship-svg__engine {
-    fill: rgba(12, 18, 36, 0.75);
-    stroke: rgba(223, 230, 255, 0.36);
-    stroke-width: 1.4;
-  }
-
-  .hero-ship__hull {
-    position: absolute;
-    inset: 19% 24% 19% 14%;
-    border-radius: 9999px;
-    border: 1.5px solid rgba(214, 223, 255, 0.42);
-    background: linear-gradient(180deg, rgba(117, 143, 214, 0.05), rgba(117, 143, 214, 0.02));
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.04),
-      0 0 0 12px rgba(125, 153, 230, 0.02);
-    backdrop-filter: blur(2px);
-  }
-
-  .hero-ship__nose {
-    position: absolute;
-    right: 8%;
-    top: 36%;
-    width: 22%;
-    height: 28%;
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-    border: 1.5px solid rgba(214, 223, 255, 0.42);
-    background: linear-gradient(180deg, rgba(117, 143, 214, 0.05), rgba(117, 143, 214, 0.01));
-  }
-
-  .hero-ship__cockpit-glass {
-    position: absolute;
-    right: 23%;
-    top: 39%;
-    width: 10%;
-    height: 13%;
-    border-radius: 9999px;
-    border: 1px solid rgba(214, 223, 255, 0.5);
-    background: radial-gradient(circle at 30% 50%, rgba(201, 168, 76, 0.28), rgba(77, 100, 168, 0.08));
-    box-shadow: 0 0 18px rgba(201, 168, 76, 0.16);
-  }
-
-  .hero-ship__wing {
-    position: absolute;
-    top: 50%;
-    width: 26%;
-    height: 22%;
-    border: 1px solid rgba(214, 223, 255, 0.25);
-    background: linear-gradient(180deg, rgba(117, 143, 214, 0.03), rgba(117, 143, 214, 0.01));
-  }
-
-  .hero-ship__wing--left {
-    left: 11%;
-    clip-path: polygon(0 100%, 100% 0, 100% 100%);
-    transform: translateY(-50%);
-  }
-
-  .hero-ship__wing--right {
-    right: 24%;
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-    transform: translateY(-50%);
-  }
-
-  .hero-ship__tail {
-    position: absolute;
-    left: 10%;
-    width: 10%;
-    height: 18%;
-    border: 1px solid rgba(214, 223, 255, 0.25);
-    background: linear-gradient(180deg, rgba(117, 143, 214, 0.03), rgba(117, 143, 214, 0.01));
-  }
-
-  .hero-ship__tail--left {
-    top: 18%;
-    clip-path: polygon(0 100%, 100% 0, 100% 100%);
-  }
-
-  .hero-ship__tail--right {
-    bottom: 18%;
-    clip-path: polygon(0 0, 100% 0, 100% 100%);
-  }
-
-  .hero-ship__engine {
-    position: absolute;
-    left: 6%;
-    width: 8%;
-    height: 10%;
-    border-radius: 9999px;
-    border: 1px solid rgba(214, 223, 255, 0.2);
-    background:
-      radial-gradient(circle at 25% 50%, rgba(255, 217, 125, 0.95), transparent 26%),
-      radial-gradient(circle at 52% 50%, rgba(255, 118, 87, 0.9), transparent 48%),
-      rgba(8, 14, 33, 0.18);
-    box-shadow: 0 0 24px rgba(255, 171, 104, 0.22);
-  }
-
-  .hero-ship__engine--top {
-    top: 32%;
-  }
-
-  .hero-ship__engine--bottom {
-    bottom: 32%;
-  }
-
-  .hero-ship__spine {
-    position: absolute;
-    left: 21%;
-    right: 29%;
-    top: 49.5%;
-    height: 1px;
-    background: rgba(214, 223, 255, 0.22);
-  }
-
-  .hero-ship-pod {
-    position: absolute;
+  .hero-callout-column {
     display: grid;
-    place-items: center;
-    border-radius: 1.8rem;
-    border: 1.4px solid rgba(214, 223, 255, 0.46);
-    background: rgba(17, 27, 59, 0.14);
-    backdrop-filter: blur(6px);
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.04),
-      0 0 32px rgba(122, 158, 255, 0.06);
-    text-align: center;
-    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    gap: 3.25rem;
   }
 
-  .hero-ship-pod:hover,
-  .hero-ship-pod:focus-visible {
-    transform: translateY(-2px) scale(1.02);
-    border-color: rgba(201, 168, 76, 0.78);
-    background: rgba(201, 168, 76, 0.08);
+  .hero-callout {
+    display: grid;
+    gap: 0.7rem;
+    color: var(--brand-cream);
+    transition: transform 180ms ease, opacity 180ms ease;
   }
 
-  .hero-ship-pod__title {
-    display: block;
-    font-size: 0.86rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+  .hero-callout:hover,
+  .hero-callout:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .hero-callout h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0;
+    font-size: clamp(1.55rem, 1.35rem + 0.65vw, 2.3rem);
+    font-weight: 500;
     color: var(--brand-cream);
   }
 
-  .hero-ship-pod__detail {
+  .hero-callout h3::after {
+    content: "";
+    flex: 1 1 auto;
+    height: 1.5px;
+    background: linear-gradient(90deg, rgba(245, 230, 200, 0.85), rgba(245, 230, 200, 0.08));
+  }
+
+  .hero-callout h3 span {
+    color: rgba(201, 168, 76, 0.92);
+    font-size: 0.92rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .hero-callout p {
+    margin: 0;
+    max-width: 22rem;
+    color: rgba(245, 230, 200, 0.84);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .hero-callout__cta {
+    color: rgba(245, 230, 200, 0.96);
+    font-size: 1rem;
+    text-decoration: underline;
+    text-underline-offset: 0.26em;
+  }
+
+  .hero-reference-ship {
+    position: relative;
+    width: min(100%, 38rem);
+    margin: 0 auto;
+    aspect-ratio: 0.84 / 1;
+    filter: drop-shadow(0 24px 70px rgba(0, 0, 0, 0.34));
+  }
+
+  .hero-reference-ship__svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .hero-reference-ship__craft {
+    transform-origin: 50% 50%;
+  }
+
+  .hero-reference-ship__outer,
+  .hero-reference-ship__wing,
+  .hero-reference-ship__ramp {
+    fill: rgba(115, 137, 203, 0.05);
+    stroke: rgba(245, 230, 200, 0.9);
+    stroke-width: 5;
+    stroke-linejoin: round;
+  }
+
+  .hero-reference-ship__inner {
+    fill: rgba(15, 27, 61, 0.18);
+    stroke: rgba(245, 230, 200, 0.28);
+    stroke-width: 2.5;
+  }
+
+  .hero-reference-ship__room {
+    fill: rgba(14, 24, 53, 0.6);
+    stroke: rgba(245, 230, 200, 0.7);
+    stroke-width: 2.4;
+  }
+
+  .hero-reference-ship__label {
+    fill: rgba(245, 230, 200, 0.94);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero-reference-hotspot {
+    position: absolute;
     display: block;
-    margin-top: 0.3rem;
-    font-size: 0.74rem;
-    color: rgba(201, 168, 76, 0.9);
+    border-radius: 1.5rem;
+    outline: none;
   }
 
-  .hero-ship-pod--transmission {
-    left: 34%;
-    top: 24%;
-    width: 15%;
-    height: 16%;
+  .hero-reference-hotspot:hover,
+  .hero-reference-hotspot:focus-visible {
+    box-shadow:
+      0 0 0 1px rgba(201, 168, 76, 0.82),
+      0 0 24px rgba(201, 168, 76, 0.28);
+    background: rgba(201, 168, 76, 0.08);
   }
 
-  .hero-ship-pod--cockpit {
-    left: 61%;
-    top: 36%;
-    width: 12%;
-    height: 19%;
+  .hero-reference-hotspot--cockpit {
+    left: 37%;
+    top: 13%;
+    width: 26%;
+    height: 11%;
   }
 
-  .hero-ship-pod--greenhouse {
-    left: 40%;
-    top: 46%;
-    width: 19%;
-    height: 18%;
+  .hero-reference-hotspot--greenhouse {
+    left: 32%;
+    top: 29%;
+    width: 34%;
+    height: 22%;
   }
 
-  .hero-ship-pod--cargo {
-    left: 58%;
-    top: 62%;
-    width: 13%;
-    height: 17%;
+  .hero-reference-hotspot--cart {
+    left: 26%;
+    top: 53%;
+    width: 20%;
+    height: 11%;
+  }
+
+  .hero-reference-hotspot--transmission {
+    left: 54%;
+    top: 53%;
+    width: 20%;
+    height: 11%;
+  }
+
+  .hero-ship-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem 1.2rem;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: heroCaptionFadeIn 1200ms cubic-bezier(0.22, 1, 0.36, 1) 920ms forwards;
   }
 
   .hero-ship-caption {
@@ -1629,8 +1514,33 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .hero-ship-shell {
-      min-height: 34rem;
+    .hero-reference-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      justify-items: center;
+    }
+
+    .hero-callout-column {
+      width: 100%;
+      max-width: 42rem;
+      gap: 1.4rem;
+    }
+
+    .hero-callout {
+      border: 1px solid rgba(201, 168, 76, 0.18);
+      border-radius: 1.5rem;
+      padding: 1.15rem 1.2rem;
+      background: rgba(10, 18, 42, 0.42);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-callout h3::after {
+      display: none;
+    }
+
+    .hero-reference-ship {
+      order: -1;
+      width: min(100%, 34rem);
     }
   }
 
@@ -1640,25 +1550,68 @@
       padding-bottom: 2rem;
     }
 
-    .hero-ship-shell {
-      min-height: 30rem;
+    .hero-ship-caption h1 {
+      font-size: clamp(2.5rem, 10vw, 4rem);
     }
 
-    .hero-ship,
-    .hero-ship-svg {
-      width: min(96vw, 620px);
+    .hero-reference-layout {
+      gap: 1.4rem;
     }
 
-    .hero-ship-pod {
-      border-radius: 1.3rem;
+    .hero-reference-ship {
+      width: min(100%, 26rem);
     }
 
-    .hero-ship-pod__title {
-      font-size: 0.7rem;
+    .hero-callout-column {
+      gap: 1rem;
     }
 
-    .hero-ship-pod__detail {
-      font-size: 0.62rem;
+    .hero-callout {
+      padding: 1rem;
+    }
+
+    .hero-callout h3 {
+      font-size: 1.28rem;
+      line-height: 1.2;
+      flex-wrap: wrap;
+    }
+
+    .hero-callout h3 span {
+      width: 100%;
+      font-size: 0.78rem;
+    }
+
+    .hero-callout p,
+    .hero-callout__cta {
+      font-size: 0.94rem;
+    }
+
+    .hero-reference-hotspot--cockpit {
+      left: 36%;
+      top: 12%;
+      width: 28%;
+      height: 12%;
+    }
+
+    .hero-reference-hotspot--greenhouse {
+      left: 30%;
+      top: 28%;
+      width: 38%;
+      height: 22%;
+    }
+
+    .hero-reference-hotspot--cart {
+      left: 23%;
+      top: 53%;
+      width: 23%;
+      height: 12%;
+    }
+
+    .hero-reference-hotspot--transmission {
+      left: 54%;
+      top: 53%;
+      width: 23%;
+      height: 12%;
     }
 
     .home-section-shell,
@@ -1668,8 +1621,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-ship-shell,
+    .hero-reference-layout,
     .hero-ship-caption,
+    .hero-ship-actions,
     .home-section-shell--reveal {
       animation: none;
       transition: none;
