@@ -1462,6 +1462,117 @@
     background: rgba(15, 27, 61, 0.55);
   }
 
+  .register-role-step {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .register-role-grid {
+    display: grid;
+    gap: 1.1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .register-role-card {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: 0.85rem;
+    min-height: 18rem;
+    padding: 1.4rem;
+    border-radius: 1.75rem;
+    border: 1.5px solid rgba(245, 230, 200, 0.26);
+    background:
+      linear-gradient(180deg, rgba(18, 30, 65, 0.84), rgba(12, 21, 46, 0.94)),
+      radial-gradient(circle at top right, rgba(201, 168, 76, 0.08), transparent 30%);
+    text-align: left;
+    color: var(--brand-cream);
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      background 180ms ease;
+  }
+
+  .register-role-card:hover,
+  .register-role-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(201, 168, 76, 0.62);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+  }
+
+  .register-role-card.is-selected {
+    border-color: rgba(201, 168, 76, 0.82);
+    box-shadow:
+      0 22px 48px rgba(0, 0, 0, 0.24),
+      0 0 0 1px rgba(201, 168, 76, 0.16) inset;
+    background:
+      linear-gradient(180deg, rgba(24, 38, 79, 0.9), rgba(14, 24, 53, 0.96)),
+      radial-gradient(circle at top right, rgba(201, 168, 76, 0.14), transparent 36%);
+  }
+
+  .register-role-card__check {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(245, 230, 200, 0.45);
+    background: rgba(15, 27, 61, 0.5);
+    transition: all 180ms ease;
+  }
+
+  .register-role-card.is-selected .register-role-card__check {
+    border-color: rgba(201, 168, 76, 0.92);
+    background:
+      radial-gradient(circle at center, rgba(201, 168, 76, 0.95) 0 48%, transparent 52%),
+      rgba(15, 27, 61, 0.92);
+    box-shadow: 0 0 16px rgba(201, 168, 76, 0.28);
+  }
+
+  .register-role-card__icon {
+    width: 7rem;
+    height: 7rem;
+    display: inline-grid;
+    place-items: center;
+    color: rgba(245, 230, 200, 0.92);
+  }
+
+  .register-role-card__icon svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .register-role-card__eyebrow {
+    color: rgba(201, 168, 76, 0.92);
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .register-role-card__eyebrow span {
+    color: rgba(245, 230, 200, 0.62);
+    margin-left: 0.45rem;
+  }
+
+  .register-role-card__title {
+    font-size: clamp(1.4rem, 1.15rem + 0.5vw, 2rem);
+    line-height: 1.15;
+    color: var(--brand-cream);
+  }
+
+  .register-role-card__body {
+    color: rgba(245, 230, 200, 0.72);
+    line-height: 1.6;
+    max-width: 22rem;
+  }
+
   .marketplace-backdrop-art {
     position: absolute;
     inset: 0;
@@ -1633,6 +1744,14 @@
     .home-section-shell,
     .home-final-cta {
       padding: 1.7rem 1rem;
+    }
+
+    .register-role-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .register-role-card {
+      min-height: 15.5rem;
     }
   }
 
