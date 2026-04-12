@@ -100,7 +100,7 @@ const faqs = [
 
 export default function Home() {
   useEffect(() => {
-    const sections = Array.from(document.querySelectorAll('.home-section-shell--reveal'));
+    const sections = Array.from(document.querySelectorAll('.home-section-reveal'));
 
     if (!sections.length) {
       return undefined;
@@ -203,68 +203,76 @@ export default function Home() {
       </section>
 
       <div className="home-fade-stack" id="landing-content">
-        <section className="home-section-shell home-section-shell--reveal">
-          <div className="text-center">
-            <p className="eyebrow-gold">How It Works</p>
-            <h2 className="mt-3 font-display text-4xl text-brand-cream">Three steps from farm to pickup.</h2>
-          </div>
-          <div className="mt-8 grid gap-4 lg:grid-cols-3">
-            {howItWorks.map((item) => (
-              <article key={item.step} className="home-info-card">
-                <p className="home-info-card__step">{item.step}</p>
-                <h3 className="mt-3 text-xl font-semibold text-white">{item.title}</h3>
-                <p className="mt-3 text-[#f5e6c8]/72">{item.body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="home-section-shell home-section-shell--reveal">
-          <div className="text-center">
-            <p className="eyebrow-gold">Why HackDart?</p>
-            <h2 className="mt-3 font-display text-4xl text-brand-cream">Better for families and better for farms.</h2>
-          </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {benefits.map((item) => (
-              <article key={item.title} className="home-benefit-card">
-                <div className="home-benefit-card__icon" aria-hidden="true" />
-                <div>
-                  <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                  <p className="mt-2 text-[#f5e6c8]/72">{item.body}</p>
-                </div>
-              </article>
-            ))}
+        <section className="home-section-shell">
+          <div className="home-section-reveal">
+            <div className="text-center">
+              <p className="eyebrow-gold">How It Works</p>
+              <h2 className="mt-3 font-display text-4xl text-brand-cream">Three steps from farm to pickup.</h2>
+            </div>
+            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+              {howItWorks.map((item) => (
+                <article key={item.step} className="home-info-card">
+                  <p className="home-info-card__step">{item.step}</p>
+                  <h3 className="mt-3 text-xl font-semibold text-white">{item.title}</h3>
+                  <p className="mt-3 text-[#f5e6c8]/72">{item.body}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="home-section-shell home-section-shell--reveal">
-          <div className="text-center">
-            <p className="eyebrow-gold">Frequently Asked Questions</p>
-          </div>
-          <div className="mt-8 space-y-3">
-            {faqs.map((item) => (
-              <details key={item.question} className="home-faq-item">
-                <summary>{item.question}</summary>
-                <p>{item.answer}</p>
-              </details>
-            ))}
+        <section className="home-section-shell">
+          <div className="home-section-reveal">
+            <div className="text-center">
+              <p className="eyebrow-gold">Why HackDart?</p>
+              <h2 className="mt-3 font-display text-4xl text-brand-cream">Better for families and better for farms.</h2>
+            </div>
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              {benefits.map((item) => (
+                <article key={item.title} className="home-benefit-card">
+                  <div className="home-benefit-card__icon" aria-hidden="true" />
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                    <p className="mt-2 text-[#f5e6c8]/72">{item.body}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="home-final-cta home-section-shell--reveal">
-          <p className="eyebrow-gold">Ready to come aboard?</p>
-          <h2 className="mt-3 font-display text-5xl text-brand-cream">Fresh, affordable produce is a few clicks away.</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-[#f5e6c8]/74">
-            Start browsing as a buyer, or create a seller account and turn surplus harvest into a
-            real local pickup route.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link className="btn-gold" href="/marketplace">
-              Shop now
-            </Link>
-            <Link className="btn-orbit" href="/login">
-              Sign in
-            </Link>
+        <section className="home-section-shell">
+          <div className="home-section-reveal">
+            <div className="text-center">
+              <p className="eyebrow-gold">Frequently Asked Questions</p>
+            </div>
+            <div className="mt-8 space-y-3">
+              {faqs.map((item) => (
+                <details key={item.question} className="home-faq-item">
+                  <summary>{item.question}</summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="home-final-cta home-section-shell">
+          <div className="home-section-reveal">
+            <p className="eyebrow-gold">Ready to come aboard?</p>
+            <h2 className="mt-3 font-display text-5xl text-brand-cream">Fresh, affordable produce is a few clicks away.</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-[#f5e6c8]/74">
+              Start browsing as a buyer, or create a seller account and turn surplus harvest into a
+              real local pickup route.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link className="btn-gold" href="/marketplace">
+                Shop now
+              </Link>
+              <Link className="btn-orbit" href="/login">
+                Sign in
+              </Link>
+            </div>
           </div>
         </section>
       </div>
