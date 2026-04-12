@@ -392,7 +392,7 @@
     position: relative;
     border-radius: 2rem;
     border: 1px solid rgba(201, 168, 76, 0.18);
-    padding: 1.6rem;
+    padding: 1.6rem 1.6rem 2.4rem;
     background: rgba(14, 23, 51, 0.74);
     box-shadow:
       0 20px 60px rgba(0, 0, 0, 0.16),
@@ -400,9 +400,7 @@
   }
 
   .mission-band--buyers {
-    background:
-      linear-gradient(180deg, rgba(98, 121, 220, 0.26), rgba(14, 23, 51, 0.8)),
-      rgba(14, 23, 51, 0.78);
+    background: rgba(14, 23, 51, 0.78);
   }
 
   .mission-band__title {
@@ -434,7 +432,7 @@
     border-radius: 999px;
     border: 1px solid rgba(201, 168, 76, 0.28);
     background: rgba(12, 19, 42, 0.74);
-    padding: 1.1rem 1.35rem;
+    padding: 1.55rem 1.85rem;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.025);
   }
 
