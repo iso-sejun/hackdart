@@ -107,10 +107,10 @@ export default function MissionPage() {
         <section className="mission-ecosystem">
           <p className="eyebrow-gold text-center">Observatory</p>
           <h2 className="mission-band__title">A Self-Sustaining Ecosystem</h2>
-          <div className="mission-ecosystem__orbit">
-            <div className="mission-ecosystem__ring" aria-hidden="true" />
+          <div className="mission-ecosystem__list">
             {ecosystemNotes.map((note, index) => (
-              <article key={note} className={`mission-ecosystem__node mission-ecosystem__node--${index + 1}`}>
+              <article key={note} className="mission-ecosystem__line">
+                <span className="mission-ecosystem__index">{String(index + 1).padStart(2, '0')}</span>
                 <p>{note}</p>
               </article>
             ))}

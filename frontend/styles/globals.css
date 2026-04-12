@@ -513,45 +513,48 @@
     padding-top: 0.5rem;
   }
 
-  .mission-ecosystem__orbit {
-    position: relative;
-    width: 100%;
-    min-height: 28rem;
+  .mission-ecosystem__list {
     display: grid;
-    place-items: center;
+    gap: 1rem;
+    width: min(100%, 58rem);
+    padding: 1.5rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    background: rgba(12, 19, 42, 0.56);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.025);
   }
 
-  .mission-ecosystem__ring {
-    position: absolute;
-    width: min(82vw, 42rem);
-    height: min(58vw, 20rem);
+  .mission-ecosystem__line {
+    display: grid;
+    gap: 0.85rem;
+    align-items: start;
+    grid-template-columns: auto 1fr;
+    padding: 1rem 1.1rem;
+    border-radius: 1.2rem;
+    border: 1px solid rgba(201, 168, 76, 0.16);
+    background: rgba(14, 23, 51, 0.76);
+  }
+
+  .mission-ecosystem__index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3rem;
+    height: 3rem;
+    padding: 0 0.8rem;
     border-radius: 999px;
-    border: 1.6px solid rgba(201, 168, 76, 0.34);
-    box-shadow: 0 0 32px rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.28);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--brand-cream);
   }
 
-  .mission-ecosystem__node {
-    position: absolute;
-    max-width: 15rem;
-    text-align: center;
+  .mission-ecosystem__line p {
+    margin: 0;
+    line-height: 1.8;
     color: rgba(245, 230, 200, 0.76);
-    line-height: 1.7;
-  }
-
-  .mission-ecosystem__node--1 {
-    top: 1rem;
-    left: 8%;
-  }
-
-  .mission-ecosystem__node--2 {
-    top: 1rem;
-    right: 8%;
-  }
-
-  .mission-ecosystem__node--3 {
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
   }
 
   .mission-cta {
