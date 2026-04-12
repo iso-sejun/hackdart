@@ -923,7 +923,7 @@
 
   .hero-callout-column {
     display: grid;
-    gap: 3.25rem;
+    gap: 3.9rem;
   }
 
   .hero-callout {
@@ -1029,6 +1029,8 @@
     display: block;
     border-radius: 1.5rem;
     outline: none;
+    z-index: 3;
+    cursor: pointer;
   }
 
   .hero-reference-hotspot:hover,
@@ -1040,31 +1042,38 @@
   }
 
   .hero-reference-hotspot--cockpit {
-    left: 37%;
-    top: 13%;
-    width: 26%;
-    height: 11%;
+    left: 43.6%;
+    top: 18%;
+    width: 12.8%;
+    height: 10.8%;
   }
 
   .hero-reference-hotspot--greenhouse {
-    left: 32%;
-    top: 29%;
-    width: 34%;
-    height: 22%;
+    left: 41.1%;
+    top: 31.5%;
+    width: 17.8%;
+    height: 17.4%;
   }
 
   .hero-reference-hotspot--cart {
-    left: 26%;
-    top: 53%;
-    width: 20%;
-    height: 11%;
+    left: 37.7%;
+    top: 51.4%;
+    width: 10.8%;
+    height: 9.2%;
   }
 
   .hero-reference-hotspot--transmission {
-    left: 54%;
-    top: 53%;
-    width: 20%;
-    height: 11%;
+    left: 51.5%;
+    top: 51.4%;
+    width: 10.8%;
+    height: 9.2%;
+  }
+
+  .hero-reference-hotspot--cargo {
+    left: 39.7%;
+    top: 62.7%;
+    width: 20.6%;
+    height: 13.8%;
   }
 
   .hero-ship-actions {
@@ -1095,7 +1104,7 @@
 
   .home-fade-stack {
     display: grid;
-    gap: 1.4rem;
+    gap: 1.95rem;
     scroll-snap-type: y proximity;
   }
 
@@ -1117,7 +1126,7 @@
     border: 1.4px solid rgba(201, 168, 76, 0.22);
     border-radius: 2rem;
     background: rgba(10, 18, 42, 0.52);
-    padding: 2rem 1.4rem;
+    padding: 2.35rem 1.55rem;
     box-shadow:
       0 24px 65px rgba(0, 0, 0, 0.16),
       inset 0 1px 0 rgba(255, 255, 255, 0.03);
@@ -1523,7 +1532,7 @@
     .hero-callout-column {
       width: 100%;
       max-width: 42rem;
-      gap: 1.4rem;
+      gap: 1.6rem;
     }
 
     .hero-callout {
@@ -1587,36 +1596,43 @@
     }
 
     .hero-reference-hotspot--cockpit {
-      left: 36%;
-      top: 12%;
-      width: 28%;
-      height: 12%;
+      left: 43.2%;
+      top: 17.8%;
+      width: 13.6%;
+      height: 11.6%;
     }
 
     .hero-reference-hotspot--greenhouse {
-      left: 30%;
-      top: 28%;
-      width: 38%;
-      height: 22%;
+      left: 40.4%;
+      top: 31.1%;
+      width: 19.2%;
+      height: 18.8%;
     }
 
     .hero-reference-hotspot--cart {
-      left: 23%;
-      top: 53%;
-      width: 23%;
-      height: 12%;
+      left: 36.9%;
+      top: 50.8%;
+      width: 12.4%;
+      height: 10.4%;
     }
 
     .hero-reference-hotspot--transmission {
-      left: 54%;
-      top: 53%;
-      width: 23%;
-      height: 12%;
+      left: 50.9%;
+      top: 50.8%;
+      width: 12.4%;
+      height: 10.4%;
+    }
+
+    .hero-reference-hotspot--cargo {
+      left: 39%;
+      top: 62.1%;
+      width: 22.2%;
+      height: 15.2%;
     }
 
     .home-section-shell,
     .home-final-cta {
-      padding: 1.4rem 1rem;
+      padding: 1.7rem 1rem;
     }
   }
 

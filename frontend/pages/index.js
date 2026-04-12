@@ -59,19 +59,19 @@ const howItWorks = [
 const benefits = [
   {
     title: 'Lower prices',
-    body: 'Produce that might have earned nothing becomes discounted food access for families.',
+    body: 'Farmers will sell their unharvested, surplus produce for 50% off original price.',
   },
   {
     title: 'Fresh produce',
-    body: 'The model focuses on real farm inventory, not vague substitutions or shelf-stable fallback.',
+    body: 'All produce is locally sourced from farms near you! With this system, you are getting real, organic farm inventory-not shelf-stable, ultraprocessed leftovers.',
   },
   {
     title: 'Simple pickup',
-    body: 'Food bank hubs reduce the complexity of individual delivery while staying neighborhood-friendly.',
+    body: 'Produce bought from Hackdart will be shipped over to Foodbanks near you. These centralized location-hubs keep fulfillment of orders practical and easy-to-understand.',
   },
   {
-    title: 'Better for farms',
-    body: 'Growers recover revenue from surplus harvest instead of absorbing a total loss.',
+    title: 'Better for farmers',
+    body: 'Farmers will take all profits made from sold produce, generating partial profit from food that would otherwise never leave the farm.',
   },
 ];
 
@@ -79,22 +79,22 @@ const faqs = [
   {
     question: 'How does pickup work?',
     answer:
-      'At checkout, the buyer selects a nearby food bank. Sellers ship one combined batch there, and the food bank splits each household order for pickup.',
+      'At checkout simply click the location of the foodbank you would like to pick up your produce. Once there, provide the food bank your account information and order info!',
   },
   {
     question: 'Why is the produce discounted?',
     answer:
-      'The platform is built around surplus farm produce that still has value but may otherwise go unsold.',
+      'Produce is discounted because all products listed are built for farm produce that would be wasted if unsold. This lets families access healthy food at a lower price.',
   },
   {
     question: 'Is the produce still fresh?',
     answer:
-      'Yes. The goal is to move good produce before it becomes waste, not to resell expired inventory.',
+      'Of course! All produce is sourced from local farms near your area to maximize nutritional benefits.',
   },
   {
-    question: 'Do I need an account to browse?',
+    question: 'Do farmers have to pay for shipping and storage?',
     answer:
-      'You can explore first, but creating an account is the fastest way to move through shopping, order tracking, and fulfillment.',
+      'Absolutely not! Using already established government subsidies and donations we at Hackdart will cover all shipping fees incurred during the transaction. Storage will be held in local food banks. And all profits will be kept by farms!',
   },
 ];
 
@@ -175,6 +175,7 @@ export default function Home() {
             <Link href="/marketplace" className="hero-reference-hotspot hero-reference-hotspot--greenhouse" aria-label="Greenhouse - browse produce" />
             <Link href="/cart" className="hero-reference-hotspot hero-reference-hotspot--cart" aria-label="Cargo - cart and pickup" />
             <Link href="/mission" className="hero-reference-hotspot hero-reference-hotspot--transmission" aria-label="Transmission - mission and impact" />
+            <Link href="/cart" className="hero-reference-hotspot hero-reference-hotspot--cargo" aria-label="Cargo - cart and pickup" />
           </div>
 
           <div className="hero-callout-column hero-callout-column--right">
@@ -239,7 +240,6 @@ export default function Home() {
         <section className="home-section-shell home-section-shell--reveal">
           <div className="text-center">
             <p className="eyebrow-gold">Frequently Asked Questions</p>
-            <h2 className="mt-3 font-display text-4xl text-brand-cream">Quick answers for first-time visitors.</h2>
           </div>
           <div className="mt-8 space-y-3">
             {faqs.map((item) => (
