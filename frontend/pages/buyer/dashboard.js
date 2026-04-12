@@ -158,7 +158,7 @@ export default function BuyerDashboardPage() {
         <div className="dashboard-grid mt-6">
           <section className="dashboard-panel">
             <p className="eyebrow-gold">Account</p>
-            <h3 className="mt-3 text-2xl font-semibold text-white">{profile?.fullName || 'Buyer'}</h3>
+            <h3 className="mt-3 text-2xl font-semibold text-white">HackDart Buyer</h3>
             <p className="mt-3 text-[#f5e6c8]/72">
               Default hub radius: <span className="text-[#d7bc68]">{profile?.pickupRadiusMiles || 5} miles</span>
             </p>
