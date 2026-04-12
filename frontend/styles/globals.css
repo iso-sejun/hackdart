@@ -1273,6 +1273,26 @@
     text-transform: uppercase;
   }
 
+  .hero-reference-ship__label--cockpit {
+    font-size: 15px;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-reference-ship__label--greenhouse {
+    font-size: 14px;
+    letter-spacing: 0.035em;
+  }
+
+  .hero-reference-ship__label--mission {
+    font-size: 14px;
+    letter-spacing: 0.03em;
+  }
+
+  .hero-reference-ship__label--cargo {
+    font-size: 19px;
+    letter-spacing: 0.05em;
+  }
+
   .hero-reference-hotspot {
     position: absolute;
     display: block;

@@ -163,11 +163,11 @@ export default function Home() {
                 <rect x="394" y="466" width="76" height="76" rx="14" className="hero-reference-ship__room" />
                 <rect x="304" y="570" width="152" height="116" rx="20" className="hero-reference-ship__room" />
 
-                <text x="380" y="218" textAnchor="middle" className="hero-reference-ship__label">Cockpit</text>
-                <text x="380" y="366" textAnchor="middle" className="hero-reference-ship__label">Greenhouse</text>
-                <text x="330" y="512" textAnchor="middle" className="hero-reference-ship__label">Cart</text>
-                <text x="432" y="512" textAnchor="middle" className="hero-reference-ship__label">Mission</text>
-                <text x="380" y="638" textAnchor="middle" className="hero-reference-ship__label">Cargo</text>
+                <text x="380" y="218" textAnchor="middle" className="hero-reference-ship__label hero-reference-ship__label--cockpit">Cockpit</text>
+                <text x="380" y="366" textAnchor="middle" className="hero-reference-ship__label hero-reference-ship__label--greenhouse">Greenhouse</text>
+                <text x="330" y="512" textAnchor="middle" className="hero-reference-ship__label hero-reference-ship__label--cart">Cart</text>
+                <text x="432" y="512" textAnchor="middle" className="hero-reference-ship__label hero-reference-ship__label--mission">Mission</text>
+                <text x="380" y="638" textAnchor="middle" className="hero-reference-ship__label hero-reference-ship__label--cargo">Cargo</text>
               </g>
             </svg>
 
