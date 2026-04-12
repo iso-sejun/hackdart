@@ -104,18 +104,19 @@ const faqs = [
 export default function Home() {
   return (
     <AppShell variant="home">
-      <section className="home-hero-grid">
-        <div className="space-y-6 pt-4">
+      <section className="home-hero-stack">
+        <div className="home-hero-copy">
           <p className="eyebrow-gold">Spaceship</p>
-          <h1 className="max-w-3xl font-display text-5xl leading-[0.94] text-brand-cream sm:text-7xl">
+          <h1 className="font-display text-5xl leading-[0.94] text-brand-cream sm:text-7xl">
             A shared ship for farmers, food banks, and families.
           </h1>
-          <p className="max-w-2xl text-lg leading-8 text-[#f5e6c8]/76">
-            HackDart reroutes farm surplus into affordable neighborhood pickups. The space theme
-            stays, but the experience is built to make the model instantly understandable.
+          <p className="mx-auto max-w-3xl text-lg leading-8 text-[#f5e6c8]/76">
+            HackDart reroutes farm surplus into affordable neighborhood pickups through one
+            coordinated route. The ship stays thematic, but the experience centers the actual
+            mission and flow.
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <Link className="btn-gold" href="/marketplace">
               Shop produce
             </Link>
@@ -123,38 +124,29 @@ export default function Home() {
               Create account
             </Link>
           </div>
-
-          <div className="home-impact-strip">
-            <div className="home-impact-chip">
-              <span className="home-impact-chip__value">50%</span>
-              <span className="home-impact-chip__label">profit recovered on produce that may have earned zero</span>
-            </div>
-            <div className="home-impact-chip">
-              <span className="home-impact-chip__value">1 batch</span>
-              <span className="home-impact-chip__label">can satisfy many nearby household orders through one hub</span>
-            </div>
-            <div className="home-impact-chip">
-              <span className="home-impact-chip__value">Fresh access</span>
-              <span className="home-impact-chip__label">without needing individual last-mile delivery for every order</span>
-            </div>
-          </div>
         </div>
 
-        <div className="home-ship-panel">
+        <div className="home-ship-panel home-ship-panel--hero">
           <div className="home-ship-panel__copy">
             <p className="eyebrow-gold">Ship Map</p>
             <h2 className="mt-2 font-display text-4xl text-brand-cream">Navigate the vessel.</h2>
             <p className="mt-3 max-w-xl text-[#f5e6c8]/72">
-              The ship keeps the same space architecture, but every destination now supports a real
-              task: browse, sign in, register, review mission, or move to pickup.
+              Every room maps to a real product action: mission, login, account creation,
+              marketplace browsing, cart review, and pickup checkout.
             </p>
           </div>
 
           <div className="harvest-ship-scene">
             <div className="harvest-ship" aria-hidden="true">
               <div className="harvest-ship__body" />
+              <div className="harvest-ship__nose" />
+              <div className="harvest-ship__cockpit" />
               <div className="harvest-ship__wing harvest-ship__wing--left" />
               <div className="harvest-ship__wing harvest-ship__wing--right" />
+              <div className="harvest-ship__tail harvest-ship__tail--left" />
+              <div className="harvest-ship__tail harvest-ship__tail--right" />
+              <div className="harvest-ship__thruster harvest-ship__thruster--top" />
+              <div className="harvest-ship__thruster harvest-ship__thruster--bottom" />
               <div className="harvest-ship__room harvest-ship__room--mission" />
               <div className="harvest-ship__room harvest-ship__room--register" />
               <div className="harvest-ship__room harvest-ship__room--marketplace" />
@@ -174,6 +166,21 @@ export default function Home() {
                 <span className="harvest-ship-hotspot__detail">{hotspot.detail}</span>
               </Link>
             ))}
+          </div>
+        </div>
+
+        <div className="home-impact-strip">
+          <div className="home-impact-chip">
+            <span className="home-impact-chip__value">50%</span>
+            <span className="home-impact-chip__label">profit recovered on produce that may have earned zero</span>
+          </div>
+          <div className="home-impact-chip">
+            <span className="home-impact-chip__value">1 batch</span>
+            <span className="home-impact-chip__label">can satisfy many nearby household orders through one hub</span>
+          </div>
+          <div className="home-impact-chip">
+            <span className="home-impact-chip__value">Fresh access</span>
+            <span className="home-impact-chip__label">without needing individual last-mile delivery for every order</span>
           </div>
         </div>
       </section>
