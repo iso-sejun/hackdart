@@ -5,6 +5,7 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
+import { withDisplayFoodBank } from '../../src/lib/foodBankDisplay';
 
 export default function SellerOrdersPage() {
   const { token } = useAuth();
@@ -22,7 +23,12 @@ export default function SellerOrdersPage() {
 
       try {
         const response = await apiRequest('/sellers/me/batches', withAuth(token));
-        setBatches(response.data.batches);
+        setBatches(
+          response.data.batches.map((batch) => ({
+            ...batch,
+            foodBank: withDisplayFoodBank(batch.foodBank),
+          }))
+        );
       } catch (error) {
         setBatches([]);
         setMessage(error.message);

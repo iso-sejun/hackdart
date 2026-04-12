@@ -4,6 +4,7 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
+import { withDisplayFoodBank } from '../../src/lib/foodBankDisplay';
 
 function formatStatus(status) {
   return status.replaceAll('_', ' ');
@@ -37,7 +38,12 @@ export default function BuyerOrdersPage() {
 
       try {
         const response = await apiRequest('/buyers/me/orders', withAuth(token));
-        setOrders(response.data.orders);
+        setOrders(
+          response.data.orders.map((group) => ({
+            ...group,
+            foodBank: withDisplayFoodBank(group.foodBank),
+          }))
+        );
       } catch (error) {
         setOrders([]);
         setMessage(error.message);

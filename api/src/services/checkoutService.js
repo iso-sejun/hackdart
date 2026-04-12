@@ -9,13 +9,13 @@ const mongoose = require('mongoose');
 const { getStripeClient } = require('../config/stripe');
 
 const DEMO_FOOD_BANK_NAME_MAP = {
-  'demo-food-bank-x': 'Food Bank X',
-  'demo-food-bank-y': 'Food Bank Y',
+  'demo-food-bank-x': 'Upper Valley Community Food Bank',
+  'demo-food-bank-y': 'White River Junction Family Food Pantry',
 };
 
 const DEMO_FOOD_BANK_FIXTURES = {
   'demo-food-bank-x': {
-    name: 'Food Bank X',
+    name: 'Upper Valley Community Food Bank',
     email: 'hello@foodbankx.org',
     phone: '603-555-0101',
     hours: 'Mon-Fri 9am-5pm',
@@ -34,7 +34,7 @@ const DEMO_FOOD_BANK_FIXTURES = {
     },
   },
   'demo-food-bank-y': {
-    name: 'Food Bank Y',
+    name: 'White River Junction Family Food Pantry',
     email: 'pickup@foodbanky.org',
     phone: '603-555-0142',
     hours: 'Tue-Sat 10am-4pm',

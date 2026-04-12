@@ -5,6 +5,7 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
+import { withDisplayFoodBank } from '../../src/lib/foodBankDisplay';
 
 function formatStatus(status) {
   return status.replaceAll('_', ' ');
@@ -22,7 +23,12 @@ export default function BuyerDashboardPage() {
     const loadOrders = async () => {
       try {
         const response = await apiRequest('/buyers/me/orders', withAuth(token));
-        setOrders(response.data.orders.slice(0, 3));
+        setOrders(
+          response.data.orders.slice(0, 3).map((order) => ({
+            ...order,
+            foodBank: withDisplayFoodBank(order.foodBank),
+          }))
+        );
       } catch (_error) {
         setOrders([]);
       }

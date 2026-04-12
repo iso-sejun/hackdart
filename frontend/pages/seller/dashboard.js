@@ -5,6 +5,7 @@ import ProtectedPage from '../../src/components/ProtectedPage';
 import DashboardShell from '../../src/components/DashboardShell';
 import { useAuth } from '../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../src/lib/api';
+import { withDisplayFoodBank } from '../../src/lib/foodBankDisplay';
 
 export default function SellerDashboardPage() {
   const { profile, token, refreshSession } = useAuth();
@@ -62,7 +63,11 @@ export default function SellerDashboardPage() {
           apiRequest('/sellers/me/products', withAuth(token)),
         ]);
 
-        const nextBatches = batchResponse.data.batches || [];
+        const nextBatches =
+          (batchResponse.data.batches || []).map((batch) => ({
+            ...batch,
+            foodBank: withDisplayFoodBank(batch.foodBank),
+          })) || [];
         setBatches(nextBatches);
         setBatchCount(nextBatches.length);
         setProductCount((productResponse.data.products || []).length);
@@ -210,10 +215,6 @@ export default function SellerDashboardPage() {
           </div>
 
           <div className="dashboard-hero-card__stats">
-            <div className="dashboard-stat-card">
-              <span className="dashboard-stat-card__label">Stripe status</span>
-              <strong>{profile?.stripeOnboardingStatus || 'not_started'}</strong>
-            </div>
             <div className="dashboard-stat-card">
               <span className="dashboard-stat-card__label">Food safety</span>
               <strong>{profile?.foodSafetyAttested ? 'Attested' : 'Missing'}</strong>

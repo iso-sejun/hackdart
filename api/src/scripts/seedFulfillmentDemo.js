@@ -80,7 +80,7 @@ async function seedFulfillmentDemo() {
   await connectToDatabase();
 
   const sellerProfile = await SellerProfile.findOne({ email: 'seller@hackdart.space' });
-  const foodBank = await FoodBank.findOne({ name: 'Food Bank X' });
+  const foodBank = await FoodBank.findOne({ name: 'Upper Valley Community Food Bank' });
   const products = await Product.find({ sellerId: sellerProfile?.userId }).limit(3);
 
   if (!sellerProfile || !foodBank || products.length < 2) {

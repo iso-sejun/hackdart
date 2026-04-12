@@ -3,7 +3,7 @@ const { geocodeAddress } = require('../lib/demoGeocoder');
 
 const DEMO_FOOD_BANK_FIXTURES = [
   {
-    name: 'Food Bank X',
+    name: 'Upper Valley Community Food Bank',
     email: 'hello@foodbankx.org',
     phone: '603-555-0101',
     address: {
@@ -23,7 +23,7 @@ const DEMO_FOOD_BANK_FIXTURES = [
     contactName: 'Riley Hart',
   },
   {
-    name: 'Food Bank Y',
+    name: 'White River Junction Family Food Pantry',
     email: 'pickup@foodbanky.org',
     phone: '603-555-0142',
     address: {

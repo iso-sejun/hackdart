@@ -2,7 +2,7 @@ export function getDemoPickupOptions(address = {}) {
   return [
     {
       id: null,
-      name: 'Food Bank X',
+      name: 'Upper Valley Community Food Bank',
       hours: 'Mon-Fri 9am-5pm',
       contactName: 'Riley Hart',
       address: {
@@ -15,7 +15,7 @@ export function getDemoPickupOptions(address = {}) {
     },
     {
       id: null,
-      name: 'Food Bank Y',
+      name: 'White River Junction Family Food Pantry',
       hours: 'Tue-Sat 10am-4pm',
       contactName: 'Morgan Lee',
       address: {

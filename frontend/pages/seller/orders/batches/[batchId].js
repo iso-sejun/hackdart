@@ -6,6 +6,7 @@ import ProtectedPage from '../../../../src/components/ProtectedPage';
 import DashboardShell from '../../../../src/components/DashboardShell';
 import { useAuth } from '../../../../src/context/AuthContext';
 import { apiRequest, withAuth } from '../../../../src/lib/api';
+import { withDisplayFoodBank } from '../../../../src/lib/foodBankDisplay';
 
 const DEMO_FOOD_BANK_EMAIL = 'unboxingvidskim@gmail.com';
 
@@ -28,7 +29,10 @@ export default function SellerBatchDetailPage() {
 
     try {
       const response = await apiRequest(`/sellers/me/batches/${batchId}`, withAuth(token));
-      setBatch(response.data);
+      setBatch({
+        ...response.data,
+        foodBank: withDisplayFoodBank(response.data.foodBank),
+      });
       setEmailMeta(null);
     } catch (error) {
       setMessage(error.message);
@@ -53,7 +57,10 @@ export default function SellerBatchDetailPage() {
         })
       );
 
-      setBatch(response.data.batch);
+      setBatch({
+        ...response.data.batch,
+        foodBank: withDisplayFoodBank(response.data.batch.foodBank),
+      });
       setEmailMeta(response.data.email || null);
       setMessage(
         response.data.email?.usedJsonTransport
