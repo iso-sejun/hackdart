@@ -7,6 +7,11 @@ const Payment = require('../models/Payment');
 const Product = require('../models/Product');
 const { getStripeClient } = require('../config/stripe');
 
+const DEMO_FOOD_BANK_NAME_MAP = {
+  'demo-food-bank-x': 'Food Bank X',
+  'demo-food-bank-y': 'Food Bank Y',
+};
+
 function createError(message, statusCode, code, details = null) {
   const error = new Error(message);
   error.statusCode = statusCode;
@@ -49,18 +54,47 @@ async function getActiveCart(buyerId) {
   return cart;
 }
 
-async function validateCheckout(buyerId, payload) {
-  await ensureBuyerProfile(buyerId);
-  const cart = await getActiveCart(buyerId);
+async function resolveFoodBank(foodBankId, pickupAddress = {}) {
+  if (!foodBankId) {
+    throw createError('Pickup food bank not found', 404, 'FOOD_BANK_NOT_FOUND');
+  }
 
-  const foodBank = await FoodBank.findOne({
-    _id: payload.foodBankId,
+  let foodBank = await FoodBank.findOne({
+    _id: foodBankId,
     acceptingOrders: true,
   });
+
+  if (foodBank) {
+    return foodBank;
+  }
+
+  const mappedName = DEMO_FOOD_BANK_NAME_MAP[foodBankId];
+
+  if (mappedName) {
+    foodBank = await FoodBank.findOne({
+      name: mappedName,
+      acceptingOrders: true,
+    });
+  }
+
+  if (!foodBank && pickupAddress.postalCode) {
+    foodBank = await FoodBank.findOne({
+      'address.postalCode': pickupAddress.postalCode,
+      acceptingOrders: true,
+    }).sort({ createdAt: 1 });
+  }
 
   if (!foodBank) {
     throw createError('Pickup food bank not found', 404, 'FOOD_BANK_NOT_FOUND');
   }
+
+  return foodBank;
+}
+
+async function validateCheckout(buyerId, payload) {
+  await ensureBuyerProfile(buyerId);
+  const cart = await getActiveCart(buyerId);
+  const foodBank = await resolveFoodBank(payload.foodBankId, payload.pickupAddress);
 
   const normalizedItems = [];
 
