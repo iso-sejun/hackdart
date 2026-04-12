@@ -57,7 +57,7 @@ export default function LoginPage() {
     <AppShell compact variant="login" showHeader={false}>
       <header className="market-nav-shell auth-page-header mb-10 flex flex-wrap items-center justify-between gap-4">
         <Link href="/" className="font-display text-2xl tracking-[0.08em] text-brand-gold">
-          HACKDART
+          Hyperion
         </Link>
         <nav className="flex flex-wrap items-center gap-3 text-sm text-[#f5e6c8]/80">
           <Link className="nav-link nav-link-gold" href="/">

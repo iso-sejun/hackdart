@@ -53,7 +53,7 @@ export default function AppShell({
                 isGoldNav ? 'text-brand-gold' : 'text-emerald-200'
               }`}
             >
-              HACKDART
+              Hyperion
             </Link>
             <nav
               className={`flex flex-wrap items-center gap-3 text-sm ${
