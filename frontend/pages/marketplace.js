@@ -140,10 +140,6 @@ function getCategoryIcon(category) {
     return '✦';
   }
 
-  if (normalized.includes('fruit') || normalized.includes('tomato')) {
-    return '🍅';
-  }
-
   if (normalized.includes('leaf')) {
     return '🥬';
   }
@@ -152,8 +148,16 @@ function getCategoryIcon(category) {
     return '🌿';
   }
 
+  if (normalized.includes('vegetable')) {
+    return '🥕';
+  }
+
   if (normalized.includes('root')) {
     return '🥕';
+  }
+
+  if (normalized.includes('fruit') || normalized.includes('tomato')) {
+    return '🍎';
   }
 
   return '🧺';
