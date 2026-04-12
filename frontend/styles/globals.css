@@ -1467,6 +1467,133 @@
     gap: 1rem;
   }
 
+  .register-pass-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.64fr);
+    gap: 1.6rem;
+    align-items: stretch;
+  }
+
+  .register-pass-layout__form {
+    min-width: 0;
+  }
+
+  .register-pass-layout__side {
+    min-width: 0;
+  }
+
+  .register-pass-panel {
+    height: 100%;
+    min-height: 100%;
+    border-left: 1px dashed rgba(245, 230, 200, 0.18);
+    padding-left: 1.6rem;
+    display: grid;
+    align-content: start;
+    justify-items: center;
+    gap: 1rem;
+    color: rgba(245, 230, 200, 0.82);
+    text-align: center;
+  }
+
+  .register-pass-panel__avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 9999px;
+    border: 2px solid rgba(245, 230, 200, 0.9);
+    position: relative;
+  }
+
+  .register-pass-panel__avatar::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 0.75rem);
+    width: 3.6rem;
+    height: 1.7rem;
+    transform: translateX(-50%);
+    border: 2px solid rgba(245, 230, 200, 0.9);
+    border-bottom: 0;
+    border-radius: 9999px 9999px 0 0;
+  }
+
+  .register-pass-panel__badge {
+    margin-top: 3rem;
+    font-size: 2rem;
+    line-height: 1.15;
+    color: rgba(245, 230, 200, 0.58);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .register-pass-panel__qr {
+    width: 9.75rem;
+    aspect-ratio: 1;
+    border-radius: 1rem;
+    padding: 0.7rem;
+    background:
+      linear-gradient(180deg, rgba(245, 230, 200, 0.08), rgba(245, 230, 200, 0.02)),
+      rgba(15, 27, 61, 0.3);
+    border: 1px solid rgba(245, 230, 200, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  }
+
+  .register-pass-panel__qr span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(245, 230, 200, 0.9) 0 10%, transparent 11%),
+      radial-gradient(circle at 82% 18%, rgba(245, 230, 200, 0.9) 0 10%, transparent 11%),
+      radial-gradient(circle at 18% 82%, rgba(245, 230, 200, 0.9) 0 10%, transparent 11%),
+      linear-gradient(90deg, transparent 9%, rgba(245, 230, 200, 0.72) 9% 15%, transparent 15% 28%, rgba(245, 230, 200, 0.72) 28% 34%, transparent 34% 48%, rgba(245, 230, 200, 0.72) 48% 56%, transparent 56% 68%, rgba(245, 230, 200, 0.72) 68% 76%, transparent 76%),
+      linear-gradient(transparent 9%, rgba(245, 230, 200, 0.72) 9% 16%, transparent 16% 28%, rgba(245, 230, 200, 0.72) 28% 35%, transparent 35% 49%, rgba(245, 230, 200, 0.72) 49% 56%, transparent 56% 70%, rgba(245, 230, 200, 0.72) 70% 78%, transparent 78%),
+      rgba(245, 230, 200, 0.08);
+  }
+
+  .register-pass-panel__meta {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    text-align: left;
+  }
+
+  .register-pass-panel__meta p {
+    margin: 0 0 0.2rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245, 230, 200, 0.46);
+  }
+
+  .register-pass-panel__meta strong {
+    font-size: 1.05rem;
+    color: rgba(245, 230, 200, 0.96);
+    font-weight: 500;
+  }
+
+  .register-pass-panel__title {
+    margin: 0.25rem 0 0;
+    font-size: 1rem;
+    color: rgba(201, 168, 76, 0.94);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+
+  .register-seller-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    background: rgba(201, 168, 76, 0.1);
+    padding: 1rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: rgba(245, 230, 200, 0.92);
+  }
+
   .register-role-grid {
     display: grid;
     gap: 1.1rem;
@@ -1583,21 +1710,21 @@
       radial-gradient(circle, rgba(245, 230, 200, 0.74) 0 1px, transparent 1.7px),
       radial-gradient(circle, rgba(201, 168, 76, 0.56) 0 1px, transparent 2px),
       linear-gradient(180deg, rgba(22, 39, 87, 0.22), rgba(9, 16, 36, 0.04)),
-      url('/design/login-backdrop.png') center center / cover no-repeat;
+      url('/design/login-backdrop.png') center bottom / contain no-repeat;
     background-size:
       auto,
       auto,
       145px 145px,
       210px 210px,
       auto,
-      cover;
+      contain;
     background-position:
       center,
       center,
       0 0,
       58px 76px,
       center,
-      center;
+      center bottom;
     opacity: 0.92;
     filter: saturate(0.88);
     pointer-events: none;
@@ -1771,6 +1898,17 @@
 
     .register-role-grid {
       grid-template-columns: 1fr;
+    }
+
+    .register-pass-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .register-pass-panel {
+      border-left: 0;
+      border-top: 1px dashed rgba(245, 230, 200, 0.18);
+      padding-left: 0;
+      padding-top: 1.4rem;
     }
 
     .register-role-card {

@@ -26,9 +26,11 @@ const roles = [
 ];
 
 const buyerInitialState = {
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
-  fullName: '',
+  confirmPassword: '',
   phone: '',
   addressLine1: '',
   city: '',
@@ -41,6 +43,7 @@ const buyerInitialState = {
 const sellerInitialState = {
   email: '',
   password: '',
+  confirmPassword: '',
   farmName: '',
   contactName: '',
   phone: '',
@@ -68,6 +71,31 @@ export default function RegisterPage() {
       role === 'seller'
         ? 'Create a seller account to list produce and manage future food bank batches.'
         : 'Create a buyer account to access affordable produce pickup routes near you.',
+    [role]
+  );
+  const passMeta = useMemo(
+    () =>
+      role === 'seller'
+        ? {
+            badge: 'Seller Manifest',
+            passTitle: 'Grower boarding pass',
+            lineOneLabel: 'Route',
+            lineOneValue: 'Farm to hub',
+            lineTwoLabel: 'Bay',
+            lineTwoValue: 'Cargo A1',
+            lineThreeLabel: 'Mode',
+            lineThreeValue: 'Pilot / Seller',
+          }
+        : {
+            badge: 'Customer Pass',
+            passTitle: 'Pickup boarding pass',
+            lineOneLabel: 'Flight no',
+            lineOneValue: 'Polar route',
+            lineTwoLabel: 'Seat',
+            lineTwoValue: 'Pickup',
+            lineThreeLabel: 'Mode',
+            lineThreeValue: 'Passenger / Buyer',
+          },
     [role]
   );
 
@@ -98,6 +126,16 @@ export default function RegisterPage() {
     setError('');
 
     try {
+      if (role === 'seller' && sellerForm.password !== sellerForm.confirmPassword) {
+        setError('Passwords do not match.');
+        return;
+      }
+
+      if (role === 'buyer' && buyerForm.password !== buyerForm.confirmPassword) {
+        setError('Passwords do not match.');
+        return;
+      }
+
       if (role === 'seller') {
         const nextUser = await registerSeller({
           email: sellerForm.email,
@@ -124,7 +162,7 @@ export default function RegisterPage() {
       const nextUser = await registerBuyer({
         email: buyerForm.email,
         password: buyerForm.password,
-        fullName: buyerForm.fullName,
+        fullName: `${buyerForm.firstName} ${buyerForm.lastName}`.trim(),
         phone: buyerForm.phone,
         address: {
           line1: buyerForm.addressLine1,
@@ -184,150 +222,198 @@ export default function RegisterPage() {
         footerHref="/login"
         footerLabel="Login"
         variant="login"
+        wide={hasChosenRole}
       >
         {hasChosenRole ? (
           <>
-            <div className="login-role-switch mb-6 flex gap-3 rounded-full p-1">
-              {roles.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setRole(item.id)}
-                  className={`flex-1 rounded-full px-4 py-2 text-sm font-medium transition ${
-                    role === item.id
-                      ? 'bg-[#c9a84c] text-space-navy shadow-[0_10px_30px_rgba(201,168,76,0.22)]'
-                      : 'text-[#f5e6c8]/72 hover:bg-white/5 hover:text-[#f5e6c8]'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
+            <div className="register-pass-layout">
+              <div className="register-pass-layout__form">
+                <div className="login-role-switch mb-6 flex gap-3 rounded-full p-1">
+                  {roles.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setRole(item.id)}
+                      className={`flex-1 rounded-full px-4 py-2 text-sm font-medium transition ${
+                        role === item.id
+                          ? 'bg-[#c9a84c] text-space-navy shadow-[0_10px_30px_rgba(201,168,76,0.22)]'
+                          : 'text-[#f5e6c8]/72 hover:bg-white/5 hover:text-[#f5e6c8]'
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
 
-            <form className="space-y-4" onSubmit={onSubmit}>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {role === 'seller' ? (
-                  <>
+                <form className="space-y-4" onSubmit={onSubmit}>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {role === 'seller' ? (
+                      <>
+                        <label className="field">
+                          <span>Farm name</span>
+                          <input name="farmName" value={activeForm.farmName} onChange={updateForm} required />
+                        </label>
+                        <label className="field">
+                          <span>Contact name</span>
+                          <input
+                            name="contactName"
+                            value={activeForm.contactName}
+                            onChange={updateForm}
+                            required
+                          />
+                        </label>
+                      </>
+                    ) : (
+                      <>
+                        <label className="field">
+                          <span>First name</span>
+                          <input name="firstName" value={activeForm.firstName} onChange={updateForm} required />
+                        </label>
+                        <label className="field">
+                          <span>Last name</span>
+                          <input name="lastName" value={activeForm.lastName} onChange={updateForm} required />
+                        </label>
+                      </>
+                    )}
+
                     <label className="field sm:col-span-2">
-                      <span>Farm name</span>
-                      <input name="farmName" value={activeForm.farmName} onChange={updateForm} required />
+                      <span>Email address</span>
+                      <input name="email" type="email" value={activeForm.email} onChange={updateForm} required />
                     </label>
-                    <label className="field sm:col-span-2">
-                      <span>Contact name</span>
+
+                    <label className="field">
+                      <span>Password</span>
                       <input
-                        name="contactName"
-                        value={activeForm.contactName}
+                        name="password"
+                        type="password"
+                        value={activeForm.password}
+                        onChange={updateForm}
+                        minLength={8}
+                        required
+                      />
+                    </label>
+
+                    <label className="field">
+                      <span>Confirm password</span>
+                      <input
+                        name="confirmPassword"
+                        type="password"
+                        value={activeForm.confirmPassword}
+                        onChange={updateForm}
+                        minLength={8}
+                        required
+                      />
+                    </label>
+
+                    <label className="field sm:col-span-2">
+                      <span>Phone</span>
+                      <input name="phone" value={activeForm.phone} onChange={updateForm} required />
+                    </label>
+
+                    <label className="field sm:col-span-2">
+                      <span>{role === 'seller' ? 'Farm address' : 'Home address'}</span>
+                      <input
+                        name="addressLine1"
+                        value={activeForm.addressLine1}
                         onChange={updateForm}
                         required
                       />
                     </label>
-                  </>
-                ) : (
-                  <label className="field sm:col-span-2">
-                    <span>Full name</span>
-                    <input name="fullName" value={activeForm.fullName} onChange={updateForm} required />
-                  </label>
-                )}
 
-                <label className="field sm:col-span-2">
-                  <span>Email</span>
-                  <input name="email" type="email" value={activeForm.email} onChange={updateForm} required />
-                </label>
+                    <label className="field">
+                      <span>City</span>
+                      <input name="city" value={activeForm.city} onChange={updateForm} required />
+                    </label>
 
-                <label className="field sm:col-span-2">
-                  <span>Password</span>
-                  <input
-                    name="password"
-                    type="password"
-                    value={activeForm.password}
-                    onChange={updateForm}
-                    minLength={8}
-                    required
-                  />
-                </label>
+                    <label className="field">
+                      <span>State</span>
+                      <input name="state" value={activeForm.state} onChange={updateForm} required />
+                    </label>
 
-                <label className="field sm:col-span-2">
-                  <span>Phone</span>
-                  <input name="phone" value={activeForm.phone} onChange={updateForm} required />
-                </label>
+                    <label className="field">
+                      <span>Postal code</span>
+                      <input name="postalCode" value={activeForm.postalCode} onChange={updateForm} required />
+                    </label>
 
-                <label className="field sm:col-span-2">
-                  <span>{role === 'seller' ? 'Farm address' : 'Home address'}</span>
-                  <input
-                    name="addressLine1"
-                    value={activeForm.addressLine1}
-                    onChange={updateForm}
-                    required
-                  />
-                </label>
+                    <label className="field">
+                      <span>Country</span>
+                      <input name="country" value={activeForm.country} onChange={updateForm} required />
+                    </label>
 
-                <label className="field">
-                  <span>City</span>
-                  <input name="city" value={activeForm.city} onChange={updateForm} required />
-                </label>
+                    {role === 'buyer' ? (
+                      <label className="field sm:col-span-2">
+                        <span>Pickup radius (miles)</span>
+                        <input
+                          name="pickupRadiusMiles"
+                          type="number"
+                          min="1"
+                          max="25"
+                          value={activeForm.pickupRadiusMiles}
+                          onChange={updateForm}
+                          required
+                        />
+                      </label>
+                    ) : (
+                      <label className="register-seller-note sm:col-span-2">
+                        <input
+                          className="mt-1 h-4 w-4 accent-[#c9a84c]"
+                          name="foodSafetyAttested"
+                          type="checkbox"
+                          checked={activeForm.foodSafetyAttested}
+                          onChange={updateForm}
+                          required
+                        />
+                        <span>
+                          I confirm that my farm follows applicable food safety regulations and I agree to
+                          the seller terms for this platform.
+                        </span>
+                      </label>
+                    )}
+                  </div>
 
-                <label className="field">
-                  <span>State</span>
-                  <input name="state" value={activeForm.state} onChange={updateForm} required />
-                </label>
+                  {error ? <p className="text-sm text-[#f7c8c8]">{error}</p> : null}
 
-                <label className="field">
-                  <span>Postal code</span>
-                  <input name="postalCode" value={activeForm.postalCode} onChange={updateForm} required />
-                </label>
+                  <button type="submit" className="btn-gold w-full" disabled={isLoading}>
+                    {isLoading ? 'Creating account...' : `Create ${role} account`}
+                  </button>
+                </form>
 
-                <label className="field">
-                  <span>Country</span>
-                  <input name="country" value={activeForm.country} onChange={updateForm} required />
-                </label>
-
-                {role === 'buyer' ? (
-                  <label className="field sm:col-span-2">
-                    <span>Pickup radius (miles)</span>
-                    <input
-                      name="pickupRadiusMiles"
-                      type="number"
-                      min="1"
-                      max="25"
-                      value={activeForm.pickupRadiusMiles}
-                      onChange={updateForm}
-                      required
-                    />
-                  </label>
-                ) : (
-                  <label className="flex items-start gap-3 rounded-3xl border border-[#c9a84c]/20 bg-[#c9a84c]/10 p-4 text-sm text-[#f5e6c8] sm:col-span-2">
-                    <input
-                      className="mt-1 h-4 w-4 accent-[#c9a84c]"
-                      name="foodSafetyAttested"
-                      type="checkbox"
-                      checked={activeForm.foodSafetyAttested}
-                      onChange={updateForm}
-                      required
-                    />
-                    <span>
-                      I confirm that my farm follows applicable food safety regulations and I agree to
-                      the seller terms for this platform.
-                    </span>
-                  </label>
-                )}
+                <p className="mt-4 text-center text-sm text-[#f5e6c8]/60">
+                  <button
+                    type="button"
+                    onClick={() => setHasChosenRole(false)}
+                    className="text-brand-gold transition hover:text-brand-cream"
+                  >
+                    Change role selection
+                  </button>
+                </p>
               </div>
 
-              {error ? <p className="text-sm text-[#f7c8c8]">{error}</p> : null}
-
-              <button type="submit" className="btn-gold w-full" disabled={isLoading}>
-                {isLoading ? 'Creating account...' : `Create ${role} account`}
-              </button>
-            </form>
-
-            <p className="mt-4 text-center text-sm text-[#f5e6c8]/60">
-              <button
-                type="button"
-                onClick={() => setHasChosenRole(false)}
-                className="text-brand-gold transition hover:text-brand-cream"
-              >
-                Change role selection
-              </button>
-            </p>
+              <aside className="register-pass-layout__side">
+                <div className="register-pass-panel">
+                  <div className="register-pass-panel__avatar" aria-hidden="true" />
+                  <p className="register-pass-panel__badge">{passMeta.badge}</p>
+                  <div className="register-pass-panel__qr" aria-hidden="true">
+                    <span />
+                  </div>
+                  <div className="register-pass-panel__meta">
+                    <div>
+                      <p>{passMeta.lineOneLabel}</p>
+                      <strong>{passMeta.lineOneValue}</strong>
+                    </div>
+                    <div>
+                      <p>{passMeta.lineTwoLabel}</p>
+                      <strong>{passMeta.lineTwoValue}</strong>
+                    </div>
+                    <div className="sm:col-span-2">
+                      <p>{passMeta.lineThreeLabel}</p>
+                      <strong>{passMeta.lineThreeValue}</strong>
+                    </div>
+                  </div>
+                  <p className="register-pass-panel__title">{passMeta.passTitle}</p>
+                </div>
+              </aside>
+            </div>
           </>
         ) : (
           <div className="register-role-step">

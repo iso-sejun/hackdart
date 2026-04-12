@@ -9,9 +9,14 @@ export default function AuthCard({
   footerHref,
   footerLabel,
   variant = 'default',
+  wide = false,
 }) {
   return (
-    <section className={`mx-auto max-w-2xl ${variant === 'login' ? 'auth-orbit-card' : 'panel-glow'}`}>
+    <section
+      className={`mx-auto ${wide ? 'max-w-5xl' : 'max-w-2xl'} ${
+        variant === 'login' ? 'auth-orbit-card' : 'panel-glow'
+      }`}
+    >
       <p className={variant === 'login' ? 'eyebrow-gold' : 'eyebrow'}>{eyebrow}</p>
       <h1
         className={`mt-3 font-display leading-tight ${
