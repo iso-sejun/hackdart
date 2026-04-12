@@ -1,6 +1,9 @@
 import Link from 'next/link';
 
+import { useAuth } from '../context/AuthContext';
+
 export default function AppShell({ children, compact = false, variant = 'default' }) {
+  const { isAuthenticated, logout, user } = useAuth();
   const shellClass =
     variant === 'marketplace'
       ? 'bg-space-market'
@@ -59,6 +62,26 @@ export default function AppShell({ children, compact = false, variant = 'default
             <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href="/register">
               Register
             </Link>
+            {isAuthenticated ? (
+              <>
+                <span
+                  className={`rounded-full border px-4 py-3 text-xs uppercase tracking-[0.2em] ${
+                    isGoldNav
+                      ? 'border-[#c9a84c]/25 bg-[#0f1b3d]/35 text-[#d7bc68]'
+                      : 'border-white/10 bg-white/5 text-white/70'
+                  }`}
+                >
+                  {user?.role || 'signed in'}
+                </span>
+                <button
+                  type="button"
+                  className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`}
+                  onClick={logout}
+                >
+                  Logout
+                </button>
+              </>
+            ) : null}
           </nav>
         </header>
         {children}
