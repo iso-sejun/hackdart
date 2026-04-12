@@ -340,36 +340,6 @@ export default function RegisterPage() {
                   className={`register-role-card ${role === item.id ? 'is-selected' : ''}`}
                 >
                   <span className="register-role-card__check" aria-hidden="true" />
-                  <span className={`register-role-card__icon register-role-card__icon--${item.icon}`} aria-hidden="true">
-                    {item.icon === 'farmer' ? (
-                      <svg viewBox="0 0 120 120" role="presentation">
-                        <path d="M34 29c5-10 18-16 26-16s21 6 26 16" />
-                        <path d="M28 35c8-7 24-11 32-11s24 4 32 11" />
-                        <path d="M40 38c4 5 12 8 20 8s16-3 20-8" />
-                        <circle cx="60" cy="49" r="11" />
-                        <path d="M49 63h22v22H49z" />
-                        <path d="M42 100V76c0-13 8-21 18-21s18 8 18 21v24" />
-                        <path d="M27 95V79c0-10-6-18-15-22" />
-                        <path d="M93 95V79c0-10 6-18 15-22" />
-                        <path d="M12 84c10 0 18 8 18 18v5H12z" />
-                        <path d="M90 102c0-10 8-18 18-18v23H90z" />
-                      </svg>
-                    ) : (
-                      <svg viewBox="0 0 120 120" role="presentation">
-                        <circle cx="31" cy="27" r="12" />
-                        <path d="M39 24c4 0 8 4 8 8s-4 8-8 8" />
-                        <path d="M23 41L14 58l14 7 8-15" />
-                        <path d="M37 40l12 9 16-2" />
-                        <path d="M40 48l-4 23" />
-                        <path d="M51 59l7 20" />
-                        <path d="M66 45h27l9 10v14H63V55z" />
-                        <path d="M71 45v-7M83 45v-7M95 45v-7" />
-                        <path d="M63 58h39" />
-                        <circle cx="77" cy="78" r="8" />
-                        <circle cx="99" cy="78" r="8" />
-                      </svg>
-                    )}
-                  </span>
                   <span className="register-role-card__eyebrow">
                     {item.label} <span>{item.sublabel}</span>
                   </span>
