@@ -45,6 +45,8 @@ export default function RegisterPage() {
   const [buyerForm, setBuyerForm] = useState(buyerInitialState);
   const [sellerForm, setSellerForm] = useState(sellerInitialState);
   const [error, setError] = useState('');
+  const dashboardHref =
+    user?.role === 'seller' ? '/seller/dashboard' : user?.role === 'buyer' ? '/buyer/dashboard' : null;
 
   const helperText = useMemo(
     () =>
@@ -146,6 +148,11 @@ export default function RegisterPage() {
           <Link className="nav-link nav-link-gold" href="/register">
             Register
           </Link>
+          {isAuthenticated && dashboardHref ? (
+            <Link className="nav-link nav-link-gold" href={dashboardHref}>
+              Dashboard
+            </Link>
+          ) : null}
         </nav>
       </header>
       <AuthCard

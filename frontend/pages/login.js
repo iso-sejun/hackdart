@@ -17,6 +17,8 @@ export default function LoginPage() {
   const [role, setRole] = useState('buyer');
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
+  const dashboardHref =
+    user?.role === 'seller' ? '/seller/dashboard' : user?.role === 'buyer' ? '/buyer/dashboard' : null;
 
   const helperText = useMemo(
     () =>
@@ -70,6 +72,11 @@ export default function LoginPage() {
           <Link className="nav-link nav-link-gold" href="/register">
             Register
           </Link>
+          {isAuthenticated && dashboardHref ? (
+            <Link className="nav-link nav-link-gold" href={dashboardHref}>
+              Dashboard
+            </Link>
+          ) : null}
         </nav>
       </header>
       <AuthCard

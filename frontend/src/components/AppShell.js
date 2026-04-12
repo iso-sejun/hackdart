@@ -22,6 +22,8 @@ export default function AppShell({
 
   const isGoldNav = ['marketplace', 'login', 'register', 'home', 'mission', 'why-us'].includes(variant);
   const isAuthVariant = ['login', 'register'].includes(variant);
+  const dashboardHref =
+    user?.role === 'seller' ? '/seller/dashboard' : user?.role === 'buyer' ? '/buyer/dashboard' : null;
 
   return (
     <main className={`min-h-screen text-white ${shellClass}`}>
@@ -71,6 +73,11 @@ export default function AppShell({
               </Link>
               {isAuthenticated ? (
                 <>
+                  {dashboardHref ? (
+                    <Link className={`nav-link ${isGoldNav ? 'nav-link-gold' : ''}`} href={dashboardHref}>
+                      Dashboard
+                    </Link>
+                  ) : null}
                   <span
                     className={`rounded-full border px-4 py-3 text-xs uppercase tracking-[0.2em] ${
                       isGoldNav
