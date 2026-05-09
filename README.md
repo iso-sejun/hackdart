@@ -16,6 +16,11 @@ Hyperion connects those two sides through a shared pickup model:
 
 The result is a marketplace where farmers recover value from surplus inventory and households get better access to healthy food.
 
+## Live Links
+
+- Deployed app: [hackdart.vercel.app](https://hackdart.vercel.app/)
+- Devpost: [Hyperion on Devpost](https://devpost.com/software/hyperion-azdqmk?_gl=1*cf4rc6*_gcl_au*ODU3MDA3ODgwLjE3NzQ2MzkzMTc.*_ga*NTk3ODQ1OTgyLjE3NzQ2MzkzMTc.*_ga_0YHJK3Y10M*czE3NzYyNjcyNzMkbzE0JGcxJHQxNzc2MjY3MzkwJGo1OSRsMCRoMA..)
+
 ## Tech Stack
 
 Next.js, React, and Tailwind CSS for the frontend
